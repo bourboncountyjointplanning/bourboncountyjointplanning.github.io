@@ -89,9 +89,9 @@
         
         var options = {
             center: [38.2171,-84.2279],
-            zoom: 12,
+            zoom: 13,
             maxZoom: 18,
-            minZoom: 5,
+            minZoom: 12,
             attributionControl: false,
         }        
         
@@ -154,7 +154,6 @@
              
                 layer.on('mouseover', function(e){
                     var props = this.feature.properties["ZONE_"];
-                    console.log(props);
         
                     infoWindow.show();
                     infoWindow.html("Zone: "+props);
@@ -162,8 +161,6 @@
                     $(document).mousemove(function(e){
                         //first offset from the mouse position of the info window
                         infoWindow.css({"left": e.pageX + 6, "top": e.pageY - infoWindow.height() - 15}); 
-                        
-                        console.log("here");
                         
                         //if crashes into top, flip to lower right
                          if(infoWindow.offset().top < 4) {
@@ -197,6 +194,8 @@
                     return '#b2df8a';
                 } else if(zone == "B-2") {
                     return '#33a02c'
+                } else if (zone == "C"){
+                    return '#e31a1c'
                 } else if(zone == "I-1") {
                     return '#fdbf6f'
                 } else if(zone == "I-2") {
@@ -207,6 +206,8 @@
                     return '#6a3d9a'
                 } else if (zone == "R-3"){
                     return '#fee08b'
+                } else if (zone == "R-4"){
+                    return '#ccebc5'
                 }
         }
 //        
