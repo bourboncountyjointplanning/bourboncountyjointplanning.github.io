@@ -1,207 +1,747 @@
 <!DOCTYPE html>
 <html>
+
+<head>
+    <meta charset=utf-8 />
+    <title>KFTC EJ Analysis</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />    
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+    <script src="https://cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15/cartodb.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/simple-statistics/1.0.0/simple_statistics.min.js"></script>
+    <script src="l.control.geosearch.js"></script>
+    <script src="l.geosearch.provider.esri.js"></script>
+     <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+    <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css" />
     
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>GETTING STARTED WITH BRACKETS</title>
-        <meta name="description" content="An interactive getting started guide for Brackets.">
-        <link rel="stylesheet" href="main.css">
-    </head>
-    <body>
+  
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: whitesmoke;
+            font-family: Lato, sans-serif;
+            color: #0D0000;
+        }
+        header {
+            position: absolute;
+            height: 15%;
+            width: 100%;
+/*            background:rgba(25,25,25,0.8);*/
+            background: whitesmoke;
+            border-bottom: 6px solid #66bd63;
+        }
+        h1 {
+/*            margin-left: 5px;*/
+            left: 1%;
+            margin-top:10px;
+            color: #302725;
+            font-family: Lato, sans-serif;
+            font-size: 2em;            
+            text-align: left;
+            font-weight: 100;
+            position: absolute;
+        }
+        p {
+            font-family: Lato, sans-serif;
+            color: whitesmoke;
+            font-size: 1em;
+        }
+        h2 {
+/*            display: inline-block;*/
+/*            margin-right: 5px;*/
+            color: #302725;
+            font-family: Lato, sans-serif;
+            font-size: 0.8em;
+            position: absolute;
+            text-align: left;
+            font-weight: normal;
+            right: 0%; 
+            top: 2%;
+            width: 300px;
+            border-left: solid;
+            border-left-width: thick;
+            border-left-color:rgba(143,70,60,1);
+            padding-left: 8px;
+        }
+/*
+        h2 p {
+            font-size: 0.5em;
+            text-align: left;
+            font-family:
+        }
+*/
+        #map {
+            position: absolute;
+            z-index: 100;
+            width: 100%;
+            top: 16%;
+            bottom: 0;
+        } 
+        p2 {
+            font-family: Lato, sans-serif;
+            font-align: left;
+            font-size: 0.7em;
+            text-transform: uppercase;
+            color: rgba(135,156,67,1); 
+            font-style: normal;
+            margin: 0px;
+            margin-bottom: 0px;
+            border: 0;
+            line-height: 0.8;
+        }
+        p3 {
+           font-family: Lato, sans-serif;
+            font-align: left;
+            font-size: 0.7em;
+/*            text-transform: uppercase;*/
+            color: whitesmoke; 
+            font-style: normal;
+            margin-top: -35px;
+            margin-bottom: 20px;
+        }
+        .logo{
+            width: 200px;
+           
+        }
+        .scale{
+            width: 100px;
+            right: 127%;
+            bottom: 2%;
+            position: absolute;
+        }
+        .leaflet-popup-content-wrapper {
+            background: rgba(25,25,25,0.9);
+            opacity: 0.95;
+            border-radius: 5px;
+            color: whitesmoke;
+        }
+        .leaflet-popup-tip {
+            background: rgba(25,25,25,0.8);
+            opacity: 0.8;
+        }
+        .leaflet-control-layers-expanded {
+            border-radius: 0px;
+            background: rgba(25,25,25,0.8);
+            color: whitesmoke;
+            width: 220px;
+            top: 5%;
+            position: absolute;
+            right: 5%;
+        }
+        .leaflet-container {
+            font-family: Lato, sans-serif;
+            font-size: 1.3em;
+        }
+        .info {
+            padding: 6px 8px;
+/*            font-size: 1em;*/
+            background: rgba(25,25,25,0.8);
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            border-radius: 0px;
+            color: whitesmoke;
+            bottom:120px;
+            right: 5%;
+            width: 240px;
+            height: 180px; 
+            position: relative;
+        } 
+        /*"Demographics"*/
+        .info h3 {
+            margin: 0px;
+            text-decoration: underline;
+            font-weight: normal;
+            text-align: center;
+            padding: 0px;
+        }
+        /*"hover over a county"*/
+        .info h4 {
+            font-size: 0.95em;
+            text-align: center;
+            font-weight: normal;
+            margin-top: -30px;
+            border: 0px;
+            margin-bottom: 0px;
+        }
+        /*county name*/
+        .info h5 {
+            font-size: 0.9em;
+            text-align: center;
+            font-weight: normal;
+            text-transform: uppercase;
+            color: rgba(202,106,40,1);
+            margin-top: -30px;
+            margin-bottom: 0px;
+        }
+        /*minority, poverty*/
+        .info h6 {
+            font-size: 1em;
+            text-align: left;
+            font-weight: normal;
+/*            margin: 0px;*/
+            margin-top: -38px;
+            color: rgba(135,156,67,1);
+            text-transform: uppercase;
+            border: 0px;
+        }
+        .info p {
+            font-size: 1em;
+            text-align: left;
+            font-weight: normal;
+            color: whitesmoke;
+            margin-top: -60px;
+            border: 0px;
+        }
+        .info span {
+            float: left;
+            margin-right: 50px;
+        }
+        .leaflet-control-geosearch {
+            position: absolute;
+            width: 10%;
+            left: 40px;
+        }
+        .leaflet-control-geosearch input {
+            padding: 5px 8px;
+            background: '#ffffff' ;
+            color: #A0A0A0 ;
+            border-radius: 5px;
+            box-shadow: 2px 2px 2px 2px #888888;
+        }
+        .leaflet-control-geosearch-msg ul {
+            list-style: none;
+            display: none;
+            height: auto;
+            background: none;
+            padding: 0;
+            position: absolute;
+            top: -220%;
+            z-index: 200;
+        }
+        .leaflet-control-geosearch ul li {
+            border-radius: 4px;
+            padding: 4px 8px;
+            font-size: 3em;
+            color: '#ffffff';
+        }
+        /*BUTTONS*/
+        .what-is-ej-button {
+            position: absolute;
+            top: 9%;
+            left: 1%;
+            z-index: 99;
+            font-size: 1.1em;
+            font-family: Lato, sans-serif;
+            color: whitesmoke;
+/*            box-shadow: 0 1px 5px rgba(202,106,40,.65);*/
+            background: rgba(202,106,40,.80);
+        }
+        .kftc-ej-button {
+            position: absolute;
+            top: 9%;
+            left: 21%;
+            z-index: 99;
+            font-size: 1.1em;
+            font-family: Lato, sans-serif;
+            color: whitesmoke;
+            box-shadow: 0 1px 5px rgba(136,156,67,.65);
+            background: rgba(135,156,67,.80);
+        }
+        .more-info-button {
+            position: absolute;
+            top: 9%;
+            left: 34%;
+            z-index: 99;
+            font-size: 1.1em;
+            font-family: Lato, sans-serif;
+            color: whitesmoke;
+            box-shadow: 0 1px 5px rgba(143,70,60,.65);
+            background: rgba(143,70,60,.80);
+        }
+         .empower-ky-button {
+            position: absolute;
+            top: 9%;
+            left: 45%;
+            z-index: 99;
+            font-size: 1.1em;
+            font-family: Lato, sans-serif;
+            color: whitesmoke;
+            box-shadow: 0 1px 5px rgba(113,79,96,.65);
+            background: rgba(113,79,96,.80);
+        }
+        /*css for info pop-up itself*/
+        .ej-info {
+            width: 25%;
+        /*    min-height: 450px;*/
+            background: rgba(25,25,25,0.9);
+            position: absolute;
+            z-index: 800;
+            left: 6%;
+            top: 12%;
+            padding: 20px 2%;
+            display: none;
+         }
+         .kftc-ej {
+            width: 30%;
+        /*    min-height: 450px;*/
+            background: rgba(25,25,25,0.9);
+            position: absolute;
+            z-index: 800;
+            left: 18%;
+            top: 12%;
+            padding: 20px 2%;
+            display: none;
+         }
+         .more-info {
+            width: 25%;
+        /*    min-height: 450px;*/
+            background: rgba(25,25,25,0.9);
+            position: absolute;
+            z-index: 800;
+            left: 18%;
+            top: 12%;
+            padding: 20px 2%;
+            display: none;
+         }
+        .close-ej-info {
+            position: absolute;
+            top: 8px;
+            right: 10px;
+            color: whitesmoke;
+        }
+        .close-kftc-ej {
+            position: absolute;
+            top: 8px;
+            right: 10px;
+            color: whitesmoke;
+        }
+         .close-more-info {
+            position: absolute;
+            top: 8px;
+            right: 10px;
+            color: whitesmoke;
+        }
+        .meaning p {
+           color: whitesmoke;
         
-        <h1>GETTING STARTED WITH BRACKETS</h1>
-        <h2>This is your guide!</h2>
+        }
+
+
+
+    </style>
+    
+</head>
+
+<body>  
+    <header>
+<!--        <img src ='scale.png' alt="LOGO" class='scale'>-->
+        <h1>Mapping Environmental Justice (EJ) in Kentucky</h1>
+        <h2>1. Use checkboxes to explore different maps<br>2. Hover over KY counties to update "Demographic Data" box<br>3. Click on power plant icons for plant info<br>4. Zoom to your area using the search bar</h2>
+    </header>
+    
+    
+    <div id='map'></div>
+    <div class='ej-info'>
+        <div class='close-ej-info'>close</div>
+        <p>What is environmental justice (EJ)?<br><br>The EPA defines EJ as "the fair treatment and meaningful involvement of all people regardless of race, color, national origin, or income with respect to the development, implementation, and enforcement of environmental laws, regulations, and policies."<br><br>For Kentuckians for the Commonwealth (KFTC), it also begins with the recognition that people of color and low income communties have systemically faced the greatest exposure to pollution and its harmful health effects. It requires a commitment that clean energy solutions need to prioritize these communities that stand the most to benefit from a clean energy transition.</p>
+    </div>
+    <div class='kftc-ej'>
+        <div class='close-kftc-ej'>close</div>
+        <p>About the analysis:<br><br>The goal of an Environmental Justice Analysis is to identify the areas and communities that are most affected by pollution, poor health, economic inequality, and racial injustice.<br><br>
+The Kentuckians for the Commonwealth (KFTC) EJ Analysis examines the relationships between cumulative pollution, exposure-related health problems, and demographic vulnerabilities in Kentucky using a broad set of indicators. KFTC collected data from all these categories, creating a KY-specific EJ database. KFTC used a geospatial and statistical analysis to identify the most vulnerable communities in Kentucky and explore the relationships between pollution, health, and demographics in our state.<br><br>For a summary of the analysis, including results, read the <a href="https://drive.google.com/open?id=0By9qec5SZV2OSm9RdFphZXptVXc"style="color: rgb(135,156,67)" target="_blank">KFTC EJ Analysis Executive Summary.</a><br><br>For details on the analysis, datasets, methods, and processes, see the <a href="https://drive.google.com/open?id=0By9qec5SZV2OaDdOajZWNGRLM1E"style="color: rgb(135,156,67)" target="_blank">KFTC EJ Analysis Technical Documentation.</a> </p>
+    </div>
+    <div class='more-info'>
+        <div class='close-more-info'>close</div>
+        <p>About the map:<br><br>This map displays 4 datasets from the KFTC EJ Analysis: coal-fired power plants, percent minority (per county, 2014), percent under the poverty level (per county, 2014), and Cumulative Pollution (an aggregate of all 15 pollution indicators used in the analysis).<br><br>For a summary of the analysis, read the <a href="https://drive.google.com/open?id=0By9qec5SZV2OSm9RdFphZXptVXc"style="color: rgb(135,156,67)" target="_blank">KFTC EJ Analysis Executive Summary.</a><br><br>For details on the analysis, datasets, methods, and processes, see the <a href="https://drive.google.com/open?id=0By9qec5SZV2OaDdOajZWNGRLM1E"style="color: rgb(135,156,67)" target="_blank">KFTC EJ Analysis Technical Documentation.</a><br><br>The map was developed with JavaScript using the Leaflet.js library.</p>
+    </div>
+    <button class='what-is-ej-button'>What is environmental justice?</button>
+    <button class='kftc-ej-button'>About the analysis</button>
+    <button class='more-info-button'>About the map</button>
+    <button class='empower-ky-button'>About Empower Kentucky</button>
+
+    
+    </div>
+ 
+    <script src="powerplants.js"></script>
+    <script src="county_data.js"></script>
+
+
         
-        <!--
-            MADE WITH <3 AND JAVASCRIPT
-        -->
+<script> 
         
-        <p>
-            Welcome to Brackets, a modern open-source code editor that understands web design. It's a lightweight,
-            yet powerful, code editor that blends visual tools into the editor so you get the right amount of help
-            when you want it.
-        </p>
+        var options = {
+            center: [37.6456, -84.7697],
+            zoom: 7,
+            minZoom: 7,
+            maxZoom: 10,
+            dragging: true,
+            zoomControl: true
+        }
+        var map = L.map('map', options);
+    
+        var bounds = map.getBounds();
+        map.setMaxBounds(bounds);
+       
+        var tiles =  L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
+	       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        });
+        map.addLayer(tiles);  
+    
+        // add search box    
+        new L.Control.GeoSearch({
+            provider: new L.GeoSearch.Provider.Esri(),
+            position: 'topleft',
+            zoomLevel: 10,
+            showMarker: true,
+            showPopup: false,
+            marker: {
+                draggable: false
+            }
+        }).addTo(map);
+    
+        // add EJ Analysis info button
+        var infoBox = $('.meaning').appendTo('header');
+    
+    //when adding searchbox to header, searchbox=$(class).detach().removeClass('leaflet-control').appendTo(header);
         
-        <!--
-            WHAT IS BRACKETS?
-        -->
-        <p>
-            <em>Brackets is a different type of editor.</em>
-            Brackets has some unique features like Quick Edit, Live Preview and others that you may not find in other
-            editors. Brackets is written in JavaScript, HTML and CSS. That means that most of you using Brackets
-            have the skills necessary to modify and extend the editor. In fact, we use Brackets every day to build
-            Brackets. To learn more about how to use the key features, read on.
-        </p>
-        
-        <!--
-            GET STARTED WITH YOUR OWN FILES
-        -->
-        
-        <h3>Projects in Brackets</h3>
-        <p>
-            In order to edit your own code using Brackets, you can just open the folder containing your files.
-            Brackets treats the currently open folder as a "project"; features like Code Hints, Live Preview and
-            Quick Edit only use files within the currently open folder.
-        </p>
-        
-        <samp>
-            Once you're ready to get out of this sample project and edit your own code, you can use the dropdown
-            in the left sidebar to switch folders. Right now, the dropdown says "Getting Started" - that's the
-            folder containing the file you're looking at right now. Click on the dropdown and choose "Open Folder…"
-            to open your own folder.
-            You can also use the dropdown later to switch back to folders you've opened previously, including this
-            sample project.
-        </samp>
-        
-        <!--
-            THE RELATIONSHIP BETWEEN HTML, CSS AND JAVASCRIPT
-        -->
-        <h3>Quick Edit for CSS and JavaScript</h3>
-        <p>
-            No more switching between documents and losing your context. When editing HTML, use the
-            <kbd>Cmd/Ctrl + E</kbd> shortcut to open a quick inline editor that displays all the related CSS.
-            Make a tweak to your CSS, hit <kbd>ESC</kbd> and you're back to editing HTML, or just leave the
-            CSS rules open and they'll become part of your HTML editor. If you hit <kbd>ESC</kbd> outside of
-            a quick inline editor, they'll all collapse. Quick Edit will also find rules defined in LESS and
-            SCSS files, including nested rules.
-        </p>
-        
-        <samp>
-            Want to see it in action? Place your cursor on the <!-- <samp> --> tag above and press
-            <kbd>Cmd/Ctrl + E</kbd>. You should see a CSS quick editor appear above, showing the CSS rule that
-            applies to it. Quick Edit works in class and id attributes as well. You can use it with your
-            LESS and SCSS files also.
+        //EJ BUTTON   
+        $('.what-is-ej-button').on('click', function() {
+            $('.ej-info').fadeIn();
+            $('.kftc-ej').fadeOut();
+            $('.more-info').fadeOut();
+        });
+        $('.close-ej-info').on('click', function() {
+            $('.ej-info').fadeOut();
+        });
+    
+        //KFTC BUTTON
+        $('.kftc-ej-button').on('click', function() {
+            $('.kftc-ej').fadeIn();
+            $('.ej-info').fadeOut();
+            $('.more-info').fadeOut();
+        });
+        $('.close-kftc-ej').on('click', function() {
+            $('.kftc-ej').fadeOut();
+        });
+    
+        //MORE INFO BUTTON
+        $('.more-info-button').on('click', function() {
+            $('.more-info').fadeIn();
+            $('.ej-info').fadeOut();
+            $('.kftc-ej').fadeOut();
+        });
+        $('.close-more-info').on('click', function() {
+            $('.more-info').fadeOut();
+        });
+    
+    $('.empower-ky-button').on('click', function() {
+            window.open('http://kftc.org/empowerky', "_blank");
+                $('.ej-info').fadeOut();
+                $('.kftc-ej').fadeOut();
+                $('.more-info').fadeOut();
+        });
+    
+  
+    // add info box
+//        var info = L.control({position: 'topright'});
+        var info = L.control({position: 'bottomright'});
+  
+        info.onAdd = function(map) {
+                
+            var div = L.DomUtil.create('div', 'info');
+            div.innerHTML='<h3>Demographic Data</h3>'+'<br><h4>Hover over a county</h4>';
+                return div;    
+            }
             
-            You can create new rules the same way. Click in one of the <!-- <p> --> tags above and press
-            <kbd>Cmd/Ctrl + E</kbd>. There are no rules for it right now, but you can click the New Rule
-            button to add a new rule for <!-- <p> -->.
-        </samp>
-        
-        <a href="screenshots/quick-edit.png">
-            <img alt="A screenshot showing CSS Quick Edit" src="screenshots/quick-edit.png" />
-        </a>
-        
-        <p>
-            You can use the same shortcut to edit other things as well - like functions in JavaScript,
-            colors, and animation timing functions - and we're adding more and more all the time.
-        </p>
-        <p>
-            For now inline editors cannot be nested, so you can only use Quick Edit while the cursor
-            is in a "full size" editor.
-        </p>
-        
-        <!--
-            LIVE PREVIEW
-        -->
-        <h3>Preview HTML and CSS changes live in the browser</h3>
-        <p>
-            You know that "save/reload dance" we've been doing for years? The one where you make changes in
-            your editor, hit save, switch to the browser and then refresh to finally see the result?
-            With Brackets, you don't have to do that dance.
-        </p>
-        <p>
-            Brackets will open a <em>live connection</em> to your local browser and push HTML and CSS updates as you
-            type! You might already be doing something like this today with browser-based tools, but with Brackets
-            there is no need to copy and paste the final code back into the editor. Your code runs in the
-            browser, but lives in your editor!
-        </p>
-        
-        <h3>Live Highlight HTML elements and CSS rules</h3>
-        <p>
-            Brackets makes it easy to see how your changes in HTML and CSS will affect the page. When your cursor
-            is on a CSS rule, Brackets will highlight all affected elements in the browser. Similarly, when editing
-            an HTML file, Brackets will highlight the corresponding HTML elements in the browser.
-        </p>
-        
-        <samp>
-            If you have Google Chrome installed, you can try this out yourself. Click on the lightning bolt
-            icon in the top right corner of your Brackets window or hit <kbd>Cmd/Ctrl + Alt + P</kbd>. When
-            Live Preview is enabled on an HTML document, all linked CSS documents can be edited in real-time.
-            The icon will change from gray to gold when Brackets establishes a connection to your browser.
+        info.addTo(map);
+//            $(".info").hide(); 
+
+
+    //add kftc logo as watermark
+        var logo = L.control({position: 'bottomleft'});
+    
+        logo.onAdd = function(map) {
+                var image = L.DomUtil.create('div','kftc');
+                image.innerHTML='<img src="http://www.kftc.org/sites/all/themes/kftc/logo.png" >';
+
+                return image;
+            },
+
+            logo.addTo(map);
+    
+    //add color scale as watermark
+        var colorScale = L.control({position: 'bottomright'});
+    
+        colorScale.onAdd = function(map) {
+                var image2 = L.DomUtil.create('div','scale');
+                image2.innerHTML='<img src = "scale.png">';
+
+                return image2;
+            },
+
+            colorScale.addTo(map);
+
+                    
+      // load, symbolize, add Cumulative Pollution layer
+        var sql = new cartodb.SQL({ user: 'lfgreenfield', format: 'geojson' });
+
+        sql.execute("SELECT * FROM cumulativepollution").done(function(geojson) {
+
+            // get pollution data
+            var pollution = L.geoJson(geojson);
+
+            pollution.eachLayer(function(layer){
+
+                layer.setStyle({
+
+                    fillColor: getGridColor(layer.feature.properties.gridcode),
+                    opacity: 0,
+                    fillOpacity: 1
+
+                });
+            })
+
+            pollution.addTo(map);
             
-            Now, place your cursor on the <!-- <img> --> tag above. Notice the blue highlight that appears
-            around the image in Chrome. Next, use <kbd>Cmd/Ctrl + E</kbd> to open up the defined CSS rules.
-            Try changing the size of the border from 10px to 20px or change the background
-            color from "transparent" to "hotpink". If you have Brackets and your browser running side-by-side, you
-            will see your changes instantly reflected in your browser. Cool, right?
-        </samp>
+            combineLayers(pollution);
+            
+
+
+        })
         
-        <p class="note">
-            Today, Brackets only supports Live Preview for HTML and CSS. However, in the current version, changes to
-            JavaScript files are automatically reloaded when you save. We are currently working on Live Preview
-            support for JavaScript. Live previews are also only possible with Google Chrome, but we hope
-            to bring this functionality to all major browsers in the future.
-        </p>
+        //load, symbolize, make county data (percents and boundaries) stay on top        
+        sql.execute("SELECT * FROM pov_percencounty").done(function(geojson){
+            
+            var county_data = L.geoJson(geojson);
+            
+            county_data.eachLayer(function(layer){
+             layer.setStyle({
+                    opacity: 1,
+                    fillOpacity: 0,
+                    weight: 0.8
+                })
+                layer.on('mouseover', function() {
+                    layer.setStyle({
+                        color: 'yellow',
+                        weight: 4
+                    });
+                    layer.bringToFront();
+                    
+                    var props = layer.feature.properties;
+                    
+                    
+//                TO MAKE HOVER:
+                    var content = "<h3>Demographic Data</h3>" +"<br><h5>"+layer.feature.properties["name"]+" County"+"</h5>"+"<br><h6>"+"Percent Poverty: "+"</h6>"+"<p>"+props["pctpov"]+"%"+" (state avg: 18.9%)"+"</p>"+"<br>"+"<h6>"+"Percent Minority: </h6>"+"<p>"+props["pctminor"].toFixed(1)+"%"+" (state avg: 12.6%)"+"</p>";
+                    
+                    $(".info").html(content);
+                    
+                })
+                layer.on('mouseout', function(){
+                    layer.setStyle({color: 'blue', weight: 0.8});
+                    $(".info").html("<h3>Demographic Data</h3>"+"<br>"+"<h4>Hover over a county</h4>");
+//                    layer.closePopup();
+                });
+                
+            })
+                
+            county_data.addTo(map);            
+                      
+            map.on("overlayadd", function (event) {
+                county_data.bringToFront();
+                
+            
+            });
+            
+            map.on("baselayerchange", function(event){
+                county_data.bringToFront();
+            });
+      
+        })
+ 
+    function combineLayers(pollutionLayer){
         
-        <h3>Quick View</h3>
-        <p>
-            For those of us who haven't yet memorized the color equivalents for HEX or RGB values, Brackets makes
-            it quick and easy to see exactly what color is being used. In either CSS or HTML, simply hover over any
-            color value or gradient and Brackets will display a preview of that color/gradient automatically. The
-            same goes for images: simply hover over the image link in the Brackets editor and it will display a
-            thumbnail preview of that image.
-        </p>
+        var powerPlantLayer = L.geoJson(powerPlants, {
+
+                pointToLayer: function(feature){
+                    var latlng = L.latLng(feature.properties.Latitude, feature.properties.Longitude);
+                    var icon = L.icon({
+                        iconUrl: 'powerplant.png',
+                        iconSize:     [25, 25], // size of the icon
+                        iconAnchor:   [12,12], // point of the icon which will correspond to marker's location
+                        popupAnchor:  [6, -20] // point from which the popup should open relative to the iconAnchor
+                    });
+
+                    return L.marker(latlng, {icon:icon});
+                }
+
+             }).addTo(map);
         
-        <samp>
-            To try out Quick View for yourself, place your cursor on the <!-- <body> --> tag at the top of this
-            document and press <kbd>Cmd/Ctrl + E</kbd> to open a CSS quick editor. Now simply hover over any of the
-            color values within the CSS. You can also see it in action on gradients by opening a CSS quick editor
-            on the <!-- <html> --> tag and hovering over any of the background image values. To try out the image
-            preview, place your cursor over the screenshot image included earlier in this document.
-        </samp>
+        // get pov and minor layers and send to drawMap        
+        var minorityLayer = L.geoJson(county_percents);
+        drawMap(minorityLayer, "PctMinor");
         
-        <h3>Need something else? Try an extension!</h3>
-        <p>
-            In addition to all the goodness that's built into Brackets, our large and growing community of
-            extension developers has built hundreds of extensions that add useful functionality. If there's
-            something you need that Brackets doesn't offer, more than likely someone has built an extension for
-            it. To browse or search the list of available extensions, choose <strong>File > Extension
-            Manager…</strong> and click on the "Available" tab. When you find an extension you want, just click
-            the "Install" button next to it.
-        </p>
+        var povertyLayer = L.geoJson(county_percents);
+        drawMap(povertyLayer, "PctPov");
+            
+        makePlantPopup(powerPlantLayer);
+                   
+            // make selector
+                var controls = {
+                    "Percent Poverty": povertyLayer, 
+                    "Percent Minority": minorityLayer,
+                    "Cumulative Pollution": pollutionLayer
+
+
+                };
         
-        <!--
-            LET US KNOW WHAT YOU THINK
-        -->
-        <h2>Get involved</h2>
-        <p>
-            Brackets is an open-source project. Web developers from around the world are contributing to build
-            a better code editor. Many more are building extensions that expand the capabilities of Brackets.
-            Let us know what you think, share your ideas or contribute directly to the project.
-        </p>
-        <ul>
-            <li><a href="http://brackets.io">Brackets.io</a></li>
-            <li><a href="http://blog.brackets.io">Brackets Team Blog</a></li>
-            <li><a href="https://github.com/adobe/brackets">Brackets on GitHub</a></li>
-            <li><a href="https://brackets-registry.aboutweb.com">Brackets Extension Registry</a></li>
-            <li><a href="https://github.com/adobe/brackets/wiki">Brackets Wiki</a></li>
-            <li><a href="https://groups.google.com/forum/#!forum/brackets-dev">Brackets Developer Mailing List</a></li>
-            <li><a href="https://twitter.com/brackets">@brackets on Twitter</a></li>
-            <li>Chat with Brackets developers on IRC in <a href="http://webchat.freenode.net/?channels=brackets&uio=d4">#brackets on Freenode</a></li>
-        </ul>
+                var controls_powerplant = {
+                    "Power Plants": powerPlantLayer,
+
+                };
+
+                L.control.layers(controls, controls_powerplant, { collapsed:false, postion: 'topright'}).addTo(map);
         
-    </body>
+    
+         
+
+        
+    }
+    
+    //make power plant popup    
+    function makePlantPopup(powerPlantLayer){
+        
+        console.log(powerPlantLayer);
+        
+           powerPlantLayer.eachLayer(function(layer){
+               
+                layer.on('mouseover', function() {
+                    
+                    var props = layer.feature.properties;
+
+                    var content = "<p2>"+"Power Plant: "+"</p2>"+"<p3>"+props["Plant_Name"]+"<br>"+"</p3>"+"<p2>"+"Utility: "+"</p2>"+"<p3>"+props["Utility_Na"]+"<br>"+"</p3>"+"<p2>"+"Source: "+"</p2>"+"<p3>"+props["source_des"]+"</p3>"+"<br>"+"<p2>"+"Plant Status: "+"</p2>"+"<p3>"+props["PlantStat"]+"</p3>";
+    
+                    var  options = {
+                        keepInView: true
+                    }
+                    layer.bindPopup(content, options);
+
+                })
+        })
+    }
+
+    //function drawMap to colorize pov and minor and add to map        
+        function drawMap(dataLayer, attribute){
+            
+            var breaks = getClassBreaks(dataLayer, attribute);
+//            console.log(breaks);
+            
+            dataLayer.eachLayer(function(layer){
+                
+                var props = layer.feature.properties;
+                
+                layer.setStyle({
+                    fillColor: getColor(props[attribute], breaks),
+                    opacity: 0,
+                    fillOpacity: 1
+                })
+            })
+            
+         
+    
+            
+            //not adding to map bc not automatically selected in layer control!
+                            
+//            dataLayer.addTo(map);
+            
+        }
+            
+        
+        function getGridColor (gridcode) {
+             
+                if(gridcode == 1) {
+                    return '#006837';
+                } else if(gridcode == 2) {
+                    return '#1a9850';
+                } else if(gridcode == 3) {
+                    return '#66bd63';
+                } else if(gridcode == 4) {
+                    return '#a6d96a'
+                } else if(gridcode == 5) {
+                    return '#d9ef8b'
+                } else if(gridcode == 6) {
+                    return '#fee08b'
+                } else if(gridcode == 7) {
+                    return '#fdae61'
+                }  else if(gridcode == 8) {
+                    return '#f46d43'
+                }  else if(gridcode == 9) {
+                    return '#d73027'
+                }  else if(gridcode == 10) {
+                    return '#a50026'
+                }
+            
+        }
+        
+        function getClassBreaks(dataLayer, attribute) {
+            
+            //  create array 'values'
+            var values = [];
+            
+            // for each layer, create normalized value and push into array 'values'
+            dataLayer.eachLayer(function(layer) {
+                var value = layer.feature.properties[attribute];
+                values.push(value);   
+            }); 
+           
+            // use simple statistics ck means to divide array 'values' into 5 groups/arrays, make 'clusters' which is an array of arrays
+            var clusters = ss.ckmeans(values, 10);
+            // assign highest and lowest value from each of 10 arrays within 'clusters' array to the var 'breaks' 
+            var breaks = clusters.map(function(cluster){
+                return [cluster[0],cluster.pop()];   
+            });
+            // return 'breaks' with highest and lowest values from each of 10 groups to functions where getClassBreaks/'breaks' are called
+            return breaks;
+            
+        }  
+        
+        // send d (attribute) and breaks
+         function getColor(d, breaks) {
+            
+            if(d <= breaks[0][1]) {
+                return '#006837';
+            } else if(d <= breaks[1][1]) {
+                return '#1a9850';
+            } else if(d <= breaks[2][1]) {
+                return '#66bd63';
+            } else if(d <= breaks[3][1]) {
+                return '#a6d96a'
+            } else if(d <= breaks[4][1]) {
+                return '#d9ef8b'
+            }
+             else if(d <= breaks[5][1]) {
+                return '#fdae61'
+            }
+               else if(d <= breaks[6][1]) {
+                return '#f46d43'
+            }
+               else if(d <= breaks[7][1]) {
+                return '#BD0026'
+            }
+               else if(d <= breaks[8][1]) {
+                return '#d73027'
+            }
+               else if(d <= breaks[9][1]) {
+                return '#a50026'
+            }
+         }        
+ 
+        
+
+    </script>
+    
+</body>
+
 </html>
-<!--
-
-    [[[[[[[[[[[[[[[      ]]]]]]]]]]]]]]]
-    [::::::::::::::      ::::::::::::::]
-    [::::::::::::::      ::::::::::::::]
-    [::::::[[[[[[[:      :]]]]]]]::::::]
-    [:::::[                      ]:::::]
-    [:::::[                      ]:::::]
-    [:::::[                      ]:::::]
-    [:::::[                      ]:::::]
-    [:::::[     CODE THE WEB     ]:::::]
-    [:::::[  http://brackets.io  ]:::::]
-    [:::::[                      ]:::::]
-    [:::::[                      ]:::::]
-    [:::::[                      ]:::::]
-    [:::::[                      ]:::::]
-    [::::::[[[[[[[:      :]]]]]]]::::::]
-    [::::::::::::::      ::::::::::::::]
-    [::::::::::::::      ::::::::::::::]
-    [[[[[[[[[[[[[[[      ]]]]]]]]]]]]]]]
-
--->
