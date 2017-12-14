@@ -54,19 +54,6 @@
             line-height: 75%;
             margin: 0px;
         }
-        .leaflet-popup-content p {
-            margin: 0px 0;
-        }
-        .leaflet-popup-content-wrapper {
-            background: rgba(75,75,75,0.8);
-            box-shadow: 0 0 15px rgba(0,0,0,0.2);
-            color: whitesmoke;
-            font-size: 1.2em;
-        }
-        .leaflet-popup-tip {
-            background: rgba(75,75,75,0.8);
-        }  
-*/
      
         
     </style>
@@ -136,16 +123,13 @@
                         color: 'black'
                     })
                 })
-//                layer.on('click'), function(e){
-//                    
-//                   createPopup_fromClick(layer);
-//                }
+
             }
                      
         }).addTo(map);
         
         
-        createPopup(zoneLayer)
+        createPopup(zoneLayer);
          
         function createPopup(data){
             data.eachLayer(function(layer){
