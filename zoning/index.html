@@ -88,7 +88,7 @@
         var targetDiv = 'map';
         
         var options = {
-            center: [38.2171,-84.2279],
+            center: [38.205,-84.254040],
             zoom: 13,
             maxZoom: 18,
             minZoom: 12,
@@ -136,15 +136,17 @@
                         color: 'black'
                     })
                 })
+//                layer.on('click'), function(e){
+//                    
+//                   createPopup_fromClick(layer);
+//                }
             }
                      
         }).addTo(map);
         
         
-        createPopup(zoneLayer);
-    
-        
-        
+        createPopup(zoneLayer)
+         
         function createPopup(data){
             data.eachLayer(function(layer){
                 
@@ -152,13 +154,14 @@
 
                 var infoWindow = $('#hover-window');
              
-                layer.on('mouseover', function(e){
+                //for hovers
+                layer.on('click', function(e){
                     var props = this.feature.properties["ZONE_"];
         
                     infoWindow.show();
                     infoWindow.html("Zone: "+props);
                     
-                    $(document).mousemove(function(e){
+                    $(document).click(function(e){
                         //first offset from the mouse position of the info window
                         infoWindow.css({"left": e.pageX + 6, "top": e.pageY - infoWindow.height() - 15}); 
                         
@@ -175,14 +178,15 @@
 
                 });
                 
-                layer.on('mouseout', function(e){
-                    infoWindow.hide();
-                })
-                
+//                layer.on('mouseout', function(e){
+//                    infoWindow.hide();
+//                })
+//                
             })
         }
         
-//    
+        
+    
         function getColor (zone) {
         
             
