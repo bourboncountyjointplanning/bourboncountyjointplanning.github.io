@@ -179,7 +179,7 @@
                         }
                         
                         //if crashes right, flip again
-                        if(hoverWindow.offset().left + infoWindow.width() >= $(document).width() - 40) {
+                        if(hoverWindow.offset().left + hoverWindow.width() >= $(document).width() - 40) {
                             hoverWindow.css({"left": e.pageX - infoWindow.width() - 30});
                         }
                     })
