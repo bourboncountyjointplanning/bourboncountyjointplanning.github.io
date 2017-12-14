@@ -6,14 +6,8 @@
     <title>Bourbon County Zoning Atlas</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     
-<!--    <script src="https://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 
-<!--    <link rel="stylesheet" href="https://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />    -->
-<!--
-    
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
--->
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"
   integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ=="
   crossorigin=""/>
@@ -41,8 +35,8 @@
             min-width: 60px;
             text-align: left;
             position: absolute;
-            z-index: 10;
             display: none;
+            z-index: 500;
         }
 /*
         h1 {
@@ -80,8 +74,9 @@
 </head>
 
 <body>
-    <div id='hover-window'></div>
+    
     <div id='map'></div>
+    <div id='hover-window'></div>
     
     <script src ="Flood_100yr.js"></script>
     <script src ="Flood_Zoning_Union.js"></script>
@@ -117,11 +112,7 @@
         
 
         map.addLayer(tiles);
-        
-         var onEachFeature = function(feature, layer) {
-            layer.onmouseover
-        
-         }
+
          
         var zoneLayer = L.geoJson(zones, {
             
@@ -160,17 +151,19 @@
                 var props = layer.feature.properties;
 
                 var infoWindow = $('#hover-window');
+             
                 layer.on('mouseover', function(e){
-                    var props = this.feature.properties;
-                    
-                    console.log("hello");
-                    
+                    var props = this.feature.properties["ZONE_"];
+                    console.log(props);
+        
                     infoWindow.show();
-                    infoWindow.html("Zone: ");
+                    infoWindow.html("Zone: "+props);
                     
                     $(document).mousemove(function(e){
                         //first offset from the mouse position of the info window
                         infoWindow.css({"left": e.pageX + 6, "top": e.pageY - infoWindow.height() - 15}); 
+                        
+                        console.log("here");
                         
                         //if crashes into top, flip to lower right
                          if(infoWindow.offset().top < 4) {
@@ -183,7 +176,7 @@
                         }
                     })
 
-                })
+                });
                 
                 layer.on('mouseout', function(e){
                     infoWindow.hide();
