@@ -180,7 +180,7 @@
                         
                         //if crashes right, flip again
                         if(hoverWindow.offset().left + hoverWindow.width() >= $(document).width() - 40) {
-                            hoverWindow.css({"left": e.pageX - infoWindow.width() - 30});
+                            hoverWindow.css({"left": e.pageX - hoverWindow.width() - 30});
                         }
                     })
 
