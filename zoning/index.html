@@ -8,10 +8,8 @@
     
 <!--    <script src="https://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-<!--
 
-    <link rel="stylesheet" href="https://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />    
--->
+<!--    <link rel="stylesheet" href="https://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />    -->
 <!--
     
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
@@ -136,13 +134,13 @@
                }
            }, 
             onEachFeature: function(feature, layer){
-                layer.on("mouseover", function(e){
+                layer.on('mouseover', function(e){
                     layer.setStyle({
                         color: 'yellow'
                     })
                     layer.bringToFront();
                 });
-                layer.on("mouseout", function(e){
+                layer.on('mouseout', function(e){
                     layer.setStyle({
                         color: 'black'
                     })
@@ -160,34 +158,35 @@
             data.eachLayer(function(layer){
                 
                 var props = layer.feature.properties;
-                console.log(props);
-                
-                var hoverWindow = $('#hover-window');
+
+                var infoWindow = $('#hover-window');
                 layer.on('mouseover', function(e){
-                    var props = this.feature.properties["ZONE_"]
+                    var props = this.feature.properties;
                     
-                    hoverWindow.show();
-                    hoverWindow.html("Zone: ")
+                    console.log("hello");
+                    
+                    infoWindow.show();
+                    infoWindow.html("Zone: ");
                     
                     $(document).mousemove(function(e){
                         //first offset from the mouse position of the info window
-                        hoverWindow.css({"left": e.pageX + 6, "top": e.pageY - hoverWindow.height() - 15}); 
+                        infoWindow.css({"left": e.pageX + 6, "top": e.pageY - infoWindow.height() - 15}); 
                         
                         //if crashes into top, flip to lower right
-                         if(hoverWindow.offset().top < 4) {
-                            hoverWindow.css({"top": e.pageY + 15});
+                         if(infoWindow.offset().top < 4) {
+                            infoWindow.css({"top": e.pageY + 15});
                         }
                         
                         //if crashes right, flip again
-                        if(hoverWindow.offset().left + hoverWindow.width() >= $(document).width() - 40) {
-                            hoverWindow.css({"left": e.pageX - hoverWindow.width() - 30});
+                        if(infoWindow.offset().left + infoWindow.width() >= $(document).width() - 40) {
+                            infoWindow.css({"left": e.pageX - infoWindow.width() - 30});
                         }
                     })
 
                 })
                 
                 layer.on('mouseout', function(e){
-                    hoverWindow.hide();
+                    infoWindow.hide();
                 })
                 
             })
