@@ -99,16 +99,15 @@
         
 
         map.addLayer(tiles);
-
-         
+        
+        //add zoneLayer
         var zoneLayer = L.geoJson(zones, {
             
            style: function(feature) {
                return {
-                   color: 'black',
-                   weight: 2,
+                   weight: 0,
+                   fillOpacity: 0.75,
                    fillColor: getColor(feature.properties["ZONE_"]),
-                   fillOpacity: 0.75
                }
            }, 
             onEachFeature: function(feature, layer){
@@ -128,8 +127,46 @@
                      
         }).addTo(map);
         
+        var floodLayer = L.geoJson(flood, {
+             
+            onEachFeature: function(feature, layer){
+                layer.on('mouseover', function(e){
+                    layer.setStyle({
+                        color: 'yellow'
+                    })
+                    layer.bringToFront();
+                });
+                layer.on('mouseout', function(e){
+                    layer.setStyle({
+                        color: 'black'
+                    })
+                })
+
+            }
+                     
+        }).addTo(map);
         
-        createPopup(zoneLayer);
+           //add unionLayer 
+        var unionLayer = L.geoJson(union, {
+            
+           style: function(feature) {
+               return {
+                   weight: 0,
+                   fillOpacity: 0
+               }
+            },             
+        }).addTo(map);
+        
+        //send union layer to make popup
+        createPopup(unionLayer);
+        
+        map.on("overlayadd", function (event) {
+            unionLayer.bringToFront();
+        });
+            
+        map.on("baselayerchange", function(event){
+            unionLayer.bringToFront();
+        });
          
         function createPopup(data){
             data.eachLayer(function(layer){
@@ -140,10 +177,10 @@
              
                 //for hovers
                 layer.on('click', function(e){
-                    var props = this.feature.properties["ZONE_"];
+                    var props = this.feature.properties;
         
                     infoWindow.show();
-                    infoWindow.html("Zone: "+props);
+                    infoWindow.html("Zone: "+props["ZONE_"]+"<br>"+"Land-use Code: "+props["LU_C"]);
                     
                     $(document).click(function(e){
                         //first offset from the mouse position of the info window
@@ -198,26 +235,20 @@
                     return '#ccebc5'
                 }
         }
-//        
-//       
-//        function drawMap(data){ 
-//    
-//            
-//            for (i = 0; i < 9; i++) {
-//                
-//                var content = "<b>"+("<h1>"+data.data[i].name+"</b><br></h1>")+ ("<p>"+data.data[i].city+", "+data.data[i].state+"</p><br>"+"<p2>"+data.data[i].quote+"<br></p2>") + "<figure><img src='1_"+data.data[i].photo+".jpg' width=150></figure>";
-//                
-////              to make hover:
-//                
-////                L.marker([data.data[i].lat,data.data[i].lng], {icon:icon}).bindPopup(content, {closeButton: false, keepInView: true}).on('mouseover',function(e){this.openPopup()}).on('mouseout', function(e){this.closePopup()}).addTo(map);
-//
-////              to make click:
-//                
-//                L.marker([data.data[i].lat,data.data[i].lng], {icon:icon}).bindPopup(content, {closeButton: false, keepInView: true}).addTo(map);
-//                
-//            }
-//            
-//        }           
+      
+     var controls = {
+            "Zones": zoneLayer, 
+            "100yr. Flood": floodLayer,
+    };
+        
+//    var controls_powerplant = {
+//        "Power Plants": powerPlantLayer,
+//    };
+                
+//    L.control.layers(controls, { collapsed:false, postion: 'topright'}).addTo(map);
+        
+        L.control.layers(controls).addTo(map);
+   
     
         
           
