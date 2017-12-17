@@ -82,14 +82,24 @@
             attributionControl: false,
         }        
         
+        
         map = L.map(targetDiv, options);
-    
+        
+        
+    //set bounds manually
 //      set bounds based on zoom level 5 (for buffer room)
 //        var southWest = L.latLng(26.076, -111.665),
 //            northEast = L.latLng(48.835, -51.635),
 //            bounds = L.latLngBounds(southWest, northEast);
 //        
 //        map.setMaxBounds(bounds);
+        
+        //set bounds automatically
+        var getBounds = map.getBounds();
+          
+        var bounds = L.latLngBounds(getBounds);    
+        
+        map.setMaxBounds(bounds);
         
 
         var tiles = L.tileLayer('https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
@@ -99,6 +109,9 @@
         
 
         map.addLayer(tiles);
+        
+//           L.Control.Zoom({ position: 'bottomright' }).addTo(map);
+
         
         //add zoneLayer
         var zoneLayer = L.geoJson(zones, {
@@ -168,44 +181,59 @@
             unionLayer.bringToFront();
         });
          
-        function createPopup(data){
-            data.eachLayer(function(layer){
-                
-                var props = layer.feature.properties;
-
-                var infoWindow = $('#hover-window');
-             
-                //for hovers
-                layer.on('click', function(e){
-                    var props = this.feature.properties;
-        
-                    infoWindow.show();
-                    infoWindow.html("Zone: "+props["ZONE_"]+"<br>"+"Land-use Code: "+props["LU_C"]);
-                    
-                    $(document).click(function(e){
-                        //first offset from the mouse position of the info window
-                        infoWindow.css({"left": e.pageX + 6, "top": e.pageY - infoWindow.height() - 15}); 
-                        
-                        //if crashes into top, flip to lower right
-                         if(infoWindow.offset().top < 4) {
-                            infoWindow.css({"top": e.pageY + 15});
-                        }
-                        
-                        //if crashes right, flip again
-                        if(infoWindow.offset().left + infoWindow.width() >= $(document).width() - 40) {
-                            infoWindow.css({"left": e.pageX - infoWindow.width() - 30});
-                        }
-                    })
-
-                });
-                
-//                layer.on('mouseout', function(e){
-//                    infoWindow.hide();
-//                })
+//        function createPopup(data){
+//            data.eachLayer(function(layer){
 //                
-            })
-        }
-        
+//                var props = layer.feature.properties;
+//
+//                var infoWindow = $('#hover-window');
+//             
+//                //for hovers
+//                layer.on('click', function(e){
+//                    
+////                    if(e.target.feature.geometry =="MultiPolygon"){
+////                        
+////                    }
+//                        
+//                    
+//                    console.log(e.target.feature.geometry);
+//                    
+//                    var props = this.feature.properties;                  
+//               
+//        
+//                    infoWindow.show();
+//                    infoWindow.html("Zone: "+props["ZONE_"]+"<br>"+"Land-use Code: "+props["LU_C"]);
+//                    
+//                    $(layer).click(function(e){
+//                        
+//                        console.log(e.target);
+//                        //first offset from the mouse position of the info window
+//                        infoWindow.css({"left": e.pageX + 6, "top": e.pageY - infoWindow.height() - 15}); 
+//                        
+//                        //if crashes into top, flip to lower right
+//                         if(infoWindow.offset().top < 4) {
+//                            infoWindow.css({"top": e.pageY + 15});
+//                        }
+//                        
+//                        //if crashes right, flip again
+//                        if(infoWindow.offset().left + infoWindow.width() >= $(document).width() - 40) {
+//                            infoWindow.css({"left": e.pageX - infoWindow.width() - 30});
+//                        }
+//                    })
+//
+//                });
+//                
+////                map.on('click', function(e){
+////                    infoWindow.fadeOut();
+////                });
+//                
+////                layer.on('mouseout', function(e){
+////                    infoWindow.hide();
+////                })
+////                
+//            })
+//        }
+//        
         
     
         function getColor (zone) {
@@ -237,17 +265,16 @@
         }
       
      var controls = {
-            "Zones": zoneLayer, 
-            "100yr. Flood": floodLayer,
+        "100yr. Flood": floodLayer,
     };
         
-//    var controls_powerplant = {
-//        "Power Plants": powerPlantLayer,
-//    };
+    var controls_zone = {
+        "Zones": zoneLayer,
+    };
                 
 //    L.control.layers(controls, { collapsed:false, postion: 'topright'}).addTo(map);
         
-        L.control.layers(controls).addTo(map);
+    L.control.layers(controls, controls_zone).addTo(map);
    
     
         
