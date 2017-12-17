@@ -7,6 +7,7 @@
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="https://cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15/cartodb.js"></script>
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"
   integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ=="
@@ -159,7 +160,24 @@
                      
         }).addTo(map);
         
-           //add unionLayer 
+          
+    //add unionLayer using carto
+    
+//    var sql = new cartodb.SQL({ user: 'lfgreenfield', format: 'geojson' });
+//        
+//    sql.execute("SELECT * FROM zoning_landuse_union").done(function(geojson) {
+//            // get pollution data
+//            var unionLayer = L.geoJson(geojson);
+//            unionLayer.eachLayer(function(layer){
+//                layer.setStyle({
+//                    fillColor: 'yellow'
+//                });
+//            })
+//        unionLayer.addTo(map);
+//    });
+//        
+        
+        //add unionLayer 
         var unionLayer = L.geoJson(union, {
             
            style: function(feature) {
@@ -181,62 +199,60 @@
             unionLayer.bringToFront();
         });
          
-//        function createPopup(data){
-//            data.eachLayer(function(layer){
-//                
-//                var props = layer.feature.properties;
-//
-//                var infoWindow = $('#hover-window');
-//             
-//                //for hovers
-//                layer.on('click', function(e){
-//                    
-////                    if(e.target.feature.geometry =="MultiPolygon"){
-////                        
-////                    }
-//                        
-//                    
-//                    console.log(e.target.feature.geometry);
-//                    
-//                    var props = this.feature.properties;                  
-//               
-//        
-//                    infoWindow.show();
-//                    infoWindow.html("Zone: "+props["ZONE_"]+"<br>"+"Land-use Code: "+props["LU_C"]);
-//                    
-//                    $(layer).click(function(e){
-//                        
-//                        console.log(e.target);
-//                        //first offset from the mouse position of the info window
-//                        infoWindow.css({"left": e.pageX + 6, "top": e.pageY - infoWindow.height() - 15}); 
-//                        
-//                        //if crashes into top, flip to lower right
-//                         if(infoWindow.offset().top < 4) {
-//                            infoWindow.css({"top": e.pageY + 15});
-//                        }
-//                        
-//                        //if crashes right, flip again
-//                        if(infoWindow.offset().left + infoWindow.width() >= $(document).width() - 40) {
-//                            infoWindow.css({"left": e.pageX - infoWindow.width() - 30});
-//                        }
-//                    })
-//
+        function createPopup(data){
+            data.eachLayer(function(layer){
+                
+                var props = layer.feature.properties;
+
+                var infoWindow = $('#hover-window');
+             
+                //for hovers
+                layer.on('click', function(e){
+                
+                    console.log(e.target.feature.geometry);
+                    
+                    var props = this.feature.properties;                  
+               
+        
+                    infoWindow.show();
+                    infoWindow.html("Zone: "+props["ZONE_"]+"<br>"+"Land-use Code: "+props["LU_C"]);
+                    
+                    
+//ORIGINAL************************
+                    $(document).click(function(e){
+                        
+                        console.log(e.target);
+                        //first offset from the mouse position of the info window
+                        infoWindow.css({"left": e.pageX + 6, "top": e.pageY - infoWindow.height() - 15}); 
+                        
+                        //if crashes into top, flip to lower right
+                         if(infoWindow.offset().top < 4) {
+                            infoWindow.css({"top": e.pageY + 15});
+                        }
+                        
+                        //if crashes right, flip again
+                        if(infoWindow.offset().left + infoWindow.width() >= $(document).width() - 40) {
+                            infoWindow.css({"left": e.pageX - infoWindow.width() - 30});
+                        }
+                    })
+//******************************
+
+                });
+                
+//                map.on('click', function(e){
+//                    infoWindow.fadeOut();
 //                });
+                
+//                layer.on('mouseout', function(e){
+//                    infoWindow.hide();
+//                })
 //                
-////                map.on('click', function(e){
-////                    infoWindow.fadeOut();
-////                });
-//                
-////                layer.on('mouseout', function(e){
-////                    infoWindow.hide();
-////                })
-////                
-//            })
-//        }
-//        
+            })
+        }
+        
         
     
-        function getColor (zone) {
+    function getColor(zone){
         
             
                 if(zone == "A-1") {
@@ -262,19 +278,19 @@
                 } else if (zone == "R-4"){
                     return '#ccebc5'
                 }
-        }
+    }
       
-     var controls = {
-        "100yr. Flood": floodLayer,
-    };
-        
-    var controls_zone = {
-        "Zones": zoneLayer,
-    };
-                
-//    L.control.layers(controls, { collapsed:false, postion: 'topright'}).addTo(map);
-        
-    L.control.layers(controls, controls_zone).addTo(map);
+//     var controls = {
+//        "100yr. Flood": floodLayer,
+//    };
+//        
+//    var controls_zone = {
+//        "Zones": zoneLayer,
+//    };
+//                
+////    L.control.layers(controls, { collapsed:false, postion: 'topright'}).addTo(map);
+//        
+//    L.control.layers(controls, controls_zone).addTo(map);
    
     
         
