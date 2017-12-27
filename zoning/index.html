@@ -4,7 +4,8 @@
 <head>
     <meta charset=utf-8 />
     <title>Bourbon County Zoning Atlas</title>
-    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+<!--    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script src="https://cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15/cartodb.js"></script>
@@ -17,6 +18,16 @@
   crossorigin=""></script>
 
     <style>
+        
+        body {
+            padding: 0;
+            margin: 0;
+        }
+        html, body, #map {
+            height: 100%;
+            width: 100vw;
+        }
+/*
         body {
             margin: 0;
             padding: 0;
@@ -27,6 +38,7 @@
             top: 0;
             bottom: 0;
         }
+*/
 /*
         h1 {
             font-family: 'Rock Salt', cursive;
@@ -57,6 +69,7 @@
     <script src ="Flood_100yr.js"></script>
     <script src ="Flood_Zoning_Union.js"></script>
     <script src ="Zoning_2014.js"></script>
+    <script src ="landuse.js"></script>
     
     <script>
 
