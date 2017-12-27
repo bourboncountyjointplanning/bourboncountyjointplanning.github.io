@@ -113,24 +113,10 @@
         map.addLayer(tiles);
         
         addData();
-        
-//           L.Control.Zoom({ position: 'bottomright' }).addTo(map);
 
         
        function addData(){
-            //add zoneLayer
-            var zoneLayer = L.geoJson(zones, {
-
-               style: function(feature) {
-                   return {
-                       weight: 0,
-                       fillOpacity: 0.75,
-                       fillColor: getColor(feature.properties["ZONE_"]),
-                       color: '#636363'
-                   }
-               }, 
-
-            }).addTo(map);
+        
            
            //add flood layer
             var floodLayer = L.geoJson(flood, {
@@ -151,6 +137,20 @@
                         color: 'black'
                     }
                 }
+            }).addTo(map);
+           
+           //add zoneLayer
+            var zoneLayer = L.geoJson(zones, {
+
+               style: function(feature) {
+                   return {
+                       weight: 0,
+                       fillOpacity: 0.9,
+                       fillColor: getColor(feature.properties["ZONE_"]),
+                       color: '#636363'
+                   }
+               }, 
+
             }).addTo(map);
 
             //add unionLayer 
@@ -186,29 +186,46 @@
     function getColor(zone){
         
             
-                if(zone == "A-1") {
-                    return '#8dd3c7';
-                } else if(zone == "A-2") {
-                    return '#1f78b4';
+                if(zone == "A") {
+                    return '#9E4624';
                 } else if(zone == "B-1") {
-                    return '#b2df8a';
+                    return '#DD4132';
                 } else if(zone == "B-2") {
-                    return '#33a02c'
+                    return '#9B2335';
+                } else if(zone == "B-3") {
+                    return '#BC243C'
                 } else if (zone == "C"){
-                    return '#e31a1c'
+                    return '#F6D155'
+                } else if(zone == "H") {
+                    return '#B76bA3'
+                } else if(zone == "H-M") {
+                    return '#F7C4C9'
                 } else if(zone == "I-1") {
-                    return '#fdbf6f'
-                } else if(zone == "I-2") {
-                    return '#ff7f00'
-                } else if(zone == "R-1") {
-                    return '#cab2d6'
+                    return '#88B04B'
+                } else if (zone == "I-2"){
+                    return '#006E51'
+                } else if (zone == "NOZONE"){
+                    return '#9896A4'
+                } else if (zone == "PUD"){
+                    return '#B18F6A'
+                } else if (zone == "R-1"){
+                    return '#98B4D4'
                 } else if (zone == "R-2"){
-                    return '#6a3d9a'
+                    return '#5B5EA6'
                 } else if (zone == "R-3"){
-                    return '#fee08b'
+                    return '#92A8D1'
                 } else if (zone == "R-4"){
-                    return '#ccebc5'
-                }
+                    return '#034F84'
+                } else if (zone == "R-5"){
+                    return '#91A8D0'
+                } else if (zone == "R-6"){
+                    return '#4C6A92'
+                } else if (zone == "R-7"){
+                    return '#004B8D'
+                } else if (zone == "R-8"){
+                    return '#578CA9'
+                } 
+        
     }
     
 
@@ -275,16 +292,6 @@
             union.bringToFront();
         });
         
-//        var controls = {
-//            "100yr. Flood": flood,
-//             "Landuse": landuse,
-//        };
-//
-//        var controls_zone = {
-//            "Zones": zone,
-//        };
-
-
     }
         
     
