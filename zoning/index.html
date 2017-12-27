@@ -112,70 +112,66 @@
 
         map.addLayer(tiles);
         
+        addData();
+        
 //           L.Control.Zoom({ position: 'bottomright' }).addTo(map);
 
         
-        //add zoneLayer
-        var zoneLayer = L.geoJson(zones, {
-            
-           style: function(feature) {
-               return {
-                   weight: 0,
-                   fillOpacity: 0.75,
-                   fillColor: getColor(feature.properties["ZONE_"]),
-                   color: '#636363'
-               }
-           }, 
-//            onEachFeature: function(feature, layer){
-//                layer.on('mouseover', function(e){
-//                    layer.setStyle({
-//                        color: 'yellow'
-//                    })
-//                    layer.bringToFront();
-//                });
-//                layer.on('mouseout', function(e){
-////                    layer.setStyle({
-////                        color: 'black'
-////                    })
-//                })
-//
-//            }
-                     
-        }).addTo(map);
-        
-        var floodLayer = L.geoJson(flood, {
-            
-            style: function(feature){
-                return {
-                    opacity: 0.85,
-                    color: '#1f78b4'
+       function addData(){
+            //add zoneLayer
+            var zoneLayer = L.geoJson(zones, {
+
+               style: function(feature) {
+                   return {
+                       weight: 0,
+                       fillOpacity: 0.75,
+                       fillColor: getColor(feature.properties["ZONE_"]),
+                       color: '#636363'
+                   }
+               }, 
+
+            }).addTo(map);
+           
+           //add flood layer
+            var floodLayer = L.geoJson(flood, {
+
+                style: function(feature){
+                    return {
+                        opacity: 0.85,
+                        color: '#1f78b4'
+                    }
+                },           
+
+            }).addTo(map);
+           
+           //addlanduse layer
+            var landuseLayer = L.geoJson(landuse, {
+                style: function(feature){
+                    return {
+                        color: 'black'
+                    }
                 }
-            },           
-                     
-        }).addTo(map);
+            }).addTo(map);
+
+            //add unionLayer 
+            var unionLayer = L.geoJson(union, {
+
+               style: function(feature) {
+                   return {
+                       weight: 0,
+                       fillOpacity: 0
+                   }
+                },             
+            }).addTo(map);
+           
+           //send union layer to make popup
+           createPopup(unionLayer);
+           
+           makeLayerControl(zoneLayer, floodLayer, landuseLayer, unionLayer);
+       }
         
-        //add unionLayer 
-        var unionLayer = L.geoJson(union, {
-            
-           style: function(feature) {
-               return {
-                   weight: 0,
-                   fillOpacity: 0
-               }
-            },             
-        }).addTo(map);
         
-        //send union layer to make popup
-        createPopup(unionLayer);
         
-        map.on("overlayadd", function (event) {
-            unionLayer.bringToFront();
-        });
-            
-        map.on("baselayerchange", function(event){
-            unionLayer.bringToFront();
-        });
-         
         function createPopup(data){
             data.eachLayer(function(layer){
                 
@@ -185,7 +181,7 @@
             })
         }
         
-        
+
     
     function getColor(zone){
         
@@ -214,19 +210,84 @@
                     return '#ccebc5'
                 }
     }
-      
-     var controls = {
-        "100yr. Flood": floodLayer,
-    };
+    
+
+    function makeLayerControl(zone, flood, landuse, union){
         
-    var controls_zone = {
-        "Zones": zoneLayer,
-    };
-                
-    L.control.layers(controls, controls_zone, { collapsed:false, postion: 'topright'}).addTo(map);
+        var layersGroup = {
+            "Zones": zone,
+            "100yr. Flood": flood,
+            "Landuse": landuse,
+        };
         
-//    L.control.layers(controls, controls_zone).addTo(map);
-//   
+        console.log(layersGroup);
+        
+        L.control.layers(null, layersGroup, {collapsed: false, position: 'topright'}).addTo(map);
+        
+         $(".leaflet-control-layers").prepend('<label><input id="show-all" type="checkbox" class="leaflet-control-layers-selector" checked=""><span>SHOW all layers</span></label><label><input id="hide-all" type="checkbox" class="leaflet-control-layers-selector"><span>HIDE all layers</span></label><hr>');
+
+        $("#show-all").change(function(e){
+            if(!this.checked){
+             // is now unchecked
+                for(var layer in layersGroup) {
+                    map.removeLayer(layersGroup[layer]);   
+                }
+                $(".leaflet-control-layers input").prop('checked', false);
+                $("#hide-all").prop('checked', true);
+
+            } else {
+              // is now checked
+                for(var layer in layersGroup) {
+                    map.addLayer(layersGroup[layer]);   
+                }
+                $(".leaflet-control-layers input").prop('checked', true);
+                $("#hide-all").prop('checked', false);
+
+            }
+        });
+
+        $("#hide-all").change(function(e){
+            if(!this.checked){
+             // is now unchecked
+                for(var layer in layersGroup) {
+                    map.addLayer(layersGroup[layer]);   
+                }
+                $(".leaflet-control-layers input").prop('checked', true);
+                $("#show-all").prop('checked', true);
+                $("#hide-all").prop('checked', false);
+
+            } else {
+              // is now checked
+                for(var layer in layersGroup) {
+                    map.removeLayer(layersGroup[layer]);   
+                }
+                $(".leaflet-control-layers input").prop('checked', false);
+                $("#hide-all").prop('checked',true);
+
+            }
+        });
+        
+           map.on("overlayadd", function (event) {
+            union.bringToFront();
+        });
+            
+        map.on("baselayerchange", function(event){
+            union.bringToFront();
+        });
+        
+//        var controls = {
+//            "100yr. Flood": flood,
+//             "Landuse": landuse,
+//        };
+//
+//        var controls_zone = {
+//            "Zones": zone,
+//        };
+
+
+    }
+        
+    
     
         
           

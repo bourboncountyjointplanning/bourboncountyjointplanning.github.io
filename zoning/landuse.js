@@ -1,4 +1,4 @@
-{
+var landuse = {
 "type": "FeatureCollection",
 "name": "landuse",
 "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::4269" } },
