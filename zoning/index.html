@@ -27,18 +27,6 @@
             top: 0;
             bottom: 0;
         }
-        #hover-window {
-            background: whitesmoke;
-            box-shadow: 0 1px 5px rgba(0,0,0,.65);
-            padding: 6px 8px;
-            border-radius: 4px;
-            min-height: 40px;
-            min-width: 60px;
-            text-align: left;
-            position: absolute;
-            display: none;
-            z-index: 500;
-        }
 /*
         h1 {
             font-family: 'Rock Salt', cursive;
@@ -122,60 +110,36 @@
                    weight: 0,
                    fillOpacity: 0.75,
                    fillColor: getColor(feature.properties["ZONE_"]),
+                   color: '#636363'
                }
            }, 
-            onEachFeature: function(feature, layer){
-                layer.on('mouseover', function(e){
-                    layer.setStyle({
-                        color: 'yellow'
-                    })
-                    layer.bringToFront();
-                });
-                layer.on('mouseout', function(e){
-                    layer.setStyle({
-                        color: 'black'
-                    })
-                })
-
-            }
+//            onEachFeature: function(feature, layer){
+//                layer.on('mouseover', function(e){
+//                    layer.setStyle({
+//                        color: 'yellow'
+//                    })
+//                    layer.bringToFront();
+//                });
+//                layer.on('mouseout', function(e){
+////                    layer.setStyle({
+////                        color: 'black'
+////                    })
+//                })
+//
+//            }
                      
         }).addTo(map);
         
         var floodLayer = L.geoJson(flood, {
-             
-            onEachFeature: function(feature, layer){
-                layer.on('mouseover', function(e){
-                    layer.setStyle({
-                        color: 'yellow'
-                    })
-                    layer.bringToFront();
-                });
-                layer.on('mouseout', function(e){
-                    layer.setStyle({
-                        color: 'black'
-                    })
-                })
-
-            }
+            
+            style: function(feature){
+                return {
+                    opacity: 0.85,
+                    color: '#1f78b4'
+                }
+            },           
                      
         }).addTo(map);
-        
-          
-    //add unionLayer using carto
-    
-//    var sql = new cartodb.SQL({ user: 'lfgreenfield', format: 'geojson' });
-//        
-//    sql.execute("SELECT * FROM zoning_landuse_union").done(function(geojson) {
-//            // get pollution data
-//            var unionLayer = L.geoJson(geojson);
-//            unionLayer.eachLayer(function(layer){
-//                layer.setStyle({
-//                    fillColor: 'yellow'
-//                });
-//            })
-//        unionLayer.addTo(map);
-//    });
-//        
         
         //add unionLayer 
         var unionLayer = L.geoJson(union, {
@@ -246,10 +210,10 @@
         "Zones": zoneLayer,
     };
                 
-//    L.control.layers(controls, { collapsed:false, postion: 'topright'}).addTo(map);
+    L.control.layers(controls, controls_zone, { collapsed:false, postion: 'topright'}).addTo(map);
         
-    L.control.layers(controls, controls_zone).addTo(map);
-   
+//    L.control.layers(controls, controls_zone).addTo(map);
+//   
     
         
           
