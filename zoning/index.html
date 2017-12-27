@@ -203,50 +203,8 @@
             data.eachLayer(function(layer){
                 
                 var props = layer.feature.properties;
-
-                var infoWindow = $('#hover-window');
-             
-                //for hovers
-                layer.on('click', function(e){
                 
-                    console.log(e.target.feature.geometry);
-                    
-                    var props = this.feature.properties;                  
-               
-        
-                    infoWindow.show();
-                    infoWindow.html("Zone: "+props["ZONE_"]+"<br>"+"Land-use Code: "+props["LU_C"]);
-                    
-                    
-//ORIGINAL************************
-                    $(document).click(function(e){
-                        
-                        console.log(e.target);
-                        //first offset from the mouse position of the info window
-                        infoWindow.css({"left": e.pageX + 6, "top": e.pageY - infoWindow.height() - 15}); 
-                        
-                        //if crashes into top, flip to lower right
-                         if(infoWindow.offset().top < 4) {
-                            infoWindow.css({"top": e.pageY + 15});
-                        }
-                        
-                        //if crashes right, flip again
-                        if(infoWindow.offset().left + infoWindow.width() >= $(document).width() - 40) {
-                            infoWindow.css({"left": e.pageX - infoWindow.width() - 30});
-                        }
-                    })
-//******************************
-
-                });
-                
-//                map.on('click', function(e){
-//                    infoWindow.fadeOut();
-//                });
-                
-//                layer.on('mouseout', function(e){
-//                    infoWindow.hide();
-//                })
-//                
+                layer.bindPopup("Zone: "+props["ZONE_"]+"<br>"+"Land-use Code: "+props["LU_C"])
             })
         }
         
@@ -280,17 +238,17 @@
                 }
     }
       
-//     var controls = {
-//        "100yr. Flood": floodLayer,
-//    };
-//        
-//    var controls_zone = {
-//        "Zones": zoneLayer,
-//    };
-//                
-////    L.control.layers(controls, { collapsed:false, postion: 'topright'}).addTo(map);
-//        
-//    L.control.layers(controls, controls_zone).addTo(map);
+     var controls = {
+        "100yr. Flood": floodLayer,
+    };
+        
+    var controls_zone = {
+        "Zones": zoneLayer,
+    };
+                
+//    L.control.layers(controls, { collapsed:false, postion: 'topright'}).addTo(map);
+        
+    L.control.layers(controls, controls_zone).addTo(map);
    
     
         
