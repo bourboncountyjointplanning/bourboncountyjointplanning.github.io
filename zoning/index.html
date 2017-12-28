@@ -5,7 +5,9 @@
     <meta charset=utf-8 />
     <title>Bourbon County Zoning Atlas</title>
 <!--    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />-->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script src="https://cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15/cartodb.js"></script>
@@ -40,8 +42,77 @@
         }
         html, body, #map {
             height: 100%;
+            /* vw= viewport width*/
             width: 100vw;
         }
+/*
+        .leaflet-control-layers-expanded {
+            border-radius: 0px;
+*/
+/*            background: rgba(25,25,25,0.8);*/
+/*            color: whitesmoke;*/
+/*
+            width: 220px;
+            top: 5%;
+*/
+
+/*
+            right: 5%;
+        }
+        .leaflet-control-geosearch {
+*/
+/*            position: absolute;*/
+/*
+            width: 10%;
+            left: 5%;
+            top: 5%;
+        }
+        .leaflet-control-geosearch input {
+            padding: 5px 8px;
+            background: '#ffffff' ;
+            color: #A0A0A0 ;
+            border-radius: 5px;
+            box-shadow: 1px 1px 1px 1px #888888;
+        }
+        .leaflet-control-geosearch-msg ul {
+            list-style: none;
+            display: none;
+            height: auto;
+            background: none;
+            padding: 0;
+
+            top: -220%;
+*/
+           
+/*
+        }
+        .leaflet-control-geosearch ul li {
+            border-radius: 4px;
+            padding: 4px 8px;
+            font-size: 3em;
+            color: '#ffffff';
+        }
+*/
+/*
+        @media (max-width:800px) {
+          .leaflet-control-geosearch {
+            top: 30%;
+        }
+
+        }
+        @media (max-width: 500px) {
+            .leaflet-control-geosearch{
+                top: 30%
+            }
+        }
+        @media only screen  
+and (min-device-width: 150px)
+and (max-device-width : 200px) {
+    .leaflet-control-geosearch{
+        top: 50%
+    }
+}
+*/
 /*
         body {
             margin: 0;
@@ -53,7 +124,7 @@
             top: 0;
             bottom: 0;
         }
-*/
+
 /*
         h1 {
             font-family: 'Rock Salt', cursive;
@@ -285,7 +356,7 @@
         console.log(layersGroup["Zones"].options.properties);
         console.log(flood.options.properties);
         
-        L.control.layers(null, layersGroup, {collapsed: false, position: 'topright'}).addTo(map);
+        L.control.layers(null, layersGroup, {collapsed: true, position: 'topright'}).addTo(map);
         
          $(".leaflet-control-layers").prepend('<label><input id="show-all" type="checkbox" class="leaflet-control-layers-selector" checked=""><span>SHOW all layers</span></label><label><input id="hide-all" type="checkbox" class="leaflet-control-layers-selector"><span>HIDE all layers</span></label><hr>');
 
@@ -321,6 +392,8 @@
                 $(".leaflet-control-layers input").prop('checked', true);
                 $("#show-all").prop('checked', true);
                 $("#hide-all").prop('checked', false);
+                zone.bringToFront();
+                union.bringToFront();
 
             } else {
               // is now checked
