@@ -9,6 +9,10 @@
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script src="https://cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15/cartodb.js"></script>
+    <script src ="Leaflet.pattern-master/"></script>
+    <script src ="Leaflet.pattern-master/dist/leaflet.pattern-src.js"></script>
+    <script src="Leaflet.pattern-master/dist/leaflet.pattern.js"></script>
+
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"
   integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ=="
@@ -64,7 +68,6 @@
 <body>
     
     <div id='map'></div>
-    <div id='hover-window'></div>
     
     <script src ="Flood_100yr.js"></script>
     <script src ="Flood_Zoning_Union.js"></script>
@@ -112,6 +115,9 @@
 
         map.addLayer(tiles);
         
+//        var stripes = new L.StripePattern({options}); stripes.addTo(map);
+//        var circle = new L.Circle({LatLng}, {radius}, { fillPattern: stripes, fillOpacity: 1.0}); circle.addTo(_map);
+        
         addData();
 
         
@@ -146,7 +152,7 @@
                    return {
                        weight: 0,
                        fillOpacity: 0.9,
-                       fillColor: getColor(feature.properties["ZONE_"]),
+                       fillColor: getColorZones(feature.properties["ZONE_"]),
                        color: '#636363'
                    }
                }, 
@@ -159,7 +165,7 @@
                style: function(feature) {
                    return {
                        weight: 0,
-                       fillOpacity: 0
+                       fillOpacity: 0,
                    }
                 },             
             }).addTo(map);
@@ -183,7 +189,7 @@
         
 
     
-    function getColor(zone){
+    function getColorZones (zone){
         
             
                 if(zone == "A") {
