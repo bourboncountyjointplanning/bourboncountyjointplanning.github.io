@@ -19,9 +19,15 @@
   integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log=="
   crossorigin=""></script>
     
+<!--
+      <script src="leaflet.pattern-src.js"></script>
+    <script src="leaflet.pattern.js"></script>
+    
+-->
     
      <script src="l.control.geosearch.js"></script>
     <script src="l.geosearch.provider.esri.js"></script>
+  
     
     
     
@@ -130,14 +136,11 @@
                 draggable: false
             }
        }).addTo(map);
-        
-//        var stripes = new L.StripePattern({options}); stripes.addTo(map);
-//        var circle = new L.Circle({LatLng}, {radius}, { fillPattern: stripes, fillOpacity: 1.0}); circle.addTo(_map);
-        
-        addData();
 
         
-       function addData(){
+           
+//                           
+//                var stripes = new L.StripePattern({options});stripes.addTo(map);
         
            
            //add flood layer
@@ -159,9 +162,13 @@
            
            //addlanduse layer
             var landuseLayer = L.geoJson(landuse, {
+
                 style: function(feature){
                     return {
-                        color: 'black'
+                        color: 'black',
+                        weight: 1,
+//                        fillPattern: stripes,
+//                        fillOpacity: 1,
                     }
                 },
                 "properties": {
@@ -201,7 +208,7 @@
            createPopup(unionLayer);
            
            makeLayerControl(floodLayer, landuseLayer, zoneLayer, unionLayer);
-       }
+    
         
         
         
@@ -312,6 +319,7 @@
 
             } else {
               // is now checked
+                
                 for(var layer in layersGroup) {
                     map.removeLayer(layersGroup[layer]);   
                 }
