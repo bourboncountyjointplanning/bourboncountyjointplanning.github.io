@@ -29,6 +29,8 @@
     
      <script src="l.control.geosearch.js"></script>
     <script src="l.geosearch.provider.esri.js"></script>
+    
+    <script src="leaflet-polygon.fillPattern.js"></script>
   
     
     
@@ -278,8 +280,8 @@ and (max-device-width : 200px) {
                     return {
                         color: 'black',
                         weight: 1,
-//                        fillPattern: stripes,
-//                        fillOpacity: 1,
+                        fill: 'url(blue_stripes.png)',
+                        fillOpacity: 0.8
                     }
                 },
                 "properties": {
