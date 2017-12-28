@@ -9,14 +9,7 @@
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script src="https://cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15/cartodb.js"></script>
-    <script src ="Leaflet.pattern-master/"></script>
-    <script src ="leaflet.pattern-src.js"></script>
-    <script src="leaflet.pattern.js"></script>
-    <script src="l.control.geosearch.js"></script>
-    <script src="l.geosearch.provider.esri.js"></script>
-    
-        <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
-        <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css" />
+   
 
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"
@@ -25,6 +18,13 @@
 <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"
   integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log=="
   crossorigin=""></script>
+    
+    
+     <script src="l.control.geosearch.js"></script>
+    <script src="l.geosearch.provider.esri.js"></script>
+    
+    
+    
 
     <style>
         
@@ -119,20 +119,18 @@
         
 
         map.addLayer(tiles);
+
+       new L.Control.GeoSearch({
+            provider: new L.GeoSearch.Provider.Esri(),
+            position: 'topleft',
+            zoomLevel: 18,
+            showMarker: true,
+            showPopup: false,
+            marker: {
+                draggable: false
+            }
+       }).addTo(map);
         
-       
-        
-//        new L.Control.GeoSearch({
-//            provider: new L.GeoSearch.Provider.Esri(),
-//            position: 'topleft',
-//            zoomLevel: 10,
-//            showMarker: true,
-//            showPopup: false,
-//            marker: {
-//                draggable: false
-//            }
-//        }).addTo(map);
-//        
 //        var stripes = new L.StripePattern({options}); stripes.addTo(map);
 //        var circle = new L.Circle({LatLng}, {radius}, { fillPattern: stripes, fillOpacity: 1.0}); circle.addTo(_map);
         
