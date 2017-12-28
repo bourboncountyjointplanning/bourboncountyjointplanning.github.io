@@ -96,10 +96,15 @@
             maxZoom: 18,
             minZoom: 12,
             attributionControl: false,
+            zoomControl: false,
         }        
         
         
         map = L.map(targetDiv, options);
+        
+        L.control.zoom({
+     position:'bottomleft'
+}).addTo(map);
         
         
     //set bounds manually
