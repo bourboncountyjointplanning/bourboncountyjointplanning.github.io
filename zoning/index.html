@@ -147,6 +147,23 @@ and (max-device-width : 200px) {
     
     <script>
 
+        
+        var bigmapheight = 650;
+        var smallmapheight = 450;
+        var mapbreakwidth = 300;
+        var highzoom = 13;
+        var lowzoom = 11;
+        var initialzoom;
+        
+        if ($('#map').width()>mapbreakwidth){
+            initialzoom = highzoom;
+            $('#map').height(bigmapheight);
+        }
+        else {
+            initialzoom = lowzoom;
+            $('#map').height(smallmapheight);
+        };
+        
         var map;
         var targetDiv = 'map';
         
@@ -154,17 +171,33 @@ and (max-device-width : 200px) {
             center: [38.205,-84.254040],
             zoom: 13,
             maxZoom: 18,
-            minZoom: 12,
+            minZoom: 11,
             attributionControl: false,
             zoomControl: false,
-        }        
+        }    
+        
+        
         
         
         map = L.map(targetDiv, options);
         
         L.control.zoom({
-     position:'bottomleft'
-}).addTo(map);
+             position:'bottomleft'
+        }).addTo(map);
+        
+        map.on('resize', function(e) {
+		  	if (e.newSize.x < mapbreakwidth) {
+				map.setZoom(lowzoom);
+				$("#map").css('height', smallmapheight);
+			};
+			  
+			if (e.newSize.x > mapbreakwidth) {
+				map.setZoom(highzoom);
+				$("#map").css('height', bigmapheight);
+				$("#map").css('height', bigmapheight);
+			};
+		  });
+      
         
         
     //set bounds manually
@@ -176,11 +209,11 @@ and (max-device-width : 200px) {
 //        map.setMaxBounds(bounds);
         
         //set bounds automatically
-        var getBounds = map.getBounds();
-          
-        var bounds = L.latLngBounds(getBounds);    
-        
-        map.setMaxBounds(bounds);
+//        var getBounds = map.getBounds();
+//          
+//        var bounds = L.latLngBounds(getBounds);    
+//        
+//        map.setMaxBounds(bounds);
         
 
         var tiles = L.tileLayer('https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
