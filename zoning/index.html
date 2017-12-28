@@ -280,7 +280,7 @@ and (max-device-width : 200px) {
                     return {
                         color: 'black',
                         weight: 1,
-                        fill: 'url(blue_stripes.png)',
+                        fill: getColorLanduse(feature.properties["LU_C"]),
                         fillOpacity: 0.8
                     }
                 },
@@ -334,6 +334,36 @@ and (max-device-width : 200px) {
             })
         }
         
+        
+    function getColorLanduse(code){
+        if (code =="COM"){
+            return 'url(blue_stripes.png)'
+        } else if (code=="CONSTRAINT") {
+            return 'url(red_stripes.png)'
+        } else if (code=="DUP") {
+            return 'url(purple_stripes.png)'
+        } else if (code=="IND") {
+            return 'url(yellow_stripes.png)'
+        } else if (code=="LL") {
+            return 'url(blue_dots.png)'
+        } else if (code=="MFRES") {
+            return 'url(teal_dots.png)'
+        } else if (code=="MH") {
+            return 'url(brown_dots.png)'
+        } else if (code=="PROF") {
+            return 'url(magenta_dots.png)'
+        } else if (code=="PSP") {
+            return 'url(green_dots.png)'
+        } else if (code=="QUARRY") {
+            return 'url(yellow_dots.png)'
+        } else if (code=="RES") {
+            return 'url(green_stripes.png)'
+        } else if (code=="VACANT") {
+            return 'url(gray_stripes.png)'
+        } 
+            
+            
+    }
 
     
     function getColorZones (zone){
