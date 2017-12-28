@@ -150,10 +150,15 @@ and (max-device-width : 200px) {
         
         var bigmapheight = 650;
         var smallmapheight = 450;
-        var mapbreakwidth = 300;
+        var mapbreakwidth = 400;
         var highzoom = 13;
-        var lowzoom = 11;
+        var lowzoom = 11.5;
         var initialzoom;
+        var newSearchTop = 100;
+        var origSearchTop = 5;
+        var newSearchRight = 5;
+        var origSearchRight = 100;
+    
         
         if ($('#map').width()>mapbreakwidth){
             initialzoom = highzoom;
@@ -163,6 +168,7 @@ and (max-device-width : 200px) {
             initialzoom = lowzoom;
             $('#map').height(smallmapheight);
         };
+        
         
         var map;
         var targetDiv = 'map';
@@ -185,19 +191,21 @@ and (max-device-width : 200px) {
              position:'bottomleft'
         }).addTo(map);
         
-        map.on('resize', function(e) {
+        
+      map.on('resize', function(e) {
 		  	if (e.newSize.x < mapbreakwidth) {
 				map.setZoom(lowzoom);
 				$("#map").css('height', smallmapheight);
+//                $('.leaflet-control-geosearch').css('top', newSearchTop);
+//                $('.leaflet-control-geosearch').css('right', newSearchRight);
 			};
 			  
 			if (e.newSize.x > mapbreakwidth) {
 				map.setZoom(highzoom);
 				$("#map").css('height', bigmapheight);
-				$("#map").css('height', bigmapheight);
 			};
-		  });
-      
+        });
+        
         
         
     //set bounds manually
@@ -232,8 +240,11 @@ and (max-device-width : 200px) {
             showPopup: false,
             marker: {
                 draggable: false
-            }
+            },
+           collapse: false
        }).addTo(map);
+        
+     
 
         
            
