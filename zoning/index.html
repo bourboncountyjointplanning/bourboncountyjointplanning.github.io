@@ -328,6 +328,7 @@ and (max-device-width : 200px) {
         function createPopup(data){
             data.eachLayer(function(layer){
                 
+                
                 var props = layer.feature.properties;
                 
                 layer.bindPopup("Zone: "+props["ZONE_"]+"<br>"+"Land-use Code: "+props["LU_C"])
