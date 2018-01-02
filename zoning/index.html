@@ -86,12 +86,8 @@
             font-size: 3em;
             color: '#ffffff';
         }
+       
 /*
-        @media (max-width:800px) {
-          .leaflet-control-geosearch {
-            top: 30%;
-        }
-
         }
         @media (max-width: 500px) {
             .leaflet-control-geosearch{
@@ -152,27 +148,27 @@ and (max-device-width : 200px) {
     <script>
 
         
-        var bigmapheight = 650;
-        var smallmapheight = 450;
-        var mapbreakwidth = 500;
         var highzoom = 13;
+        var bigmapheight = '100%';
+        var smallmapheight = 500;
+        var mapbreakwidth = 500;
         var lowzoom = 11.5;
         var initialzoom;
-        var newSearchTop = 100;
+        var newSearchTop = 75;
         var origSearchTop = 5;
-        var newSearchRight = 5;
-        var origSearchRight = 100;
+        var newSearchLeft = 300;
+        var origSearchLeft = 5;
     
         
-        if ($('#map').width()>mapbreakwidth){
-            initialzoom = highzoom;
-            $('#map').height(bigmapheight);
-        }
-        else {
+        if ($('#map').width()<mapbreakwidth){
             initialzoom = lowzoom;
             $('#map').height(smallmapheight);
-        };
-        
+        }
+//        else {
+//            initialzoom = lowzoom;
+//            $('#map').height(smallmapheight);
+//        };
+//        
         
         var map;
         var targetDiv = 'map';
@@ -200,8 +196,8 @@ and (max-device-width : 200px) {
 		  	if (e.newSize.x < mapbreakwidth) {
 				map.setZoom(lowzoom);
 				$("#map").css('height', smallmapheight);
-//                $('.leaflet-control-geosearch').css('top', newSearchTop);
-//                $('.leaflet-control-geosearch').css('right', newSearchRight);
+//                $(".leaflet-control-geosearch").css('top', newSearchTop);
+//                $(".leaflet-control-geosearch").css('right', newSearchLeft);
 			};
 			  
 			if (e.newSize.x > mapbreakwidth) {
