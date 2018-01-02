@@ -269,7 +269,7 @@ and (max-device-width : 200px) {
                     "drawOrder": 1
                 },
 
-            }).addTo(map);
+            });
            
            console.log(floodLayer);
            
@@ -287,7 +287,7 @@ and (max-device-width : 200px) {
                 "properties": {
                     "drawOrder": 2
                 },
-            }).addTo(map);
+            });
            
            //add zoneLayer
             var zoneLayer = L.geoJson(zones, {
@@ -426,55 +426,55 @@ and (max-device-width : 200px) {
         
         L.control.layers(null, layersGroup, {collapsed: true, position: 'topright'}).addTo(map);
         
-         $(".leaflet-control-layers").prepend('<label><input id="show-all" type="checkbox" class="leaflet-control-layers-selector" checked=""><span>SHOW all layers</span></label><label><input id="hide-all" type="checkbox" class="leaflet-control-layers-selector"><span>HIDE all layers</span></label><hr>');
-
-        $("#show-all").change(function(e){
-            if(!this.checked){
-             // is now unchecked
-                for(var layer in layersGroup) {
-                    map.removeLayer(layersGroup[layer]);   
-                }
-                $(".leaflet-control-layers input").prop('checked', false);
-                $("#hide-all").prop('checked', true);
-
-            } else {
-              // is now checked                
-                for(var layer in layersGroup) {
-//                    console.log(layersGroup[layer].options.properties);
-                    map.addLayer(layersGroup[layer]);   
-                }
-                
-                $(".leaflet-control-layers input").prop('checked', true);
-                $("#hide-all").prop('checked', false);
-                zone.bringToFront();
-                union.bringToFront();
-            }
-        });
-
-        $("#hide-all").change(function(e){
-            if(!this.checked){
-             // is now unchecked
-                for(var layer in layersGroup) {
-                    map.addLayer(layersGroup[layer]);   
-                }
-                $(".leaflet-control-layers input").prop('checked', true);
-                $("#show-all").prop('checked', true);
-                $("#hide-all").prop('checked', false);
-                zone.bringToFront();
-                union.bringToFront();
-
-            } else {
-              // is now checked
-                
-                for(var layer in layersGroup) {
-                    map.removeLayer(layersGroup[layer]);   
-                }
-                $(".leaflet-control-layers input").prop('checked', false);
-                $("#hide-all").prop('checked',true);
-
-            }
-        });
-        
+//         $(".leaflet-control-layers").prepend('<label><input id="show-all" type="checkbox" class="leaflet-control-layers-selector" checked=""><span>SHOW all layers</span></label><label><input id="hide-all" type="checkbox" class="leaflet-control-layers-selector"><span>HIDE all layers</span></label><hr>');
+//
+//        $("#show-all").change(function(e){
+//            if(!this.checked){
+//             // is now unchecked
+//                for(var layer in layersGroup) {
+//                    map.removeLayer(layersGroup[layer]);   
+//                }
+//                $(".leaflet-control-layers input").prop('checked', false);
+//                $("#hide-all").prop('checked', true);
+//
+//            } else {
+//              // is now checked                
+//                for(var layer in layersGroup) {
+////                    console.log(layersGroup[layer].options.properties);
+//                    map.addLayer(layersGroup[layer]);   
+//                }
+//                
+//                $(".leaflet-control-layers input").prop('checked', true);
+//                $("#hide-all").prop('checked', false);
+//                zone.bringToFront();
+//                union.bringToFront();
+//            }
+//        });
+//
+//        $("#hide-all").change(function(e){
+//            if(!this.checked){
+//             // is now unchecked
+//                for(var layer in layersGroup) {
+//                    map.addLayer(layersGroup[layer]);   
+//                }
+//                $(".leaflet-control-layers input").prop('checked', true);
+//                $("#show-all").prop('checked', true);
+//                $("#hide-all").prop('checked', false);
+//                zone.bringToFront();
+//                union.bringToFront();
+//
+//            } else {
+//              // is now checked
+//                
+//                for(var layer in layersGroup) {
+//                    map.removeLayer(layersGroup[layer]);   
+//                }
+//                $(".leaflet-control-layers input").prop('checked', false);
+//                $("#hide-all").prop('checked',true);
+//
+//            }
+//        });
+//        
         map.on("overlayadd", function (event) {
             union.bringToFront();
         });
@@ -482,8 +482,8 @@ and (max-device-width : 200px) {
         map.on("baselayerchange", function(event){
             union.bringToFront();
         });
-        
-        
+//        
+//        
     }
         
     
