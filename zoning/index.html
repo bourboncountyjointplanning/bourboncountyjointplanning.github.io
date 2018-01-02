@@ -155,9 +155,9 @@ and (max-device-width : 200px) {
         var lowzoom = 11.5;
         var initialzoom;
         var newSearchTop = 75;
-        var origSearchTop = 5;
-        var newSearchLeft = 300;
-        var origSearchLeft = 5;
+        var origSearchTop = '95%';
+        var newSearchLeft = '95%';
+        var origSearchLeft = '5%';
     
         
         if ($('#map').width()<mapbreakwidth){
@@ -196,8 +196,8 @@ and (max-device-width : 200px) {
 		  	if (e.newSize.x < mapbreakwidth) {
 				map.setZoom(lowzoom);
 				$("#map").css('height', smallmapheight);
-//                $(".leaflet-control-geosearch").css('top', newSearchTop);
-//                $(".leaflet-control-geosearch").css('right', newSearchLeft);
+                $(".leaflet-control-geosearch").css('top', newSearchTop);
+                $(".leaflet-control-geosearch").css('right', newSearchLeft);
 			};
 			  
 			if (e.newSize.x > mapbreakwidth) {
@@ -412,15 +412,19 @@ and (max-device-width : 200px) {
     function makeLayerControl(flood, landuse, zone, union){
         
         var layersGroup = {
-            "Zones": zone,
-            "Landuse": landuse,
+//            "Landuse": landuse,
             "100 Yr. Floodplain": flood,
         };
+        
+        var zoneGroup = {
+            "Zones": zone,
+            "Landuse":landuse
+        };
     
-        console.log(layersGroup["Zones"].options.properties);
+//        console.log(layersGroup["Landuse"].options.properties);
         console.log(flood.options.properties);
         
-        L.control.layers(null, layersGroup, {collapsed: true, position: 'topright'}).addTo(map);
+        L.control.layers(zoneGroup, layersGroup, { collapsed: 'true', position: 'topright'}).addTo(map);
         
 //         $(".leaflet-control-layers").prepend('<label><input id="show-all" type="checkbox" class="leaflet-control-layers-selector" checked=""><span>SHOW all layers</span></label><label><input id="hide-all" type="checkbox" class="leaflet-control-layers-selector"><span>HIDE all layers</span></label><hr>');
 //
