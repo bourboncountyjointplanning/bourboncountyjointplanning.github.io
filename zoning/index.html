@@ -268,17 +268,16 @@ and (max-device-width : 200px) {
 
             });
            
-           console.log(floodLayer);
            
            //addlanduse layer
             var landuseLayer = L.geoJson(landuse, {
 
                 style: function(feature){
                     return {
-                        color: 'black',
+                        color: '#636363',
                         weight: 1,
-                        fill: getColorLanduse(feature.properties["LU_C"]),
-                        fillOpacity: 0.8
+                        fillColor: getColorLanduse(feature.properties["LU_C"]),
+                        fillOpacity: 0.9
                     }
                 },
                 "properties": {
@@ -335,29 +334,29 @@ and (max-device-width : 200px) {
         
     function getColorLanduse(code){
         if (code =="COM"){
-            return 'url(blue_stripes.png)'
+            return '#8dd3c7'
         } else if (code=="CONSTRAINT") {
-            return 'url(red_stripes.png)'
+            return '#ffffb3'
         } else if (code=="DUP") {
-            return 'url(purple_stripes.png)'
+            return '#bebada'
         } else if (code=="IND") {
-            return 'url(yellow_stripes.png)'
+            return '#fb8072'
         } else if (code=="LL") {
-            return 'url(blue_dots.png)'
+            return '#80b1d3'
         } else if (code=="MFRES") {
-            return 'url(teal_dots.png)'
+            return '#fdb462'
         } else if (code=="MH") {
-            return 'url(brown_dots.png)'
+            return '#b3de69'
         } else if (code=="PROF") {
-            return 'url(magenta_dots.png)'
+            return '#fccde5'
         } else if (code=="PSP") {
-            return 'url(green_dots.png)'
+            return '#d9d9d9'
         } else if (code=="QUARRY") {
-            return 'url(yellow_dots.png)'
+            return '#bc80bd'
         } else if (code=="RES") {
-            return 'url(green_stripes.png)'
+            return '#ccebc5'
         } else if (code=="VAC") {
-            return 'url(gray_stripes.png)'
+            return '#ffed6f'
         } 
             
             
