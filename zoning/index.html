@@ -173,6 +173,19 @@ and (max-device-width : 200px) {
         var map;
         var targetDiv = 'map';
         
+        //topo basemap
+        var topoTiles = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
+            attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community'
+        });
+        
+         var tiles = L.tileLayer('https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
+            maxZoom: 20,
+            subdomains:['mt0','mt1','mt2','mt3']
+        });
+        
+        
+        
+        
         var options = {
             center: [38.205,-84.254040],
             zoom: 13,
@@ -180,6 +193,7 @@ and (max-device-width : 200px) {
             minZoom: 11,
             attributionControl: false,
             zoomControl: false,
+            layers: [tiles],
         }    
         
         
@@ -224,11 +238,7 @@ and (max-device-width : 200px) {
 //        map.setMaxBounds(bounds);
         
 
-        var tiles = L.tileLayer('https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
-            maxZoom: 20,
-            subdomains:['mt0','mt1','mt2','mt3']
-        });
-        
+       
 
         map.addLayer(tiles);
 
@@ -277,7 +287,7 @@ and (max-device-width : 200px) {
                         color: '#636363',
                         weight: 1,
                         fillColor: getColorLanduse(feature.properties["LU_C"]),
-                        fillOpacity: 0.9
+                        fillOpacity: 0.7
                     }
                 },
                 "properties": {
@@ -291,7 +301,7 @@ and (max-device-width : 200px) {
                style: function(feature) {
                    return {
                        weight: 1,
-                       fillOpacity: 0.9,
+                       fillOpacity: 0.7,
                        fillColor: getColorZones(feature.properties["ZONE_"]),
                        color: '#636363'
                    }
@@ -316,7 +326,7 @@ and (max-device-width : 200px) {
            //send union layer to make popup
            createPopup(unionLayer);
            
-           makeLayerControl(floodLayer, landuseLayer, zoneLayer, unionLayer);
+           makeLayerControl(floodLayer, landuseLayer, zoneLayer, unionLayer, tiles, topoTiles);
     
         
         
@@ -409,17 +419,20 @@ and (max-device-width : 200px) {
     }
     
 
-    function makeLayerControl(flood, landuse, zone, union){
+    function makeLayerControl(flood, landuse, zone, union, tiles, topoTiles){
         
         var layersGroup = {
 //            "Landuse": landuse,
             "100 Yr. Floodplain": flood,
+            "Aerial Basemap": tiles,
+            "Topographic Basemap": topoTiles,
         };
         
         var zoneGroup = {
             "Zones": zone,
-            "Landuse":landuse
+            "Landuse":landuse,
         };
+        
     
 //        console.log(layersGroup["Landuse"].options.properties);
         console.log(flood.options.properties);
