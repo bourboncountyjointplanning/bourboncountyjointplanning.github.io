@@ -287,7 +287,7 @@ and (max-device-width : 200px) {
                         color: '#636363',
                         weight: 1,
                         fillColor: getColorLanduse(feature.properties["LU_C"]),
-                        fillOpacity: 0.7
+                        fillOpacity: 0.85
                     }
                 },
                 "properties": {
@@ -301,7 +301,7 @@ and (max-device-width : 200px) {
                style: function(feature) {
                    return {
                        weight: 1,
-                       fillOpacity: 0.7,
+                       fillOpacity: 0.85,
                        fillColor: getColorZones(feature.properties["ZONE_"]),
                        color: '#636363'
                    }
@@ -424,8 +424,8 @@ and (max-device-width : 200px) {
         var layersGroup = {
 //            "Landuse": landuse,
             "100 Yr. Floodplain": flood,
-            "Aerial Basemap": tiles,
-            "Topographic Basemap": topoTiles,
+//            "Aerial Basemap": tiles,
+//            "Topographic Basemap": topoTiles,
         };
         
         var zoneGroup = {
