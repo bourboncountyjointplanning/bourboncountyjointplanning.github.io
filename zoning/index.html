@@ -142,6 +142,7 @@ and (max-device-width : 200px) {
     
     <script src ="Flood_100yr.js"></script>
     <script src ="Zoning_2014.js"></script>
+    <script src = "parcels.js"></script>
     
     <script>
 
@@ -171,10 +172,6 @@ and (max-device-width : 200px) {
         var map;
         var targetDiv = 'map';
         
-        //topo basemap
-        var topoTiles = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
-            attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community'
-        });
         
          var tiles = L.tileLayer('https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
             maxZoom: 20,
@@ -276,29 +273,35 @@ and (max-device-width : 200px) {
 
             });
            
+        var parcelLayer = L.geoJson(parcels).addTo(map);
+        console.log(parcelLayer);
            
            //add zoneLayer
-            var zoneLayer = L.geoJson(zones, {
-
-               style: function(feature) {
-                   return {
-                       weight: 1,
-                       fillOpacity: 0.85,
-                       fillColor: getColorZones(feature.properties["ZONE_"]),
-                       color: '#636363'
-                   }
-               }, 
-                "properties": {
-                    "drawOrder": 3
-                },
-
-            }).addTo(map);
+//            var zoneLayer = L.geoJson(zones, {
+//
+//               style: function(feature) {
+//                   return {
+//                       weight: 1,
+//                       fillOpacity: 0.85,
+//                       fillColor: getColorZones(feature.properties["ZONE_"]),
+//                       color: '#636363'
+//                   }
+//               }, 
+//                "properties": {
+//                    "drawOrder": 3
+//                },
+//
+//            }).addTo(map);
+        
+           //add parcel layer
+    
+        
 
            
            //send union layer to make popup
 //           createPopup(unionLayer);
            
-//           makeLayerControl(floodLayer, landuseLayer, zoneLayer, unionLayer, tiles, topoTiles);
+//           makeLayerControl(floodLayer, zoneLayer, parcelLayer);
     
         
         
@@ -361,7 +364,7 @@ and (max-device-width : 200px) {
     }
     
 
-    function makeLayerControl(flood, landuse, zone, union, tiles, topoTiles){
+    function makeLayerControl(flood, zone, parcels){
         
         var layersGroup = {
 //            "Landuse": landuse,
@@ -372,12 +375,12 @@ and (max-device-width : 200px) {
         
         var zoneGroup = {
             "Zones": zone,
-            "Landuse":landuse,
+            "Parcels":parcels,
         };
         
     
 //        console.log(layersGroup["Landuse"].options.properties);
-        console.log(flood.options.properties);
+     
         
         L.control.layers(zoneGroup, layersGroup, { collapsed: 'true', position: 'topright'}).addTo(map);
         
@@ -431,11 +434,11 @@ and (max-device-width : 200px) {
 //        });
 //        
         map.on("overlayadd", function (event) {
-            union.bringToFront();
+            parcels.bringToFront();
         });
             
         map.on("baselayerchange", function(event){
-            union.bringToFront();
+            parcels.bringToFront();
         });
 //        
 //        
