@@ -141,9 +141,7 @@ and (max-device-width : 200px) {
     <div id='map'></div>
     
     <script src ="Flood_100yr.js"></script>
-    <script src ="Flood_Zoning_Union.js"></script>
     <script src ="Zoning_2014.js"></script>
-    <script src ="landuse.js"></script>
     
     <script>
 
@@ -279,22 +277,6 @@ and (max-device-width : 200px) {
             });
            
            
-           //addlanduse layer
-            var landuseLayer = L.geoJson(landuse, {
-
-                style: function(feature){
-                    return {
-                        color: '#636363',
-                        weight: 1,
-                        fillColor: getColorLanduse(feature.properties["LU_C"]),
-                        fillOpacity: 0.85
-                    }
-                },
-                "properties": {
-                    "drawOrder": 2
-                },
-            });
-           
            //add zoneLayer
             var zoneLayer = L.geoJson(zones, {
 
@@ -312,65 +294,25 @@ and (max-device-width : 200px) {
 
             }).addTo(map);
 
-            //add unionLayer 
-            var unionLayer = L.geoJson(union, {
-
-               style: function(feature) {
-                   return {
-                       weight: 0,
-                       fillOpacity: 0,
-                   }
-                },             
-            }).addTo(map);
            
            //send union layer to make popup
-           createPopup(unionLayer);
+//           createPopup(unionLayer);
            
-           makeLayerControl(floodLayer, landuseLayer, zoneLayer, unionLayer, tiles, topoTiles);
+//           makeLayerControl(floodLayer, landuseLayer, zoneLayer, unionLayer, tiles, topoTiles);
     
         
         
         
-        function createPopup(data){
-            data.eachLayer(function(layer){
-                
-                
-                var props = layer.feature.properties;
-                
-                layer.bindPopup("Zone: "+props["ZONE_"]+"<br>"+"Land-use Code: "+props["LU_C"])
-            })
-        }
-        
-        
-    function getColorLanduse(code){
-        if (code =="COM"){
-            return '#8dd3c7'
-        } else if (code=="CONSTRAINT") {
-            return '#ffffb3'
-        } else if (code=="DUP") {
-            return '#bebada'
-        } else if (code=="IND") {
-            return '#fb8072'
-        } else if (code=="LL") {
-            return '#80b1d3'
-        } else if (code=="MFRES") {
-            return '#fdb462'
-        } else if (code=="MH") {
-            return '#b3de69'
-        } else if (code=="PROF") {
-            return '#fccde5'
-        } else if (code=="PSP") {
-            return '#d9d9d9'
-        } else if (code=="QUARRY") {
-            return '#bc80bd'
-        } else if (code=="RES") {
-            return '#ccebc5'
-        } else if (code=="VAC") {
-            return '#ffed6f'
-        } 
-            
-            
-    }
+//        function createPopup(data){
+//            data.eachLayer(function(layer){
+//                
+//                
+//                var props = layer.feature.properties;
+//                
+//                layer.bindPopup("Zone: "+props["ZONE_"]+"<br>"+"Land-use Code: "+props["LU_C"])
+//            })
+//        }
+//        
 
     
     function getColorZones (zone){
