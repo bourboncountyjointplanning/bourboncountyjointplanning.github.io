@@ -169,8 +169,8 @@ and (max-device-width : 200px) {
 <body>
     
     <div class= "radio-list">
-       <input type="radio" id="agricultural" data-key="agricultural">Agricultural
-        <input type="radio" id="planneddevelopment">Planned Development
+       <input type="radio" name= "list" id="agricultural" >Agricultural
+        <input type="radio" name = "list" id="planneddevelopment" >Planned Development
     </div>
 <!--    Agricultural: <input type="radio" id="agricultural">-->
 
@@ -190,8 +190,6 @@ and (max-device-width : 200px) {
     
     <script>
         
-        var highlightedLayer;
-
         
         var highzoom = 13;
         var bigmapheight = '100%';
@@ -413,28 +411,24 @@ and (max-device-width : 200px) {
 //    };
         
         //NEW RADIO LIST PLAYING 
-        $(".radio-list input#agricultural").on('click', function(){
-            console.log("something clicked");
+        $(".radio-list input").on('click', function(){
+//            console.log("something clicked");
+
             var highlighted = $(this).attr('id');
-            console.log(highlighted);
-            highlightedLayer = geoJsonLayers[highlighted];        
-//            console.log(geoJsonLayers[highlighted]);
+//            console.log(highlighted);
+            var highlightedLayer = geoJsonLayers[highlighted];
+        
             
             highlightedLayer.setStyle({color:'yellow',weight:3});
             highlightedLayer.bringToFront();
-            
-            
-        
-            
-            
+//            
         })
-//    $(".radio-list input").change(function(e){
-//        console.log("something clicked");
-////        console.log(e);
-//       console.log(this);
-//        
-//    })
         
+        
+            
+            //color: '#636363' orig outline color
+            
+//        
 //        console.log(categoryLayers);
         
 //        L.control.layers(categoryLayers).addTo(map);
