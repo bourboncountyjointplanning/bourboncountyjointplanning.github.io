@@ -86,37 +86,7 @@
             font-size: 3em;
             color: '#ffffff';
         }
-        .btn-group button {
-            width: 20%;
-            right: 5%;
-            top: 5%
-        }
-/*
-        .leaflet-control-layers {
-    font-family: "Ubuntu";
-    padding: 6px 8px;
-    color: #f4f4f4;
-    background: #302725;
-    box-shadow: none;
-    border-radius: 3px;
-    width: 260px;
-}
-.leaflet-control-layers label {
-    padding-left: 26px;
-    text-indent: -16px;
-    line-height: 1.2em;
-    margin-bottom: 6px;
-    cursor: pointer;
-}
-.leaflet-control-layers label:hover {
-            something cool here?
-}
-.leaflet-control-layers input {
-    margin: 0 9px 0 -8px;
-    cursor: pointer;
-}
-       
-*/
+    
 /*
         }
         @media (max-width: 500px) {
@@ -131,36 +101,7 @@ and (max-device-width : 200px) {
         top: 50%
     }
 }
-*/
-/*
-        body {
-            margin: 0;
-            padding: 0;
-        }
-        #map {
-            position: absolute;
-            width: 100%;
-            top: 0;
-            bottom: 0;
-        }
 
-/*
-        h1 {
-            font-family: 'Rock Salt', cursive;
-            font-size: 1.5em;
-            padding: 0;
-        }
-        p {
-            font-family: 'Lato', sans-serif;
-            font-size: 1em;
-        }
-        p2 {
-            font-family: 'Nothing You Could Do', cursive;
-            font-size: 1.5em;
-            line-height: 75%;
-            margin: 0px;
-        }
-     
         
     </style>
     
@@ -168,14 +109,31 @@ and (max-device-width : 200px) {
 
 <body>
     
-    <form class= "radio-list">
-       <input type="radio" name= "list" id="agricultural" >Agricultural
-        <input type="radio" name = "list" id="planneddevelopment" >Planned Development
-        <input type="radio" name = "list" id="conservation" >Conservation
-    </form>
+       <div class= "radio-list">
+            <input type="radio" name= "list" id="agricultural" >Agricultural
+            <input type="radio" name = "list" id="planneddevelopment" >Planned Development
+            <input type="radio" name = "list" id="conservation" >Conservation
+    </div>
 
+
+    <div id='map'>      
+    </div>
     
-    <div id='map'></div>
+    
+<!--
+MAKE DROPDOWN LIST
+    <div class="radio-list">
+        <fieldset>
+            <label>Highlight Zone</label>
+            <select>
+                <option id ='agricultural'>Agricultural</option>
+                <option id='planneddevelopment'>Planned Development</option>
+            </select>
+         </fieldset>
+    </div>
+-->
+    
+
     
     <script src ="Flood_100yr.js"></script>
     <script src ="Zoning_2014.js"></script>
@@ -256,6 +214,8 @@ and (max-device-width : 200px) {
         
         
         map.addLayer(tiles);
+    
+//        $(".radio-list input").detach().appendTo(map);
         
             //set bounds manually
 //      set bounds based on zoom level 5 (for buffer room)
