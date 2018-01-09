@@ -317,14 +317,12 @@ and (max-device-width : 200px) {
     }
 
     var geoJsonLayers = {}; 
-        
+
     
 
     for (var layer in layerInfo) {
        
        geoJsonLayers[layer] = L.geoJson(zones, {  
-           
-    
 
           style: function(feature) {
                    return {
@@ -344,12 +342,12 @@ and (max-device-width : 200px) {
 
                 }
             },
-            onEachFeature: function(feature, layer) {
-                
-                
-                var content = "<b>"+"Zone: "+"</b><br>"+"<br>";
-
-                layer.bindPopup(content);
+//            onEachFeature: function(feature, layer) {
+//                
+//                
+//                var content = "<b>"+"Zone: "+"</b><br>"+"<br>";
+//
+//                layer.bindPopup(content);
 
 //                layer.on('mouseover', function(e) {
 //                    $(".info").show();
@@ -359,13 +357,35 @@ and (max-device-width : 200px) {
 //                    $(".info").hide(); 
 //                });
 
-                },       
+//                },       
 
       }).addTo(map); 
+    
 
-        }
+    }
+    
+
         
-        console.log(layerInfo[layer].class);
+        
+                
+        
+//   
+//            data.eachLayer(function(layer){
+//                
+//                
+//                var props = layer.feature.properties;
+//                layer.bindPopup("parcel num: "+props["PARCEL"]);
+//                
+//                console.log("here");
+//                
+////                layer.bindPopup("Zone: "+props["ZONE_"]+"<br>"+"Land-use Code: "+props["LU_C"])
+//            })
+      
+    
+        
+        console.log(geoJsonLayers);
+        console.log(layerInfo);
+
     
     
         
@@ -455,21 +475,7 @@ and (max-device-width : 200px) {
 //           makeLayerControl(floodLayer, zoneLayer, parcelLayer);
     
         
-        
-        
-        function createPopup(data){
-            data.eachLayer(function(layer){
-                
-                
-                var props = layer.feature.properties;
-                layer.bindPopup("parcel num: "+props["PARCEL"]);
-                
-                console.log("here");
-                
-//                layer.bindPopup("Zone: "+props["ZONE_"]+"<br>"+"Land-use Code: "+props["LU_C"])
-            })
-        }
-        
+
 
     
     function getColorZones (zone){
