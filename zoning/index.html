@@ -86,7 +86,37 @@
             font-size: 3em;
             color: '#ffffff';
         }
+        .btn-group button {
+            width: 20%;
+            right: 5%;
+            top: 5%
+        }
+/*
+        .leaflet-control-layers {
+    font-family: "Ubuntu";
+    padding: 6px 8px;
+    color: #f4f4f4;
+    background: #302725;
+    box-shadow: none;
+    border-radius: 3px;
+    width: 260px;
+}
+.leaflet-control-layers label {
+    padding-left: 26px;
+    text-indent: -16px;
+    line-height: 1.2em;
+    margin-bottom: 6px;
+    cursor: pointer;
+}
+.leaflet-control-layers label:hover {
+            something cool here?
+}
+.leaflet-control-layers input {
+    margin: 0 9px 0 -8px;
+    cursor: pointer;
+}
        
+*/
 /*
         }
         @media (max-width: 500px) {
@@ -138,6 +168,20 @@ and (max-device-width : 200px) {
 
 <body>
     
+    <div class= "radio-list">
+       <input type="radio" id="agricultural" data-key="agricultural">Agricultural
+        <input type="radio" id="planneddevelopment">Planned Development
+    </div>
+<!--    Agricultural: <input type="radio" id="agricultural">-->
+
+    <!--make buttons
+<!--
+     <div class ="btn-group">
+        <label class="Agricultural" data-key="agricultural"><button>Agricultural</button></label>
+        <label class="Planned Development" data-key="planneddevelopment"><button>Planned Development</button></label>
+    </div>
+-->
+    
     <div id='map'></div>
     
     <script src ="Flood_100yr.js"></script>
@@ -145,6 +189,8 @@ and (max-device-width : 200px) {
     <script src = "parcels.js"></script>
     
     <script>
+        
+        var highlightedLayer;
 
         
         var highzoom = 13;
@@ -177,6 +223,7 @@ and (max-device-width : 200px) {
             maxZoom: 20,
             subdomains:['mt0','mt1','mt2','mt3']
         });
+    
         
         
         
@@ -217,6 +264,52 @@ and (max-device-width : 200px) {
         
         
         
+        map.addLayer(tiles);
+
+       new L.Control.GeoSearch({
+            provider: new L.GeoSearch.Provider.Esri(),
+            position: 'topleft',
+            zoomLevel: 18,
+            showMarker: true,
+            showPopup: false,
+            marker: {
+                draggable: false
+            },
+           collapse: false
+       }).addTo(map);
+        
+
+        
+     
+        
+        
+    var layerInfo = {
+        agricultural: {class: "A", color: '#9E4624'},
+        business: {class: "B", color: '#578CA9'},
+        business1: {class: "B-1", color:'#DD4132'},
+        business2: {class: "B-2", color: '#9B2335'},
+        business3: {class: "B-3", color: '#BC243C'},
+        conservation: {class: "C", color: '#BC243C'},
+        historic: {class: "H", color: '#B76bA3'},
+        hospitalmedical: {class: "H-M", color: '#BC243C'},
+        industrial: {class: "I", color: '#b15928'},
+        lightindustrial1: {class: "I-1", color: '#F7C4C9'},
+        heavyindustrial: {class: "I-2", color: '#1f78b4'},
+        planneddevelopment: {class: "PUD", color: '#003300'},
+        residential1: {class: "R-1", color: '#33a02c'},
+        residential2: {class: "R-2", color: '#fb9a99'},
+        residential3: {class: "R-3", color: '#e31a1c'},
+        residential4: {class: "R-4", color: '#fdbf6f'},
+        residential5: {class: "R-5", color: '#ff7f00'},
+        residential6: {class: "R-6", color: '#5C5C3D'},
+        residential7: {class: "R-7", color: '#6a3d9a'},
+        residential8: {class: "R-8", color: '#1F1F14'},
+               
+    }
+
+    var geoJsonLayers = {}; 
+        
+        
     //set bounds manually
 //      set bounds based on zoom level 5 (for buffer room)
 //        var southWest = L.latLng(26.076, -111.665),
@@ -233,48 +326,213 @@ and (max-device-width : 200px) {
 //        map.setMaxBounds(bounds);
         
 
+
+    
+    
+
+    for (var layer in layerInfo) {
        
+       geoJsonLayers[layer] = L.geoJson(zones, {       
 
-        map.addLayer(tiles);
-
-       new L.Control.GeoSearch({
-            provider: new L.GeoSearch.Provider.Esri(),
-            position: 'topleft',
-            zoomLevel: 18,
-            showMarker: true,
-            showPopup: false,
-            marker: {
-                draggable: false
-            },
-           collapse: false
-       }).addTo(map);
-        
-     
-
-        
+          style: function(feature) {
+                   return {
+                       weight: 1,
+                       fillOpacity: 0.9,
+//                       fillColor: layerInfo[layer].color,
+                       fillColor: getColorZones(feature.properties["ZONE_"]),
+                       color: '#636363'
+                   }
+               }, 
            
-//                           
-//                var stripes = new L.StripePattern({options});stripes.addTo(map);
+            filter: function(feature) {
+
+                if (feature.properties["ZONE_"] == layerInfo[layer].class) {
+                    return feature;
+
+                }
+            },
+            onEachFeature: function(feature, layer) {
+                
+                var props = feature.properties;
+                var content = "<b>"+"Zone: "+"</b><br>"+props["ZONE_"]+"<br>";
+
+                layer.bindPopup(content);
+
+//                layer.on('mouseover', function(e) {
+//                    $(".info").show();
+//                    updateInfo(props);
+//                });
+//                layer.on('mouseout', function(){
+//                    $(".info").hide(); 
+//                });
+
+                },       
+
+      }).addTo(map); 
+
+        }
+        
+        console.log(layerInfo);
+        console.log(zones);
+        console.log(geoJsonLayers.agricultural);
+    
+
+    
+//    console.log(serviceDatabase);
+        
+    
+        //BUILD FILTER SELECTOR, COLOR OF FONT + SYNTAX TO GET TO DATA
+//        
+//        var categoryLayers = {
+//            "Agricultural": geoJsonLayers.agricultural,
+//            "Planned Development": geoJsonLayers.planneddevelopment,
+//        };
+
+//    var categoryLayers = {
+//        "<font color='#a6cee3'>Agricultural</font>": geoJsonLayers.agricultural,
+//        "<font color='#1f78b4'>Business</font>": geoJsonLayers.business,
+//        "<font color='#003300'>Central Business</font>": geoJsonLayers.business1,
+//        "<font color='#33a02c'>General Commercial</font>": geoJsonLayers.business2,
+//        "<font color='#fb9a99'>Neighborhood Commercial</font>": geoJsonLayers.business3,
+//        "<font color='#e31a1c'>Conservation</font>": geoJsonLayers.conservation,
+//        "<font color='#fdbf6f'>Historic</font>": geoJsonLayers.historic,
+//        "<font color='#ff7f00'>Industrial</font>": geoJsonLayers.industrial,
+//        "<font color='#5C5C3D'>Light Industrial</font>": geoJsonLayers.lightindustrial,
+//        "<font color='#6a3d9a'>Heavy Industrial</font>": geoJsonLayers.heavyindustrial,
+//        "<font color='#1F1F14'>Planned Development</font>": geoJsonLayers.planneddevelopment,
+//        "<font color='#b15928'>R-1 Residential</font>": geoJsonLayers.residential1,
+//        "<font color='#b15928'>R-2 Residential</font>": geoJsonLayers.residential2,
+//        "<font color='#b15928'>R-3 Residential</font>": geoJsonLayers.residential3,
+//        "<font color='#b15928'>R-4 Residential</font>": geoJsonLayers.residential4,
+//        "<font color='#b15928'>R-5 Residential</font>": geoJsonLayers.residential5,
+//        "<font color='#b15928'>R-6 Residential</font>": geoJsonLayers.residential6,
+//        "<font color='#b15928'>R-7 Residential</font>": geoJsonLayers.residential7,
+//        "<font color='#b15928'>R-8 Residential</font>": geoJsonLayers.residential8,
+//        "<font color='#b15928'>Hospital/Medical</font>": geoJsonLayers.hospitalmedical,
+//
+//    };
+        
+        //NEW RADIO LIST PLAYING 
+        $(".radio-list input#agricultural").on('click', function(){
+            console.log("something clicked");
+            var highlighted = $(this).attr('id');
+            console.log(highlighted);
+            highlightedLayer = geoJsonLayers[highlighted];        
+//            console.log(geoJsonLayers[highlighted]);
+            
+            highlightedLayer.setStyle({color:'yellow',weight:3});
+            highlightedLayer.bringToFront();
+            
+            
+        
+            
+            
+        })
+//    $(".radio-list input").change(function(e){
+//        console.log("something clicked");
+////        console.log(e);
+//       console.log(this);
+//        
+//    })
+        
+//        console.log(categoryLayers);
+        
+//        L.control.layers(categoryLayers).addTo(map);
+//
+//    L.control.layers(null, categoryLayers, {collapsed:false}).addTo(map);
+//        
+//        $(".leaflet-control-layers input").change(function(e){
+//            console.log("I was clicked");
+//            if(!this.checked){
+//                for (var layer in geoJsonLayers[layer]){
+////                    map.addLayer(geoJsonLayers[layer]);
+////                    layer.setStyle({color: 'yellow'});
+////                    layer.bringToFront();
+//                }
+//            } else{
+//                for (var layer in geoJsonLayers){
+//                    map.addLayer(geoJsonLayers[layer]);
+//                    layer.setStyle({color: 'yellow'});
+//                    layer.bringToFront();
+//                }
+//            }
+//        });
+//
+////
+//    $(".leaflet-control-layers").prepend('<label><input id="show-all" type="checkbox" class="leaflet-control-layers-selector" checked=""><span>SHOW all services</span></label><label><input id="hide-all" type="checkbox" class="leaflet-control-layers-selector"><span>HIDE all services</span></label><hr>');
+//
+//    $("#show-all").change(function(e){
+//        if(!this.checked){
+//         // is now unchecked
+//            for(var layer in geoJsonLayers) {
+//                map.removeLayer(geoJsonLayers[layer]);   
+//            }
+//            $(".leaflet-control-layers input").prop('checked', false);
+//            $("#hide-all").prop('checked', true);
+//
+//        } else {
+//          // is now checked
+//            for(var layer in geoJsonLayers) {
+//                map.addLayer(geoJsonLayers[layer]);   
+//            }
+//            $(".leaflet-control-layers input").prop('checked', true);
+//            $("#hide-all").prop('checked', false);
+//
+//        }
+//    });
+//
+//    $("#hide-all").change(function(e){
+//        if(!this.checked){
+//         // is now unchecked
+//            for(var layer in geoJsonLayers) {
+//                map.addLayer(geoJsonLayers[layer]);   
+//            }
+//            $(".leaflet-control-layers input").prop('checked', true);
+//            $("#show-all").prop('checked', true);
+//            $("#hide-all").prop('checked', false);
+//
+//        } else {
+//          // is now checked
+//            for(var layer in geoJsonLayers) {
+//                map.removeLayer(geoJsonLayers[layer]);   
+//            }
+//            $(".leaflet-control-layers input").prop('checked', false);
+//            $("#hide-all").prop('checked',true);
+//
+//        }
+//    });
+////        
+        ////////////////////////////////////////////////////
         
            
            //add flood layer
-            var floodLayer = L.geoJson(flood, {
-
-                style: function(feature){
-                    return {
-                        opacity: 0,
-                        fillColor: '#1f78b4',
-                        fillOpacity: 0.85,
-                    }
-                },
-                "properties": {
-                    "drawOrder": 1
-                },
-
-            });
+//            var floodLayer = L.geoJson(flood, {
+//
+//                style: function(feature){
+//                    return {
+//                        opacity: 0,
+//                        fillColor: '#1f78b4',
+//                        fillOpacity: 0.85,
+//                    }
+//                },
+//                "properties": {
+//                    "drawOrder": 1
+//                },
+//
+//            });
            
-        var parcelLayer = L.geoJson(parcels).addTo(map);
-        console.log(parcelLayer);
+//        var parcelLayer = L.geoJson(parcels, {
+//            style: function(feature){
+//                return{
+//                opacity: 1,
+//                    fillOpactiy: 0
+//                }
+//            },
+//            
+//        }).addTo(map);
+//        console.log(parcelLayer);
+//        
+//        createPopup(parcelLayer);
            
            //add zoneLayer
 //            var zoneLayer = L.geoJson(zones, {
@@ -306,16 +564,19 @@ and (max-device-width : 200px) {
         
         
         
-//        function createPopup(data){
-//            data.eachLayer(function(layer){
-//                
-//                
-//                var props = layer.feature.properties;
-//                
+        function createPopup(data){
+            data.eachLayer(function(layer){
+                
+                
+                var props = layer.feature.properties;
+                layer.bindPopup("parcel num: "+props["PARCEL"]);
+                
+                console.log("here");
+                
 //                layer.bindPopup("Zone: "+props["ZONE_"]+"<br>"+"Land-use Code: "+props["LU_C"])
-//            })
-//        }
-//        
+            })
+        }
+        
 
     
     function getColorZones (zone){
