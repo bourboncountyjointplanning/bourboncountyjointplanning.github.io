@@ -256,6 +256,24 @@ and (max-device-width : 200px) {
         
         
         map.addLayer(tiles);
+        
+            //set bounds manually
+//      set bounds based on zoom level 5 (for buffer room)
+//        var southWest = L.latLng(26.076, -111.665),
+//            northEast = L.latLng(48.835, -51.635),
+//            bounds = L.latLngBounds(southWest, northEast);
+//        
+//        map.setMaxBounds(bounds);
+        
+        //set bounds automatically
+//        var getBounds = map.getBounds();
+//          
+//        var bounds = L.latLngBounds(getBounds);    
+//        
+//        map.setMaxBounds(bounds);
+        
+
+
 
        new L.Control.GeoSearch({
             provider: new L.GeoSearch.Provider.Esri(),
@@ -275,65 +293,49 @@ and (max-device-width : 200px) {
         
         
     var layerInfo = {
-        agricultural: {class: "A", color: '#9E4624'},
-        business: {class: "B", color: '#578CA9'},
-        business1: {class: "B-1", color:'#DD4132'},
-        business2: {class: "B-2", color: '#9B2335'},
-        business3: {class: "B-3", color: '#BC243C'},
-        conservation: {class: "C", color: '#BC243C'},
-        historic: {class: "H", color: '#B76bA3'},
-        hospitalmedical: {class: "H-M", color: '#BC243C'},
-        industrial: {class: "I", color: '#b15928'},
-        lightindustrial1: {class: "I-1", color: '#F7C4C9'},
-        heavyindustrial: {class: "I-2", color: '#1f78b4'},
-        planneddevelopment: {class: "PUD", color: '#003300'},
-        residential1: {class: "R-1", color: '#33a02c'},
-        residential2: {class: "R-2", color: '#fb9a99'},
-        residential3: {class: "R-3", color: '#e31a1c'},
-        residential4: {class: "R-4", color: '#fdbf6f'},
-        residential5: {class: "R-5", color: '#ff7f00'},
-        residential6: {class: "R-6", color: '#5C5C3D'},
-        residential7: {class: "R-7", color: '#6a3d9a'},
-        residential8: {class: "R-8", color: '#1F1F14'},
+        agricultural: {class: "A", color: '#9E4624', label: "Agricultural (A)"},
+        business: {class: "B", color: '#578CA9', label: "Business (B)"},
+        business1: {class: "B-1", color:'#DD4132', label: "Central Business (B-1)"},
+        business2: {class: "B-2", color: '#9B2335', label: "General Commercial (B-2)"},
+        business3: {class: "B-3", color: '#BC243C', label: "Neighborhood Commercial (B-3)"},
+        conservation: {class: "C", color: '#BC243C', label: "Conservation (C)"},
+        historic: {class: "H", color: '#B76bA3', label: "Historic (H)"},
+        hospitalmedical: {class: "H-M", color: '#BC243C', label: "Hospital/Medical (H-M)"},
+        industrial: {class: "I", color: '#b15928', label: "Industrial"},
+        lightindustrial1: {class: "I-1", color: '#F7C4C9', label: "Light Industrial (I-1)"},
+        heavyindustrial: {class: "I-2", color: '#1f78b4', label: "Heavy Industrial (I-2)"},
+        planneddevelopment: {class: "PUD", color: '#003300', label: "Planned Development (PUD)"},
+        residential1: {class: "R-1", color: '#33a02c', label: "Residential (R-1)"},
+        residential2: {class: "R-2", color: '#fb9a99', label: "Residential (R-2)"},
+        residential3: {class: "R-3", color: '#e31a1c', label: "Residential (R-3)"},
+        residential4: {class: "R-4", color: '#fdbf6f', label: "Residential (R-4)"},
+        residential5: {class: "R-5", color: '#ff7f00', label: "Residential (R-5)"},
+        residential6: {class: "R-6", color: '#5C5C3D', label: "Residential (R-6)"},
+        residential7: {class: "R-7", color: '#6a3d9a', label: "Residential (R-7)"},
+        residential8: {class: "R-8", color: '#1F1F14', label: "Residential (R-8)"},
                
     }
 
     var geoJsonLayers = {}; 
         
-        
-    //set bounds manually
-//      set bounds based on zoom level 5 (for buffer room)
-//        var southWest = L.latLng(26.076, -111.665),
-//            northEast = L.latLng(48.835, -51.635),
-//            bounds = L.latLngBounds(southWest, northEast);
-//        
-//        map.setMaxBounds(bounds);
-        
-        //set bounds automatically
-//        var getBounds = map.getBounds();
-//          
-//        var bounds = L.latLngBounds(getBounds);    
-//        
-//        map.setMaxBounds(bounds);
-        
-
-
-    
     
 
     for (var layer in layerInfo) {
        
-       geoJsonLayers[layer] = L.geoJson(zones, {       
+       geoJsonLayers[layer] = L.geoJson(zones, {  
+           
+    
 
           style: function(feature) {
                    return {
                        weight: 1,
                        fillOpacity: 0.9,
-//                       fillColor: layerInfo[layer].color,
-                       fillColor: getColorZones(feature.properties["ZONE_"]),
+                       fillColor: layerInfo[layer].color,
                        color: '#636363'
                    }
+              
                }, 
+           
            
             filter: function(feature) {
 
@@ -344,8 +346,8 @@ and (max-device-width : 200px) {
             },
             onEachFeature: function(feature, layer) {
                 
-                var props = feature.properties;
-                var content = "<b>"+"Zone: "+"</b><br>"+props["ZONE_"]+"<br>";
+                
+                var content = "<b>"+"Zone: "+"</b><br>"+"<br>";
 
                 layer.bindPopup(content);
 
@@ -362,6 +364,8 @@ and (max-device-width : 200px) {
       }).addTo(map); 
 
         }
+        
+        console.log(layerInfo[layer].class);
     
     
         
@@ -376,15 +380,20 @@ and (max-device-width : 200px) {
             resetStyle();
             
             var checked = $(this).attr('id');
+            
             if (checked == 'agricultural') {
                 geoJsonLayers['agricultural'].setStyle({color:'yellow', weight: 3});
                 geoJsonLayers['agricultural'].bringToFront();
-            } else if (checked == 'planneddevelopment')
+            } else if (checked == 'planneddevelopment') {
                 geoJsonLayers['planneddevelopment'].setStyle({color:'yellow', weight: 3});
                 geoJsonLayers['planneddevelopment'].bringToFront();
-                
+            } else if (checked == 'conservation') {
+                geoJsonLayers['conservation'].setStyle({color:'yellow', weight: 3});
+                geoJsonLayers['conservation'].bringToFront();
             }
-        )
+            
+            
+        })      
 
         ////////////////////////////////////////////////////
         
