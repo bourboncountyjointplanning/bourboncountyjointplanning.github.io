@@ -164,9 +164,17 @@ and (max-device-width : 200px) {
 
        <form class= "radio-list">
             <input type="radio" name= "list" id="agricultural" >Agricultural
+            <input type="radio" name="list" id="business1">Central Business 
+           <input type="radio" name="list" id="business2">General Commercial
+           <input type="radio" name="list" id="business3">Neighborhood Commercial
+           <input type="radio" name = "list" id="conservation" >Conservation
+           <input type="radio" name = "list" id="historic" >Historic
+           <input type="radio" name = "list" id="hospitalmedical" >Hospital/Medical
+           <input type="radio" name = "list" id="lightindustrial" >Light Industrial
+           <input type="radio" name = "list" id="heavyindustrial" >Heavy Industrial
             <input type="radio" name = "list" id="planneddevelopment" >Planned Development
-            <input type="radio" name = "list" id="conservation" >Conservation
-           <input type="radio" name="list" id="reset">RESET
+            <input type="radio" name = "list" id="residential" >Residential
+            <input type="radio" name="list" id="reset">RESET
        </form>
 
 
@@ -302,15 +310,15 @@ and (max-device-width : 200px) {
         
     var layerInfo = {
         agricultural: {class: "A", color: '#9E4624', label: "Agricultural (A)"},
-        business: {class: "B", color: '#578CA9', label: "Business (B)"},
+//        business: {class: "B", color: '#578CA9', label: "Business (B)"},
         business1: {class: "B-1", color:'#DD4132', label: "Central Business (B-1)"},
         business2: {class: "B-2", color: '#9B2335', label: "General Commercial (B-2)"},
         business3: {class: "B-3", color: '#BC243C', label: "Neighborhood Commercial (B-3)"},
         conservation: {class: "C", color: '#BC243C', label: "Conservation (C)"},
         historic: {class: "H", color: '#B76bA3', label: "Historic (H)"},
         hospitalmedical: {class: "H-M", color: '#BC243C', label: "Hospital/Medical (H-M)"},
-        industrial: {class: "I", color: '#b15928', label: "Industrial"},
-        lightindustrial1: {class: "I-1", color: '#F7C4C9', label: "Light Industrial (I-1)"},
+//        industrial: {class: "I", color: '#b15928', label: "Industrial"},
+        lightindustrial: {class: "I-1", color: '#F7C4C9', label: "Light Industrial (I-1)"},
         heavyindustrial: {class: "I-2", color: '#1f78b4', label: "Heavy Industrial (I-2)"},
         planneddevelopment: {class: "PUD", color: '#003300', label: "Planned Development (PUD)"},
         residential1: {class: "R-1", color: '#33a02c', label: "Residential (R-1)"},
@@ -378,15 +386,58 @@ and (max-device-width : 200px) {
             if (checked == 'agricultural') {
                 geoJsonLayers['agricultural'].setStyle({color:'yellow', weight: 3});
                 geoJsonLayers['agricultural'].bringToFront();
+            } else if (checked =='business1'){
+                geoJsonLayers['business1'].setStyle({color:'yellow', weight: 3});
+                geoJsonLayers['business1'].bringToFront();
+            } else if (checked == 'business2') {
+                geoJsonLayers['business2'].setStyle({color:'yellow', weight: 3});
+                geoJsonLayers['business2'].bringToFront();
+            }else if (checked == 'business3') {
+                geoJsonLayers['business3'].setStyle({color:'yellow', weight: 3});
+                geoJsonLayers['business3'].bringToFront();
+            }else if (checked == 'conservation') {
+                geoJsonLayers['conservation'].setStyle({color:'yellow', weight: 3});
+                geoJsonLayers['conservation'].bringToFront();
+            } else if (checked=='historic'){
+                geoJsonLayers['historic'].setStyle({color:'yellow', weight: 3});
+                geoJsonLayers['historic'].bringToFront();
+            } else if (checked =='hospitalmedical'){
+                geoJsonLayers['hospitalmedical'].setStyle({color:'yellow', weight: 3});
+                geoJsonLayers['hospitalmedical'].bringToFront();
+            } else if (checked =='lightindustrial'){
+                geoJsonLayers['lightindustrial'].setStyle({color:'yellow', weight: 3});
+                geoJsonLayers['lightindustrial'].bringToFront();
+            }else if (checked =='heavyindustrial'){
+                geoJsonLayers['heavyindustrial'].setStyle({color:'yellow', weight: 3});
+                geoJsonLayers['heavyindustrial'].bringToFront();
             } else if (checked == 'planneddevelopment') {
                 geoJsonLayers['planneddevelopment'].setStyle({color:'yellow', weight: 3});
                 geoJsonLayers['planneddevelopment'].bringToFront();
-            } else if (checked == 'conservation') {
-                geoJsonLayers['conservation'].setStyle({color:'yellow', weight: 3});
-                geoJsonLayers['conservation'].bringToFront();
-            } else if (checked=='reset'){
+            }  else if (checked == 'residential') {
+                geoJsonLayers['residential1'].setStyle({color:'yellow', weight: 3});
+                geoJsonLayers['residential1'].bringToFront();
+                geoJsonLayers['residential2'].setStyle({color:'yellow', weight: 3});
+                geoJsonLayers['residential2'].bringToFront();
+                geoJsonLayers['residential3'].setStyle({color:'yellow', weight: 3});
+                geoJsonLayers['residential3'].bringToFront();
+                geoJsonLayers['residential4'].setStyle({color:'yellow', weight: 3});
+                geoJsonLayers['residential4'].bringToFront();
+                geoJsonLayers['residential5'].setStyle({color:'yellow', weight: 3});
+                geoJsonLayers['residential5'].bringToFront();
+                geoJsonLayers['residential6'].setStyle({color:'yellow', weight: 3});
+                geoJsonLayers['residential6'].bringToFront();
+                geoJsonLayers['residential7'].setStyle({color:'yellow', weight: 3});
+                geoJsonLayers['residential7'].bringToFront();
+                geoJsonLayers['residential8'].setStyle({color:'yellow', weight: 3});
+                geoJsonLayers['residential8'].bringToFront();
+            } 
+            else if (checked=='reset'){
                 resetStyle();
             }
+            
+            
+            
+            
             
             
         })      
