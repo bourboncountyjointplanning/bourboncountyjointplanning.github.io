@@ -282,7 +282,7 @@ and (max-device-width : 200px) {
             center: [38.205,-84.254040],
             zoom: 13,
             maxZoom: 18,
-            minZoom: 11,
+            minZoom: 13,
             attributionControl: false,
             zoomControl: false,
             layers: [tiles],
@@ -317,8 +317,6 @@ and (max-device-width : 200px) {
         map.addLayer(tiles);
         
   
-        
-        var bounds = getBounds();
  
         var southWest = L.latLng(38.13928, -84.38959),
             northEast = L.latLng(38.270667, -84.11836),
@@ -343,13 +341,6 @@ and (max-device-width : 200px) {
        }).addTo(map);
         
 
-        
-     //ag- green
-        //res light yellow to dark brown (8 total)
-        //b-1 light red, b-2 red orange, b-3 dark red
-        //light indusrial light puprle, 1-2 dark purple
-        //conservation blue
-        
         
     var layerInfo = {
         agricultural: {class: "A", color: '#05c466', label: "Agricultural (A)"},
@@ -512,25 +503,7 @@ and (max-device-width : 200px) {
         L.control.layers(basemapGroup, dataGroup, {collapsed: 'true', position: 'topleft'}).addTo(map);
 
 
-//    
-////        console.log(layersGroup["Landuse"].options.properties);
-//     
-//        
-//        L.control.layers(zoneGroup, layersGroup, { collapsed: 'true', position: 'topright'}).addTo(map);
-//
-////        
-//        map.on("overlayadd", function (event) {
-//            parcels.bringToFront();
-//        });
-//            
-//        map.on("baselayerchange", function(event){
-//            parcels.bringToFront();
-//        });
-////        
-////        
-//    }
-//        
-    
+
     
         
           
