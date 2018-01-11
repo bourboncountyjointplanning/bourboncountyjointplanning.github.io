@@ -110,6 +110,12 @@
             right: 5%;
             top: 2%;
         }
+        .close-about {
+    position: absolute;
+    bottom: 1px;
+    right: 10px;
+  
+}
     
 /*
         }
@@ -137,18 +143,6 @@ and (max-device-width : 200px) {
     <button class="button">Highlight Zone</button>
 
     <div class='about' id="list" >
-<!--
-        
-        <div class="dropdown">
-            <button onclick="select()" class="button">Highight Zone Cateogry</button>
-            <div id="menu" class="drop-down content">
-                <option id="agricultural" name="list">Agricultural</option>
-                <option id="planneddevelopment" name="list">Planned Development</option>
-                <option id="conservation" name="list">Conservation</option>
-            </div>
-           
-        </div>
--->
 
 
        <div class= "radio-list">
@@ -157,7 +151,7 @@ and (max-device-width : 200px) {
             <input type="radio" name = "list" id="conservation" >Conservation
         </div>
 
-        
+
     </div>
     
     
@@ -171,15 +165,18 @@ and (max-device-width : 200px) {
     <script>
         
             
-            $('.button').on('click', function() {
-    $('.about').fadeIn();
-   
-});
-
-//$('.button').on('click', function() {
+    $('.button').on('click', function() {
+//        $('.about').show();
+        $('.about').fadeToggle(400);
+//   
+    });
+        
+//        $('.button .close-button').on('click', function() {
 //    $('.about').fadeOut();
-//  
+// 
 //});
+
+
 
         var highzoom = 13;
         var bigmapheight = '100%';
