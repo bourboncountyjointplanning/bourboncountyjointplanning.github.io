@@ -304,12 +304,15 @@ and (max-device-width : 200px) {
     }
 
     var geoJsonLayers = {}; 
+        
 
     
 
     for (var layer in layerInfo) {
        
        geoJsonLayers[layer] = L.geoJson(zones, {  
+           
+    
 
           style: function(feature) {
                    return {
@@ -326,55 +329,17 @@ and (max-device-width : 200px) {
 
                 if (feature.properties["ZONE_"] == layerInfo[layer].class) {
                     return feature;
+           
 
                 }
             },
-//            onEachFeature: function(feature, layer) {
-//                
-//                
-//                var content = "<b>"+"Zone: "+"</b><br>"+"<br>";
-//
-//                layer.bindPopup(content);
 
-//                layer.on('mouseover', function(e) {
-//                    $(".info").show();
-//                    updateInfo(props);
-//                });
-//                layer.on('mouseout', function(){
-//                    $(".info").hide(); 
-//                });
-
-//                },       
-
-      }).addTo(map); 
+       }).bindPopup("Zone: "+layerInfo[layer].label).addTo(map); 
     
 
     }
     
 
-        
-        
-                
-        
-//   
-//            data.eachLayer(function(layer){
-//                
-//                
-//                var props = layer.feature.properties;
-//                layer.bindPopup("parcel num: "+props["PARCEL"]);
-//                
-//                console.log("here");
-//                
-////                layer.bindPopup("Zone: "+props["ZONE_"]+"<br>"+"Land-use Code: "+props["LU_C"])
-//            })
-      
-    
-        
-        console.log(geoJsonLayers);
-        console.log(layerInfo);
-
-    
-    
         
         function resetStyle(){
             for (var layer in geoJsonLayers){
