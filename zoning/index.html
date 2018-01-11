@@ -315,23 +315,18 @@ and (max-device-width : 200px) {
         
         
         map.addLayer(tiles);
-    
         
-            //set bounds manually
-//      set bounds based on zoom level 5 (for buffer room)
-//        var southWest = L.latLng(26.076, -111.665),
-//            northEast = L.latLng(48.835, -51.635),
-//            bounds = L.latLngBounds(southWest, northEast);
-//        
-//        map.setMaxBounds(bounds);
+  
         
-        //set bounds automatically
-//        var getBounds = map.getBounds();
-//          
-//        var bounds = L.latLngBounds(getBounds);    
-//        
-//        map.setMaxBounds(bounds);
+        var bounds = getBounds();
+ 
+        var southWest = L.latLng(38.13928, -84.38959),
+            northEast = L.latLng(38.270667, -84.11836),
+            bounds = L.latLngBounds(southWest, northEast);
         
+        map.setMaxBounds(bounds);        
+
+ 
 
 
 
