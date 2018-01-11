@@ -89,26 +89,32 @@
         .list-container {
             position: absolute;
             z-index: 700;
-            right:35px;
+            right:20px;
             top: 5%;
             padding: 5px 5px 15px;
-            width: 98px;
+            width: 135px;
             background-color: rgba(252,252,252,1);
             border-radius: 5px;
             box-shadow: 0 1px 5px rgba(0,4,72,.80);
             display: none;
+            overflow: auto;
        
         }
-        .radio-list{
+        .radio-list {
             font-size: 0.8em;
             font-family: 'Roboto', sans-serif;
+            
+        }
+        .radio-list label {
+            position: relative;
+            display: block;   
             
         }
 
         .button{
             position: absolute;
             z-index: 500;
-            right: 35px;;
+            right: 35px;
             top: 2%;
             font-family: 'Roboto', sans-serif;
             font-size: 0.9em;
@@ -163,18 +169,18 @@ and (max-device-width : 200px) {
 
 
        <form class= "radio-list">
-            <input type="radio" name= "list" id="agricultural" >Agricultural
-            <input type="radio" name="list" id="business1">Central Business 
-           <input type="radio" name="list" id="business2">General Commercial
-           <input type="radio" name="list" id="business3">Neighborhood Commercial
-           <input type="radio" name = "list" id="conservation" >Conservation
-           <input type="radio" name = "list" id="historic" >Historic
-           <input type="radio" name = "list" id="hospitalmedical" >Hospital/Medical
-           <input type="radio" name = "list" id="lightindustrial" >Light Industrial
-           <input type="radio" name = "list" id="heavyindustrial" >Heavy Industrial
-            <input type="radio" name = "list" id="planneddevelopment" >Planned Development
-            <input type="radio" name = "list" id="residential" >Residential
-            <input type="radio" name="list" id="reset">RESET
+           <label><input type="radio" name= "list" id="agricultural" >Agricultural</label>
+            <label><input type="radio" name="list" id="business1">Central Business </label>
+          <label> <input type="radio" name="list" id="business2">General Commercial</label>
+           <label><input type="radio" name="list" id="business3">Neighborhood Commercial</label>
+           <label><input type="radio" name = "list" id="conservation" >Conservation</label>
+           <label><input type="radio" name = "list" id="historic" >Historic</label>
+          <label> <input type="radio" name = "list" id="hospitalmedical" >Hospital/Medical</label>
+           <label><input type="radio" name = "list" id="lightindustrial" >Light Industrial</label>
+           <label><input type="radio" name = "list" id="heavyindustrial" >Heavy Industrial</label>
+           <label> <input type="radio" name = "list" id="planneddevelopment" >Planned Development</label>
+           <label> <input type="radio" name = "list" id="residential" >Residential</label>
+            <label><input type="radio" name="list" id="reset">RESET</label>
        </form>
 
 
