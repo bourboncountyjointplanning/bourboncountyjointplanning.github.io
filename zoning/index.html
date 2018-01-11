@@ -21,6 +21,8 @@
   integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log=="
   crossorigin=""></script>
     
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    
 <!--
       <script src="leaflet.pattern-src.js"></script>
     <script src="leaflet.pattern.js"></script>
@@ -76,9 +78,7 @@
             display: none;
             height: auto;
             background: none;
-            padding: 0;
-
-           
+            padding: 0;   
         }
         .leaflet-control-geosearch ul li {
             border-radius: 4px;
@@ -86,32 +86,54 @@
             font-size: 3em;
             color: '#ffffff';
         }
-.list-container {
-    position: absolute;
-    z-index: 700;
-    right: 2%;
-    top: 5%;
-    padding: 0 8px 15px;
-    width: 110px;
-    background-color: rgba(53,112,54,.65);
-    border: 'whitesmoke';
-    border-width:thick;
-    box-shadow: 0 1px 5px rgba(53,112,54,.65);
-    display: none;
-}
-        .radio-list{
-            overflow-wrap: normal;
-            font-size: 1em;
-            background: 'whitesmoke';
+        .list-container {
+            position: absolute;
+            z-index: 700;
+            right:20px;
+            top: 5%;
+            padding: 5px 5px 15px;
+            width: 98px;
+            background-color: rgba(252,252,252,1);
+            border-radius: 5px;
+            box-shadow: 0 1px 5px rgba(0,4,72,.80);
+            display: none;
+            text-align: left;
+         
+       
         }
+        .radio-list{
+            font-size: 0.8em;
+            font-family: 'Roboto', sans-serif;
+            
+        }
+
         .button{
             position: absolute;
             z-index: 500;
-            right: 5%;
+            right: 35px;;
             top: 2%;
+            font-family: 'Roboto', sans-serif;
+            font-size: 0.9em;
+            padding: 15px 15x 15px;
+            box-shadow: 0 1px 5px rgba(0,4,72,.80);
+     }
+       
+/*
+        .leaflet-popup-content p {
+            margin: 0px 0;
         }
+        .leaflet-popup-content-wrapper {
+            background: rgba(75,75,75,0.8);
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            color: whitesmoke;
+            font-size: 1.2em;
+        }
+        .leaflet-popup-tip {
+            background: rgba(75,75,75,0.8);
+        } 
    
-}
+
+
     
 /*
         }
@@ -141,12 +163,12 @@ and (max-device-width : 200px) {
     <div class='list-container' id="list" >
 
 
-       <div class= "radio-list">
+       <form class= "radio-list">
             <input type="radio" name= "list" id="agricultural" >Agricultural
             <input type="radio" name = "list" id="planneddevelopment" >Planned Development
             <input type="radio" name = "list" id="conservation" >Conservation
            <input type="radio" name="list" id="reset">RESET
-        </div>
+       </form>
 
 
     </div>
@@ -370,11 +392,9 @@ and (max-device-width : 200px) {
             
         })      
 
-        ////////////////////////////////////////////////////
         
-           
-           //add flood layer
-//            var floodLayer = L.geoJson(flood, {
+//           
+//        var floodLayer = L.geoJson(flood, {
 //
 //                style: function(feature){
 //                    return {
@@ -383,134 +403,90 @@ and (max-device-width : 200px) {
 //                        fillOpacity: 0.85,
 //                    }
 //                },
-//                "properties": {
-//                    "drawOrder": 1
-//                },
-//
-//            });
-           
-//        var parcelLayer = L.geoJson(parcels, {
-//            style: function(feature){
-//                return{
-//                opacity: 1,
-//                    fillOpactiy: 0
-//                }
-//            },
-//            
-//        }).addTo(map);
-//        console.log(parcelLayer);
-//        
-//        createPopup(parcelLayer);
-           
-           //add zoneLayer
-//            var zoneLayer = L.geoJson(zones, {
-//
-//               style: function(feature) {
-//                   return {
-//                       weight: 1,
-//                       fillOpacity: 0.85,
-//                       fillColor: getColorZones(feature.properties["ZONE_"]),
-//                       color: '#636363'
-//                   }
-//               }, 
-//                "properties": {
-//                    "drawOrder": 3
-//                },
 //
 //            }).addTo(map);
-        
-           //add parcel layer
-    
-        
-
-           
-           //send union layer to make popup
-//           createPopup(unionLayer);
-           
-//           makeLayerControl(floodLayer, zoneLayer, parcelLayer);
-    
-        
+                
 
 
     
-    function getColorZones (zone){
-        
-            
-                if(zone == "A") {
-                    return '#9E4624';
-                } else if(zone == "B-1") {
-                    return '#DD4132';
-                } else if(zone == "B-2") {
-                    return '#9B2335';
-                } else if(zone == "B-3") {
-                    return '#BC243C'
-                } else if (zone == "C"){
-                    return '#F6D155'
-                } else if(zone == "H") {
-                    return '#B76bA3'
-                } else if(zone == "H-M") {
-                    return '#F7C4C9'
-                } else if(zone == "I-1") {
-                    return '#88B04B'
-                } else if (zone == "I-2"){
-                    return '#006E51'
-                } else if (zone == "NOZONE"){
-                    return '#9896A4'
-                } else if (zone == "PUD"){
-                    return '#B18F6A'
-                } else if (zone == "R-1"){
-                    return '#98B4D4'
-                } else if (zone == "R-2"){
-                    return '#5B5EA6'
-                } else if (zone == "R-3"){
-                    return '#92A8D1'
-                } else if (zone == "R-4"){
-                    return '#034F84'
-                } else if (zone == "R-5"){
-                    return '#91A8D0'
-                } else if (zone == "R-6"){
-                    return '#4C6A92'
-                } else if (zone == "R-7"){
-                    return '#004B8D'
-                } else if (zone == "R-8"){
-                    return '#578CA9'
-                } 
-        
-    }
-    
-
-    function makeLayerControl(flood, zone, parcels){
-        
-        var layersGroup = {
-//            "Landuse": landuse,
-            "100 Yr. Floodplain": flood,
-//            "Aerial Basemap": tiles,
-//            "Topographic Basemap": topoTiles,
-        };
-        
-        var zoneGroup = {
-            "Zones": zone,
-            "Parcels":parcels,
-        };
-        
-    
-//        console.log(layersGroup["Landuse"].options.properties);
-     
-        
-        L.control.layers(zoneGroup, layersGroup, { collapsed: 'true', position: 'topright'}).addTo(map);
-
+//    function getColorZones (zone){
 //        
-        map.on("overlayadd", function (event) {
-            parcels.bringToFront();
-        });
-            
-        map.on("baselayerchange", function(event){
-            parcels.bringToFront();
-        });
+//            
+//                if(zone == "A") {
+//                    return '#9E4624';
+//                } else if(zone == "B-1") {
+//                    return '#DD4132';
+//                } else if(zone == "B-2") {
+//                    return '#9B2335';
+//                } else if(zone == "B-3") {
+//                    return '#BC243C'
+//                } else if (zone == "C"){
+//                    return '#F6D155'
+//                } else if(zone == "H") {
+//                    return '#B76bA3'
+//                } else if(zone == "H-M") {
+//                    return '#F7C4C9'
+//                } else if(zone == "I-1") {
+//                    return '#88B04B'
+//                } else if (zone == "I-2"){
+//                    return '#006E51'
+//                } else if (zone == "NOZONE"){
+//                    return '#9896A4'
+//                } else if (zone == "PUD"){
+//                    return '#B18F6A'
+//                } else if (zone == "R-1"){
+//                    return '#98B4D4'
+//                } else if (zone == "R-2"){
+//                    return '#5B5EA6'
+//                } else if (zone == "R-3"){
+//                    return '#92A8D1'
+//                } else if (zone == "R-4"){
+//                    return '#034F84'
+//                } else if (zone == "R-5"){
+//                    return '#91A8D0'
+//                } else if (zone == "R-6"){
+//                    return '#4C6A92'
+//                } else if (zone == "R-7"){
+//                    return '#004B8D'
+//                } else if (zone == "R-8"){
+//                    return '#578CA9'
+//                } 
 //        
+//    }
+    
+
+//    function makeLayerControl(flood, zone, parcels){
 //        
-    }
-        
+//        var layersGroup = {
+////            "Landuse": landuse,
+//            "100 Yr. Floodplain": flood,
+////            "Aerial Basemap": tiles,
+////            "Topographic Basemap": topoTiles,
+//        };
+//        
+//        var zoneGroup = {
+//            "Zones": zone,
+//            "Parcels":parcels,
+//        };
+//        
+//    
+////        console.log(layersGroup["Landuse"].options.properties);
+//     
+//        
+//        L.control.layers(zoneGroup, layersGroup, { collapsed: 'true', position: 'topright'}).addTo(map);
+//
+////        
+//        map.on("overlayadd", function (event) {
+//            parcels.bringToFront();
+//        });
+//            
+//        map.on("baselayerchange", function(event){
+//            parcels.bringToFront();
+//        });
+////        
+////        
+//    }
+//        
     
     
         
