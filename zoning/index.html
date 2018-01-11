@@ -86,7 +86,7 @@
             font-size: 3em;
             color: '#ffffff';
         }
-.about {
+.list-container {
     position: absolute;
     z-index: 700;
     right: 2%;
@@ -138,14 +138,14 @@ and (max-device-width : 200px) {
 
     <button class="button">Highlight Zone</button>
 
-    <div class='about' id="list" >
+    <div class='list-container' id="list" >
 
 
        <div class= "radio-list">
             <input type="radio" name= "list" id="agricultural" >Agricultural
             <input type="radio" name = "list" id="planneddevelopment" >Planned Development
             <input type="radio" name = "list" id="conservation" >Conservation
-           <input type="radio" name="list" id="reset">Reset Highlights
+           <input type="radio" name="list" id="reset">RESET
         </div>
 
 
@@ -163,17 +163,11 @@ and (max-device-width : 200px) {
         
             
     $('.button').on('click', function() {
-//        $('.about').show();
-//        $('.about').fadeToggle(400);
-        $('.about').toggle();
-//   
+
+        $('.list-container').toggle();
+  
     });
         
-//        $('.button .close-button').on('click', function() {
-//    $('.about').fadeOut();
-// 
-//});
-
 
 
         var highzoom = 13;
@@ -249,7 +243,6 @@ and (max-device-width : 200px) {
         
         map.addLayer(tiles);
     
-//        $(".radio-list input").detach().appendTo(map);
         
             //set bounds manually
 //      set bounds based on zoom level 5 (for buffer room)
