@@ -157,6 +157,9 @@
             box-shadow: 0 1px 5px rgba(0,4,72,.80);
             background-color: rgba(252,252,252,1);
      }
+        pI{
+            font-style: italic;
+        }
        
 /*
         .leaflet-popup-content p {
@@ -395,7 +398,7 @@ and (max-device-width : 200px) {
                 }
             },
 
-       }).bindPopup("<b>"+"Zone: "+"</b>"+layerInfo[layer].label+"<br>"+"Read zone specifications "+('<a href="http://www.bourboncountyplanning.com/zoning/" target="_blank">here</a>')).addTo(map); 
+       }).bindPopup("<b>"+"Zone: "+"</b>"+layerInfo[layer].label+"<br>"+"<pI>"+"Read zone specifications "+('<a href="http://www.bourboncountyplanning.com/zoning/" target="_blank">here</a>')).addTo(map); 
     
 
     }
