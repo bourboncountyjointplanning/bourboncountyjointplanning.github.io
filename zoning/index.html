@@ -50,20 +50,19 @@
             width: 100vw;
         }
 /*
-        .leaflet-control-layers-expanded {
-            border-radius: 0px;
-            background: rgba(25,25,25,0.8);
-            color: whitesmoke;
-            width: 220px;
-            top: 5%;
-
-            right: 5%;
+        .leaflet-touch .leaflet-control-layers-toggle {
+            width: 44px;
+            height: 44px;
+            left: 5%;
         }
 */
+        .leaflet-control-layers-expanded {
+            left: 5%;
+        }
         .leaflet-control-geosearch {
 
             width: 10%;
-            left: 5%;
+            left: 2.5%;
             top: 5%;
         }
         .leaflet-control-geosearch input {
@@ -272,6 +271,9 @@ and (max-device-width : 200px) {
             subdomains:['mt0','mt1','mt2','mt3']
         });
     
+        var topoLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
+	           attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community'
+        });
         
         
         
@@ -489,82 +491,32 @@ and (max-device-width : 200px) {
         })      
 
         
-//           
-//        var floodLayer = L.geoJson(flood, {
-//
-//                style: function(feature){
-//                    return {
-//                        opacity: 0,
-//                        fillColor: '#1f78b4',
-//                        fillOpacity: 0.85,
-//                    }
-//                },
-//
-//            }).addTo(map);
+           
+        var floodLayer = L.geoJson(flood, {
+
+                style: function(feature){
+                    return {
+                        opacity: 0,
+                        fillColor: '#1f78b4',
+                        fillOpacity: 0.85,
+                    }
+                },
+
+         });
                 
 
-
+        var basemapGroup = {
+            "Aerial Basemap": tiles,
+            "Topo Basemap": topoLayer,
+        };
+        
+        var dataGroup = {
+            "100 Yr. Flood": floodLayer,
+        }
     
-//    function getColorZones (zone){
-//        
-//            
-//                if(zone == "A") {
-//                    return '#9E4624';
-//                } else if(zone == "B-1") {
-//                    return '#DD4132';
-//                } else if(zone == "B-2") {
-//                    return '#9B2335';
-//                } else if(zone == "B-3") {
-//                    return '#BC243C'
-//                } else if (zone == "C"){
-//                    return '#F6D155'
-//                } else if(zone == "H") {
-//                    return '#B76bA3'
-//                } else if(zone == "H-M") {
-//                    return '#F7C4C9'
-//                } else if(zone == "I-1") {
-//                    return '#88B04B'
-//                } else if (zone == "I-2"){
-//                    return '#006E51'
-//                } else if (zone == "NOZONE"){
-//                    return '#9896A4'
-//                } else if (zone == "PUD"){
-//                    return '#B18F6A'
-//                } else if (zone == "R-1"){
-//                    return '#98B4D4'
-//                } else if (zone == "R-2"){
-//                    return '#5B5EA6'
-//                } else if (zone == "R-3"){
-//                    return '#92A8D1'
-//                } else if (zone == "R-4"){
-//                    return '#034F84'
-//                } else if (zone == "R-5"){
-//                    return '#91A8D0'
-//                } else if (zone == "R-6"){
-//                    return '#4C6A92'
-//                } else if (zone == "R-7"){
-//                    return '#004B8D'
-//                } else if (zone == "R-8"){
-//                    return '#578CA9'
-//                } 
-//        
-//    }
-    
+        L.control.layers(basemapGroup, dataGroup, {collapsed: 'true', position: 'topleft'}).addTo(map);
 
-//    function makeLayerControl(flood, zone, parcels){
-//        
-//        var layersGroup = {
-////            "Landuse": landuse,
-//            "100 Yr. Floodplain": flood,
-////            "Aerial Basemap": tiles,
-////            "Topographic Basemap": topoTiles,
-//        };
-//        
-//        var zoneGroup = {
-//            "Zones": zone,
-//            "Parcels":parcels,
-//        };
-//        
+
 //    
 ////        console.log(layersGroup["Landuse"].options.properties);
 //     
