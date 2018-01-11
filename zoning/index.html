@@ -88,18 +88,27 @@
         }
 .about {
     position: absolute;
-    z-index: 500;
+    z-index: 700;
     right: 2%;
-    top: 50%;
+    top: 5%;
     padding: 0 8px 15px;
     width: 110px;
-/*    background: rgba(255,255,255,.4);*/
-    border: rgba(53,112,54,0.8); 
-    border-width: thick;
+    background: 'black';
+    border: 'whitesmoke';
+    border-width:thick;
     box-shadow: 0 1px 5px rgba(53,112,54,.65);
+    display: none;
 }
         .radio-list{
             overflow-wrap: normal;
+            font-size: 1em;
+            background: 'whitesmoke';
+        }
+        .button{
+            position: absolute;
+            z-index: 500;
+            right: 5%;
+            top: 2%;
         }
     
 /*
@@ -124,34 +133,33 @@ and (max-device-width : 200px) {
 
 <body>
     
+
+    <button class="button">Highlight Zone</button>
+
+    <div class='about' id="list" >
 <!--
-       <div class= "radio-list">
-            <input type="radio" name= "list" id="agricultural" >Agricultural
-            <input type="radio" name = "list" id="planneddevelopment" >Planned Development
-            <input type="radio" name = "list" id="conservation" >Conservation
-    </div>
+        
+        <div class="dropdown">
+            <button onclick="select()" class="button">Highight Zone Cateogry</button>
+            <div id="menu" class="drop-down content">
+                <option id="agricultural" name="list">Agricultural</option>
+                <option id="planneddevelopment" name="list">Planned Development</option>
+                <option id="conservation" name="list">Conservation</option>
+            </div>
+           
+        </div>
 -->
 
-<!-- drop down on button:-->
-<!--
-<div class="dropdown">
-    <button class ="dropbtn">Highlight Zone Category</button>
-<button onclick="myFunction()" class="dropbtn">Highlight Zone Category</button>
-  <div id="myDropdown" class="dropdown-content">
-    <a href="#home">Home</a>
-    <a href="#about">About</a>
-    <a href="#contact">Contact</a>
-  </div>
-</div>
--->
-    <div class='about'>
-        
+
        <div class= "radio-list">
             <input type="radio" name= "list" id="agricultural" >Agricultural
             <input type="radio" name = "list" id="planneddevelopment" >Planned Development
             <input type="radio" name = "list" id="conservation" >Conservation
+        </div>
+
+        
     </div>
-    </div>
+    
     
     <div id='map'>   
 
@@ -162,7 +170,17 @@ and (max-device-width : 200px) {
     
     <script>
         
-        
+            
+            $('.button').on('click', function() {
+    $('.about').fadeIn();
+   
+});
+
+//$('.button').on('click', function() {
+//    $('.about').fadeOut();
+//  
+//});
+
         var highzoom = 13;
         var bigmapheight = '100%';
         var smallmapheight = 500;
@@ -375,6 +393,7 @@ and (max-device-width : 200px) {
                 geoJsonLayers[layer].setStyle({color: '#636363', weight:1});
             }
         }
+        
         
         $(".radio-list input").on('change', function(e){
             
