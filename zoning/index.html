@@ -48,16 +48,6 @@
             /* vw= viewport width*/
             width: 100vw;
         }
-/*
-        .leaflet-touch .leaflet-control-layers-toggle {
-            width: 44px;
-            height: 44px;
-            left: 5%;
-        }
-*/
-        .leaflet-control-layers-expanded {
-            left: 5%;
-        }
         .leaflet-control-geosearch {
 
             width: 10%;
@@ -84,10 +74,13 @@
             font-size: 3em;
             color: '#ffffff';
         }
+        .leaflet-control-layers-toggle {
+            right: 200px;
+        }
         .list-container {
             position: absolute;
             z-index: 700;
-            right:20px;
+            right:35px;
             top: 5%;
             padding: 5px 5px 15px;
             width: 170px;
@@ -161,26 +154,7 @@
         pI{
             font-style: italic;
         }
-        .leaflet-tooltip.addLabels {
-          background-color: transparent;
-          border: transparent;
-          box-shadow: none;
-        }
-       
-/*
-        .leaflet-popup-content p {
-            margin: 0px 0;
-        }
-        .leaflet-popup-content-wrapper {
-            background: rgba(75,75,75,0.8);
-            box-shadow: 0 0 15px rgba(0,0,0,0.2);
-            color: whitesmoke;
-            font-size: 1.2em;
-        }
-        .leaflet-popup-tip {
-            background: rgba(75,75,75,0.8);
-        } 
-   
+    
 
     </style>
     
@@ -256,21 +230,7 @@
         var map;
         var targetDiv = 'map';
         
-//        
-//         var tiles = L.tileLayer('https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
-//            maxZoom: 20,
-//            subdomains:['mt0','mt1','mt2','mt3']
-//        });
-//    
-//        var topoLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
-//	           attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community'
-//        });
-//        
-     
-//        var addressAerial = L.tileLayer('https://api.mapbox.com/styles/v1/lfgreenfield/cjcc9smu801su2sobbbxazg5d/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoibGZncmVlbmZpZWxkIiwiYSI6IjJTQWFaakEifQ.n0qIzdB2sQ4MymItf7vCWA');
-//        
-        
-        
+   
         
         var options = {
             center: [38.205,-84.254040],
@@ -495,57 +455,15 @@
 
          });
         
-//        var addressLayer = L.geoJson(addressPoints, {
-//            
-//            pointToLayer: function(feature, latlng){
-//                var label = String(feature.properties["NUMBER_"]);
-////                console.log(label);
-//                return L.circleMarker(latlng, {
-//                    radius: 1,
-//                    fillOpacity: 0,
-//                    opacity: 0,
-//                }).bindTooltip(label, {permanent: true, direction: "center", className: "addLabels"}).openTooltip();
-//            }
-//        });
-//        var addressLayer = L.geoJson(addressPoints);
-//        
-//        var tileIndex=geojsonvt(addressPoints);
-//        
-//        var features = tileIndex.getTile(0,0,0).features;
-//        
-//        console.log(tileIndex.tileCoords);
-//        
-        //lfgreenfield.5zjwygdg
         
-//        map.on('zoomend', function() {
-//    if (map.getZoom() <18){
-//        if (map.hasLayer(addressLayer)) {
-//            map.removeLayer(addressLayer);
-//        } else {
-//            console.log("point layer not activated");
-//        }
-//    }
-//    if (map.getZoom() >= 18){
-//        if (map.hasLayer(addressLayer)){
-//            console.log("layer already added");
-//        } else {
-//            map.addLayer(addressLayer);
-//        }
-//    }
-//})
-//                
-
-        var basemapGroup = {
-            "Aerial Basemap": tiles,
-//            "Topographic Basemap": topoLayer, 
-        };
         
         var dataGroup = {
             "100 Yr. Flood": floodLayer,
             "Addresses":addressLabels,
         }
-    
-        L.control.layers(basemapGroup, dataGroup, {collapsed: 'true', position: 'topleft'}).addTo(map);
+        
+       
+        L.control.layers(null, dataGroup,{collapsed: true, position: 'topleft'}).addTo(map);
 
 
 
