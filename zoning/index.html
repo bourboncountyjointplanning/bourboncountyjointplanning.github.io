@@ -256,20 +256,19 @@
         var map;
         var targetDiv = 'map';
         
-        
-         var tiles = L.tileLayer('https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
-            maxZoom: 20,
-            subdomains:['mt0','mt1','mt2','mt3']
-        });
-    
+//        
+//         var tiles = L.tileLayer('https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
+//            maxZoom: 20,
+//            subdomains:['mt0','mt1','mt2','mt3']
+//        });
+//    
 //        var topoLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
 //	           attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community'
 //        });
-        
-        var addressLabels = L.tileLayer('https://api.mapbox.com/styles/v1/lfgreenfield/cjcca4zn921n92roijkuv6y5h/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoibGZncmVlbmZpZWxkIiwiYSI6IjJTQWFaakEifQ.n0qIzdB2sQ4MymItf7vCWA');
 //        
-        var addressAerial = L.tileLayer('https://api.mapbox.com/styles/v1/lfgreenfield/cjcc9smu801su2sobbbxazg5d/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoibGZncmVlbmZpZWxkIiwiYSI6IjJTQWFaakEifQ.n0qIzdB2sQ4MymItf7vCWA');
-        
+     
+//        var addressAerial = L.tileLayer('https://api.mapbox.com/styles/v1/lfgreenfield/cjcc9smu801su2sobbbxazg5d/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoibGZncmVlbmZpZWxkIiwiYSI6IjJTQWFaakEifQ.n0qIzdB2sQ4MymItf7vCWA');
+//        
         
         
         
@@ -280,13 +279,17 @@
             minZoom: 11,
             attributionControl: false,
             zoomControl: false,
-            layers: [tiles],
+//            layers: [tiles, addressLabels],
         }    
         
         
         
         
         map = L.map(targetDiv, options);
+        
+        map.createPane('labels');
+        map.getPane('labels').style.zIndex=650;
+        map.getPane('labels').style.pointerEvents-'none';
         
         L.control.zoom({
              position:'bottomleft'
@@ -307,10 +310,19 @@
 			};
         });
         
+           var addressLabels = L.tileLayer('https://api.mapbox.com/styles/v1/lfgreenfield/cjcccodc23fmu2rmzyt07sf8d/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoibGZncmVlbmZpZWxkIiwiYSI6IjJTQWFaakEifQ.n0qIzdB2sQ4MymItf7vCWA',{
+            pane: 'labels'
+        });
         
-        
-        map.addLayer(tiles);
-        
+           
+         var tiles = L.tileLayer('https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
+            maxZoom: 20,
+            subdomains:['mt0','mt1','mt2','mt3']
+        });
+////        
+        tiles.addTo(map);
+        addressLabels.addTo(map);
+
   
  
         var southWest = L.latLng(38.13928, -84.38959),
@@ -525,11 +537,12 @@
 
         var basemapGroup = {
             "Aerial Basemap": tiles,
-            "Aerial with Addresses": addressAerial,
+//            "Topographic Basemap": topoLayer, 
         };
         
         var dataGroup = {
             "100 Yr. Flood": floodLayer,
+            "Addresses":addressLabels,
         }
     
         L.control.layers(basemapGroup, dataGroup, {collapsed: 'true', position: 'topleft'}).addTo(map);
