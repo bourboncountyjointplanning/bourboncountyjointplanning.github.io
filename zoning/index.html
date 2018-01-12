@@ -31,8 +31,6 @@
     
      <script src="l.control.geosearch.js"></script>
     <script src="l.geosearch.provider.esri.js"></script>
-    
-    <script src="leaflet-polygon.fillPattern.js"></script>
   
     
     
@@ -162,6 +160,11 @@
         pI{
             font-style: italic;
         }
+        .leaflet-tooltip.addLabels {
+          background-color: transparent;
+          border: transparent;
+          box-shadow: none;
+        }
        
 /*
         .leaflet-popup-content p {
@@ -214,7 +217,7 @@
     
     <script src ="Flood_100yr.js"></script>
     <script src ="Zoning_2014.js"></script>
-    <script src = "parcels.js"></script>
+    <script src="addresses.js"></script>
     
     <script>
         
@@ -365,7 +368,7 @@
           style: function(feature) {
                    return {
                        weight: 1,
-                       fillOpacity: 0.75,
+                       fillOpacity: 0.70,
                        fillColor: layerInfo[layer].color,
                        color: '#636363'
                    }
@@ -469,16 +472,46 @@
                     return {
                         opacity: 0,
                         fillColor: '#1f78b4',
-                        fillOpacity: 0.75,
+                        fillOpacity: 0.70,
                     }
                 },
 
          });
+        
+        var addressLayer = L.geoJson(addressPoints, {
+            
+            pointToLayer: function(feature, latlng){
+                var label = String(feature.properties["NUMBER_"]);
+//                console.log(label);
+                return L.circleMarker(latlng, {
+                    radius: 1,
+                    fillOpacity: 0,
+                    opacity: 0,
+                }).bindTooltip(label, {permanent: true, direction: "center", className: "addLabels"}).openTooltip();
+            }
+        });
+        
+        map.on('zoomend', function() {
+    if (map.getZoom() <18){
+        if (map.hasLayer(addressLayer)) {
+            map.removeLayer(addressLayer);
+        } else {
+            console.log("point layer not activated");
+        }
+    }
+    if (map.getZoom() >= 18){
+        if (map.hasLayer(addressLayer)){
+            console.log("layer already added");
+        } else {
+            map.addLayer(addressLayer);
+        }
+    }
+})
                 
 
         var basemapGroup = {
             "Aerial Basemap": tiles,
-            "Topo Basemap": topoLayer,
+            "Topographic Basemap": topoLayer,
         };
         
         var dataGroup = {
