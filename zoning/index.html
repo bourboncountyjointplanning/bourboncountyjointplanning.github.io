@@ -31,6 +31,7 @@
     
      <script src="l.control.geosearch.js"></script>
     <script src="l.geosearch.provider.esri.js"></script>
+    <script src="geojson-vt-dev.js"></script>
   
     
     
@@ -265,6 +266,8 @@
 	           attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community'
         });
         
+        var addressAerial = L.tileLayer('https://api.mapbox.com/styles/v1/lfgreenfield/cjcc9smu801su2sobbbxazg5d/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoibGZncmVlbmZpZWxkIiwiYSI6IjJTQWFaakEifQ.n0qIzdB2sQ4MymItf7vCWA');
+        
         
         
         
@@ -304,7 +307,7 @@
         
         
         
-        map.addLayer(tiles);
+        map.addLayer(addressAerial);
         
   
  
@@ -478,36 +481,45 @@
 
          });
         
-        var addressLayer = L.geoJson(addressPoints, {
-            
-            pointToLayer: function(feature, latlng){
-                var label = String(feature.properties["NUMBER_"]);
-//                console.log(label);
-                return L.circleMarker(latlng, {
-                    radius: 1,
-                    fillOpacity: 0,
-                    opacity: 0,
-                }).bindTooltip(label, {permanent: true, direction: "center", className: "addLabels"}).openTooltip();
-            }
-        });
+//        var addressLayer = L.geoJson(addressPoints, {
+//            
+//            pointToLayer: function(feature, latlng){
+//                var label = String(feature.properties["NUMBER_"]);
+////                console.log(label);
+//                return L.circleMarker(latlng, {
+//                    radius: 1,
+//                    fillOpacity: 0,
+//                    opacity: 0,
+//                }).bindTooltip(label, {permanent: true, direction: "center", className: "addLabels"}).openTooltip();
+//            }
+//        });
+//        var addressLayer = L.geoJson(addressPoints);
+//        
+//        var tileIndex=geojsonvt(addressPoints);
+//        
+//        var features = tileIndex.getTile(0,0,0).features;
+//        
+//        console.log(tileIndex.tileCoords);
+//        
+        //lfgreenfield.5zjwygdg
         
-        map.on('zoomend', function() {
-    if (map.getZoom() <18){
-        if (map.hasLayer(addressLayer)) {
-            map.removeLayer(addressLayer);
-        } else {
-            console.log("point layer not activated");
-        }
-    }
-    if (map.getZoom() >= 18){
-        if (map.hasLayer(addressLayer)){
-            console.log("layer already added");
-        } else {
-            map.addLayer(addressLayer);
-        }
-    }
-})
-                
+//        map.on('zoomend', function() {
+//    if (map.getZoom() <18){
+//        if (map.hasLayer(addressLayer)) {
+//            map.removeLayer(addressLayer);
+//        } else {
+//            console.log("point layer not activated");
+//        }
+//    }
+//    if (map.getZoom() >= 18){
+//        if (map.hasLayer(addressLayer)){
+//            console.log("layer already added");
+//        } else {
+//            map.addLayer(addressLayer);
+//        }
+//    }
+//})
+//                
 
         var basemapGroup = {
             "Aerial Basemap": tiles,
