@@ -259,8 +259,6 @@
 		  	if (e.newSize.x < mapbreakwidth) {
 				map.setZoom(lowzoom);
 				$("#map").css('height', smallmapheight);
-//                $(".leaflet-control-geosearch").css('top', newSearchTop);
-//                $(".leaflet-control-geosearch").css('right', newSearchLeft);
 			};
 			  
 			if (e.newSize.x > mapbreakwidth) {
@@ -269,7 +267,7 @@
 			};
         });
         
-           var addressLabels = L.tileLayer('https://api.mapbox.com/styles/v1/lfgreenfield/cjcccodc23fmu2rmzyt07sf8d/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoibGZncmVlbmZpZWxkIiwiYSI6IjJTQWFaakEifQ.n0qIzdB2sQ4MymItf7vCWA',{
+        var addressLabels = L.tileLayer('https://api.mapbox.com/styles/v1/lfgreenfield/cjcccodc23fmu2rmzyt07sf8d/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoibGZncmVlbmZpZWxkIiwiYSI6IjJTQWFaakEifQ.n0qIzdB2sQ4MymItf7vCWA',{
             pane: 'labels'
         });
         
@@ -338,7 +336,9 @@
     var geoJsonLayers = {}; 
         
 
-    
+    function getColor(layer, color) {
+        
+    }
 
     for (var layer in layerInfo) {
        
