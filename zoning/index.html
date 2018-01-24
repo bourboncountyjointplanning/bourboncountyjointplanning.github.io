@@ -274,6 +274,10 @@
             pane: 'labels'
         });
         
+        var zoneLabels = L.tileLayer('https://api.mapbox.com/styles/v1/lfgreenfield/cjct2xme90p7v2rnxzd8j2na2/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoibGZncmVlbmZpZWxkIiwiYSI6IjJTQWFaakEifQ.n0qIzdB2sQ4MymItf7vCWA',{
+            pane: 'labels'
+        });
+        
            
          var tiles = L.tileLayer('https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
             maxZoom: 20,
@@ -281,7 +285,8 @@
         });
 ////        
         tiles.addTo(map);
-        addressLabels.addTo(map);
+        zoneLabels.addTo(map);
+//        addressLabels.addTo(map);
 
   
  
