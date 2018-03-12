@@ -13,11 +13,11 @@
    
 
 
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"
-  integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ=="
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css"
+  integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
   crossorigin=""/>
-<script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"
-  integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log=="
+<script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"
+  integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw=="
   crossorigin=""></script>
     
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
@@ -155,7 +155,7 @@
 <body>
     
 
-    <button class="button">Highlight Zone</button>
+    <button class="button">Highlight Paris City Zones</button>
 
     <div class='list-container' id="list" >
 
@@ -184,6 +184,7 @@
     
     <script src ="Flood_100yr.js"></script>
     <script src ="zoning.js"></script>
+    <script src="county_zones.js"></script>
     
     <script>
         
@@ -311,13 +312,31 @@
             residential8: {class: "R-8", color: '#614126', label: "Residential (R-8)"},
 
         }
+        
+        var countyLayerInfo = {
+            agricultural1: {class: "A-1", color: '#05c466', label: "Agricultural (A-1)"},
+            agricultural2: {class: "A-2", color: '#05c466', label: "Agricultural (A-2)"},
+            business1: {class: "B-1", color:'#d65353', label: "Central Business (B-1)"},
+            business2: {class: "B-2", color: '#DD4132', label: "General Commercial (B-2)"},
+            business3: {class: "B-3", color: '#9B2335', label: "Neighborhood Commercial (B-3)"},
+            conservation: {class: "C", color: '#53aad6', label: "Conservation (C)"},
+            lightindustrial: {class: "I-1", color: '#b678c1', label: "Light Industrial (I-1)"},
+            heavyindustrial: {class: "I-2", color: '#760b8c', label: "Heavy Industrial (I-2)"},
+            planneddevelopment: {class: "PUD", color: '#766e77', label: "Planned Development (PUD)"},
+            residential1: {class: "R-1", color: '#ffff00', label: "Residential (R-1)"},
+            residential2: {class: "R-2", color: '#e5bb22', label: "Residential (R-2)"},
+            residential3: {class: "R-3", color: '#e0a31f', label: "Residential (R-3)"},
+            residential4: {class: "R-4", color: '#a88b25', label: "Residential (R-4)"},
+        }
 
-        var geoJsonLayers = {}; 
+        var cityLayers = {}; 
+        
+        var countyLayers = {};
 
-    //iterate through layer group, make geoJson, return colors and labels
+    //iterate through CITY layer group, make geoJson, return colors and labels
         for (var layer in layerInfo) {
 
-           geoJsonLayers[layer] = L.geoJson(zones, {  
+           cityLayers[layer] = L.geoJson(zones, {  
 
 
 
@@ -345,12 +364,44 @@
 
 
         }
-    
+        
+        //iterate through COUNTY layer group, add colors, labels
+        for (var layer in countyLayerInfo) {
 
+           countyLayers[layer] = L.geoJson(county_zones, {  
+
+
+
+              style: function(feature) {
+                       return {
+                           weight: 1,
+                           fillOpacity: 0.6,
+                           fillColor: countyLayerInfo[layer].color,
+                           color: '#636363'
+                       }
+
+                   }, 
+
+
+                filter: function(feature) {
+
+                    if (feature.properties["ZONE"] == countyLayerInfo[layer].class) {
+                        return feature;
+
+
+                    }
+                },
+
+           }).bindPopup("<b>"+"Zone: "+"</b>"+countyLayerInfo[layer].label+"<br>"+"<pI>"+('<a href="http://www.bourboncountyplanning.com" target="_blank">County Zone Ordinance</a>')); 
+
+
+        }
+    
+console.log(countyLayers);
      //reset all layers to original widths, outline colors, opacities, and weight 
         function resetStyle(){
-            for (var layer in geoJsonLayers){
-                geoJsonLayers[layer].setStyle({color: '#636363', weight:1, fillOpacity: 0.6});
+            for (var layer in cityLayers){
+                cityLayers[layer].setStyle({color: '#636363', weight:1, fillOpacity: 0.6});
             }
         }
         
@@ -362,52 +413,52 @@
             var checked = $(this).attr('id');
             
             if (checked == 'agricultural') {
-                geoJsonLayers['agricultural'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
-                geoJsonLayers['agricultural'].bringToFront();
+                cityLayers['agricultural'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
+                cityLayers['agricultural'].bringToFront();
             } else if (checked =='business1'){
-                geoJsonLayers['business1'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
-                geoJsonLayers['business1'].bringToFront();
+                cityLayers['business1'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
+                cityLayers['business1'].bringToFront();
             } else if (checked == 'business2') {
-                geoJsonLayers['business2'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
-                geoJsonLayers['business2'].bringToFront();
+                cityLayers['business2'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
+                cityLayers['business2'].bringToFront();
             }else if (checked == 'business3') {
-                geoJsonLayers['business3'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
-                geoJsonLayers['business3'].bringToFront();
+                cityLayers['business3'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
+                cityLayers['business3'].bringToFront();
             }else if (checked == 'conservation') {
-                geoJsonLayers['conservation'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
-                geoJsonLayers['conservation'].bringToFront();
+                cityLayers['conservation'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
+                cityLayers['conservation'].bringToFront();
             } else if (checked=='historic'){
-                geoJsonLayers['historic'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
-                geoJsonLayers['historic'].bringToFront();
+                cityLayers['historic'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
+                cityLayers['historic'].bringToFront();
             } else if (checked =='hospitalmedical'){
-                geoJsonLayers['hospitalmedical'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
-                geoJsonLayers['hospitalmedical'].bringToFront();
+                cityLayers['hospitalmedical'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
+                cityLayers['hospitalmedical'].bringToFront();
             } else if (checked =='lightindustrial'){
-                geoJsonLayers['lightindustrial'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
-                geoJsonLayers['lightindustrial'].bringToFront();
+                cityLayers['lightindustrial'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
+                cityLayers['lightindustrial'].bringToFront();
             }else if (checked =='heavyindustrial'){
-                geoJsonLayers['heavyindustrial'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
-                geoJsonLayers['heavyindustrial'].bringToFront();
+                cityLayers['heavyindustrial'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
+                cityLayers['heavyindustrial'].bringToFront();
             } else if (checked == 'planneddevelopment') {
-                geoJsonLayers['planneddevelopment'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
-                geoJsonLayers['planneddevelopment'].bringToFront();
+                cityLayers['planneddevelopment'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
+                cityLayers['planneddevelopment'].bringToFront();
             }  else if (checked == 'residential') {
-                geoJsonLayers['residential1'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
-                geoJsonLayers['residential1'].bringToFront();
-                geoJsonLayers['residential2'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
-                geoJsonLayers['residential2'].bringToFront();
-                geoJsonLayers['residential3'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
-                geoJsonLayers['residential3'].bringToFront();
-                geoJsonLayers['residential4'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
-                geoJsonLayers['residential4'].bringToFront();
-                geoJsonLayers['residential5'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
-                geoJsonLayers['residential5'].bringToFront();
-                geoJsonLayers['residential6'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
-                geoJsonLayers['residential6'].bringToFront();
-                geoJsonLayers['residential7'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
-                geoJsonLayers['residential7'].bringToFront();
-                geoJsonLayers['residential8'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
-                geoJsonLayers['residential8'].bringToFront();
+                cityLayers['residential1'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
+                cityLayers['residential1'].bringToFront();
+                cityLayers['residential2'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
+                cityLayers['residential2'].bringToFront();
+                cityLayers['residential3'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
+                cityLayers['residential3'].bringToFront();
+                cityLayers['residential4'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
+                cityLayers['residential4'].bringToFront();
+                cityLayers['residential5'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
+                cityLayers['residential5'].bringToFront();
+                cityLayers['residential6'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
+                cityLayers['residential6'].bringToFront();
+                cityLayers['residential7'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
+                cityLayers['residential7'].bringToFront();
+                cityLayers['residential8'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
+                cityLayers['residential8'].bringToFront();
             } 
             else if (checked=='reset'){
                 resetStyle();
@@ -431,14 +482,23 @@
          });
         
         
-     //add flood layer and address labels tile layer to layer control   
+     //add flood layer, address labels tile layer, and county zones to layer control   
         var dataGroup = {
+            "Unincorporated County Zones": countyLayers,
             "100 Yr. Flood": floodLayer,
             "Addresses":addressLabels,
-        }
+        };
         
-       
-        L.control.layers(null, dataGroup,{collapsed: true, position: 'topleft'}).addTo(map);
+        L.control.layers(dataGroup).addTo(map);
+        
+//        var zoneGroup = {
+//            "Unincorporated County Zones": countyLayers
+//        }
+    
+
+
+        
+    
 
 
 
