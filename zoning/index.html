@@ -484,12 +484,11 @@ console.log(countyLayers);
         
      //add flood layer, address labels tile layer, and county zones to layer control   
         var dataGroup = {
-            "Unincorporated County Zones": countyLayers,
             "100 Yr. Flood": floodLayer,
             "Addresses":addressLabels,
         };
         
-        L.control.layers(dataGroup).addTo(map);
+        L.control.layers(dataGroup, {position: 'topleft'}).addTo(map);
         
 //        var zoneGroup = {
 //            "Unincorporated County Zones": countyLayers
