@@ -322,16 +322,15 @@
             conservation: {class: "C", color: '#53aad6', label: "Conservation (C)"},
             lightindustrial: {class: "I-1", color: '#b678c1', label: "Light Industrial (I-1)"},
             heavyindustrial: {class: "I-2", color: '#760b8c', label: "Heavy Industrial (I-2)"},
-            planneddevelopment: {class: "PUD", color: '#766e77', label: "Planned Development (PUD)"},
             residential1: {class: "R-1", color: '#ffff00', label: "Residential (R-1)"},
             residential2: {class: "R-2", color: '#e5bb22', label: "Residential (R-2)"},
             residential3: {class: "R-3", color: '#e0a31f', label: "Residential (R-3)"},
             residential4: {class: "R-4", color: '#a88b25', label: "Residential (R-4)"},
         }
 
-        var cityLayers = {}; 
+        var cityLayers = L.featureGroup(); 
         
-        var countyLayers = {};
+        var countyLayers = L.featureGroup();
 
     //iterate through CITY layer group, make geoJson, return colors and labels
         for (var layer in layerInfo) {
@@ -483,18 +482,15 @@ console.log(countyLayers);
         
         
      //add flood layer, address labels tile layer, and county zones to layer control   
+        
         var dataGroup = {
-            "Unincorporated County Zones": countyLayers,
+            "Paris City Zones": cityLayers,
+            "Unincorporated County Zones":countyLayers,
             "100 Yr. Flood": floodLayer,
             "Addresses":addressLabels,
         };
         
         L.control.layers(dataGroup).addTo(map);
-        
-//        var zoneGroup = {
-//            "Unincorporated County Zones": countyLayers
-//        }
-    
 
 
         
