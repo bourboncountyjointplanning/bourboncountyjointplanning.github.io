@@ -72,7 +72,7 @@
             position: absolute;
             z-index: 700;
             right:25px;
-            top: 6%;
+            top: 9%;
             padding: 5px 5px 15px;
             width: 170px;
             background-color: rgba(252,252,252,1);
@@ -134,6 +134,17 @@
             position: absolute;
             z-index: 500;
             right: 55px;
+            top: 6%;
+            font-family: 'Roboto', sans-serif;
+            font-size: 0.9em;
+            padding: 15px 15x 15px;
+            box-shadow: 0 1px 5px rgba(0,4,72,.80);
+            background-color: rgba(252,252,252,1);
+     }
+          .go-to-button{
+            position: absolute;
+            z-index: 500;
+            right: 55px;
             top: 2%;
             font-family: 'Roboto', sans-serif;
             font-size: 0.9em;
@@ -152,7 +163,7 @@
 
 <body>
     
-
+    <button class="go-to-button">Bourbon County Zone Map</button>
     <button class="button">Highlight Zones</button>
 
     <div class='list-container' id="list" >
@@ -192,6 +203,10 @@
 
         $('.list-container').toggle();
   
+    });
+        
+    $('.go-to-button').on('click', function(){
+        window.open('https://bourboncountyjointplanning.github.io/zoning/county/', target='_self');
     });
         
     //variables for mobile-friendly capacity     
