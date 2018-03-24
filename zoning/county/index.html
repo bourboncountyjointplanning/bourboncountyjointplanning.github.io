@@ -247,7 +247,7 @@
 //            pane: 'labels'
 //        });
         
-        var zoneLabels = L.tileLayer('https://api.mapbox.com/styles/v1/lfgreenfield/cjct2xme90p7v2rnxzd8j2na2/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoibGZncmVlbmZpZWxkIiwiYSI6IjJTQWFaakEifQ.n0qIzdB2sQ4MymItf7vCWA',{
+        var zoneLabels = L.tileLayer('https://api.mapbox.com/styles/v1/lfgreenfield/cjf5smozt12fm2ro2fhi9tngf/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoibGZncmVlbmZpZWxkIiwiYSI6IjJTQWFaakEifQ.n0qIzdB2sQ4MymItf7vCWA',{
             pane: 'labels'
         });
         
@@ -257,7 +257,7 @@
             subdomains:['mt0','mt1','mt2','mt3']
         });       
         tiles.addTo(map);
-//        zoneLabels.addTo(map);
+        zoneLabels.addTo(map);
   
     //set map bounds
         var boundsSearch = map.getBounds();
@@ -335,7 +335,7 @@
                     }
                 },
 
-           }).bindPopup("<b>"+"Zone: "+"</b>"+layerInfo[layer].label+"<br>"+"<pI>"+('<a href="http://www.bourboncountyplanning.com/wp-content/uploads/2018/03/Zoning-Quick-Info-Sheets.pdf" target="_blank">Zoning Quick Info Sheets</a>')).addTo(map); 
+           }).bindPopup("<b>"+"Zone: "+"</b>"+layerInfo[layer].label+"<br>"+"<pI>"+('<a href="http://www.bourboncountyplanning.com/wp-content/uploads/2016/12/BourbonCountyZoningOrdinance.pdf" target="_blank">County Zone Ordinances</a>')).addTo(map); 
 
 
         }
