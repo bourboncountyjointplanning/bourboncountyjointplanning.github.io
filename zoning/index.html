@@ -67,9 +67,7 @@
             font-size: 3em;
             color: '#ffffff';
         }
-        .leaflet-control-layers-toggle {
-            right: 200px;
-        }
+    
         .list-container {
             position: absolute;
             z-index: 700;
@@ -155,7 +153,7 @@
 <body>
     
 
-    <button class="button">Highlight Paris City Zones</button>
+    <button class="button">Highlight Zones</button>
 
     <div class='list-container' id="list" >
 
@@ -184,7 +182,7 @@
     
     <script src ="Flood_100yr.js"></script>
     <script src ="zoning.js"></script>
-    <script src="county_zones.js"></script>
+  
     
     <script>
         
@@ -313,25 +311,10 @@
 
         }
         
-        var countyLayerInfo = {
-            agricultural1: {class: "A-1", color: '#05c466', label: "Agricultural (A-1)"},
-            agricultural2: {class: "A-2", color: '#05c466', label: "Agricultural (A-2)"},
-            business1: {class: "B-1", color:'#d65353', label: "Central Business (B-1)"},
-            business2: {class: "B-2", color: '#DD4132', label: "General Commercial (B-2)"},
-            business3: {class: "B-3", color: '#9B2335', label: "Neighborhood Commercial (B-3)"},
-            conservation: {class: "C", color: '#53aad6', label: "Conservation (C)"},
-            lightindustrial: {class: "I-1", color: '#b678c1', label: "Light Industrial (I-1)"},
-            heavyindustrial: {class: "I-2", color: '#760b8c', label: "Heavy Industrial (I-2)"},
-            planneddevelopment: {class: "PUD", color: '#766e77', label: "Planned Development (PUD)"},
-            residential1: {class: "R-1", color: '#ffff00', label: "Residential (R-1)"},
-            residential2: {class: "R-2", color: '#e5bb22', label: "Residential (R-2)"},
-            residential3: {class: "R-3", color: '#e0a31f', label: "Residential (R-3)"},
-            residential4: {class: "R-4", color: '#a88b25', label: "Residential (R-4)"},
-        }
 
         var cityLayers = {}; 
         
-        var countyLayers = {};
+   
 
     //iterate through CITY layer group, make geoJson, return colors and labels
         for (var layer in layerInfo) {
@@ -365,39 +348,6 @@
 
         }
         
-        //iterate through COUNTY layer group, add colors, labels
-        for (var layer in countyLayerInfo) {
-
-           countyLayers[layer] = L.geoJson(county_zones, {  
-
-
-
-              style: function(feature) {
-                       return {
-                           weight: 1,
-                           fillOpacity: 0.6,
-                           fillColor: countyLayerInfo[layer].color,
-                           color: '#636363'
-                       }
-
-                   }, 
-
-
-                filter: function(feature) {
-
-                    if (feature.properties["ZONE"] == countyLayerInfo[layer].class) {
-                        return feature;
-
-
-                    }
-                },
-
-           }).bindPopup("<b>"+"Zone: "+"</b>"+countyLayerInfo[layer].label+"<br>"+"<pI>"+('<a href="http://www.bourboncountyplanning.com" target="_blank">County Zone Ordinance</a>')); 
-
-
-        }
-    
-console.log(countyLayers);
      //reset all layers to original widths, outline colors, opacities, and weight 
         function resetStyle(){
             for (var layer in cityLayers){
@@ -488,12 +438,8 @@ console.log(countyLayers);
             "Addresses":addressLabels,
         };
         
-        L.control.layers(dataGroup, {position: 'topleft'}).addTo(map);
-        
-//        var zoneGroup = {
-//            "Unincorporated County Zones": countyLayers
-//        }
-    
+        L.control.layers(null, dataGroup, {position: 'topleft'}).addTo(map);
+
 
 
         
