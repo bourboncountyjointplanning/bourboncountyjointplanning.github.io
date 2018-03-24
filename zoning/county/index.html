@@ -197,7 +197,7 @@
         var bigmapheight = '100%';
         var smallmapheight = 650;
         var mapbreakwidth = 500;
-        var lowzoom = 11.5;
+        var lowzoom = 11;
         var initialzoom;
         var newSearchTop = 75;
         var origSearchTop = '95%';
@@ -266,10 +266,14 @@
 //        zoneLabels.addTo(map);
   
     //set map bounds
-        var southWest = L.latLng(38.13928, -84.38959),
-            northEast = L.latLng(38.270667, -84.11836),
-            bounds = L.latLngBounds(southWest, northEast);
+        var boundsSearch = map.getBounds();
         
+        var southWest = L.latLng(37.94148997332173,-84.70184326171876),
+            northEast = L.latLng(
+38.46703046764414,-83.80577087402345),
+            bounds = [southWest, northEast];
+        
+        map.setMaxBounds(bounds);
 //        map.setMaxBounds(bounds);        
 
     //add address search bar
