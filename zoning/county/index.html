@@ -172,8 +172,12 @@
             <label id="conservation"><input type="radio" name = "list" id="conservation" >Conservation (C)</label>
             <label id="generalindustrial"><input type="radio" name = "list" id="generalindustrial" >Light Industrial (I-1)</label>
             <label id="heavyindustrial"><input type="radio" name = "list" id="heavyindustrial" >Heavy Industrial (I-2)</label>
-            <label id="residential"> <input type="radio" name = "list" id="residential" >Residential (R1-R4)</label>
+            <label id="residential1"> <input type="radio" name = "list" id="residential1" >Residential (R-1)</label>
+           <label id="residential2"> <input type="radio" name = "list" id="residential2" >Residential (R-2)</label>
+           <label id="residential3"> <input type="radio" name = "list" id="residential3" >Residential (R-3)</label>
+           <label id="residential4"> <input type="radio" name = "list" id="residential4" >Residential (R-4)</label>
             <label id="reset"><input type="radio" name="list" id="reset">RESET HIGHLIGHTS</label>
+           <label id="QC"><input type="radio" name="list" id="QC">CHECK THESE</label>
        </form>
 
 
@@ -184,7 +188,7 @@
 
     
     <script src ="Flood_100yr.js"></script>
-    <script src ="county_zones.js"></script>
+    <script src ="county_zones_20181217.js"></script>
         
   
     
@@ -260,9 +264,9 @@
         
     //load tile layers
     
-        var zoneLabels = L.tileLayer('https://api.mapbox.com/styles/v1/lfgreenfield/cjf5smozt12fm2ro2fhi9tngf/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoibGZncmVlbmZpZWxkIiwiYSI6IjJTQWFaakEifQ.n0qIzdB2sQ4MymItf7vCWA',{
-            pane: 'labels'
-        });
+//        var zoneLabels = L.tileLayer('https://api.mapbox.com/styles/v1/lfgreenfield/cjf5smozt12fm2ro2fhi9tngf/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoibGZncmVlbmZpZWxkIiwiYSI6IjJTQWFaakEifQ.n0qIzdB2sQ4MymItf7vCWA',{
+//            pane: 'labels'
+//        });
         
            
          var tiles = L.tileLayer('https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
@@ -270,7 +274,7 @@
             subdomains:['mt0','mt1','mt2','mt3']
         });       
         tiles.addTo(map);
-        zoneLabels.addTo(map);
+//        zoneLabels.addTo(map);
   
     //set map bounds
         var boundsSearch = map.getBounds();
@@ -299,20 +303,21 @@
 
     //layer group, holds color and label values
         var layerInfo = {
-            agricultural: {class: "A-1", color: '#05c466', label: "Agricultural (A)"},
-            ruralagcommunity: {class: "A-2", color: '#326F32', label: "Rural/Agricultural Community (A-2)"},
+            agricultural: {class: "A-1", color: '#05c466', label: "Agricultural (A-1)"},
+            ruralagcommunity: {class: "A-2", color: '#548235', label: "Rural/Agricultural Community (A-2)"},
             business1: {class: "B-1", color:'#d65353', label: "Highway Commercial (B-1)"},
-            business2: {class: "B-2", color: '#9B2335', label: "Commercial (B-2)"},
+            business2: {class: "B-2", color: '#DD4132', label: "Commercial (B-2)"},
             conservation: {class: "C", color: '#53aad6', label: "Conservation (C)"},
             generalindustrial: {class: "I-1", color: '#b678c1', label: "General Industrial (I-1)"},
             heavyindustrial: {class: "I-2", color: '#760b8c', label: "Heavy Industrial (I-2)"},
-            millersburg: {class: "MILLERSBURG", color: '#766e77', label: "Millersburg"},
-            northmiddletown: {class: "NORTH MIDDLETOWN", color: '#766e77', label: "North Middletown"},
-            paris: {class: "PARIS", color: '#766e77', label: "Paris"},
-            residential1: {class: "MI", color: '#ffff00', label: "Residential (R-1)"},
+            millersburg: {class: "MILLERSBURG", color: '#595959', label: "Millersburg"},
+            northmiddletown: {class: "NORTH MIDDLETOWN", color: '#808080', label: "North Middletown"},
+            paris: {class: "PARIS", color: '#aeaaaa', label: "Paris"},
+            residential1: {class: "R-1", color: '#ffff00', label: "Residential (R-1)"},
             residential2: {class: "R-2", color: '#e5bb22', label: "Residential (R-2)"},
             residential3: {class: "R-3", color: '#e0a31f', label: "Residential (R-3)"},
             residential4: {class: "R-4", color: '#a88b25', label: "Residential (R-4)"},
+            QC: {class: "QC", color: '#ff6700', label: "need to be confirmed"},
 
         }
         
@@ -399,19 +404,25 @@
             } else if (checked == 'northmiddletown') {
                 countyLayers['northmiddletown'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
                 countyLayers['northmiddletown'].bringToFront();
-            }  else if (checked == 'residential') {
+            }  else if (checked == 'residential1') {
                 countyLayers['residential1'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
                 countyLayers['residential1'].bringToFront();
+            } else if (checked == 'residential2') {
                 countyLayers['residential2'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
                 countyLayers['residential2'].bringToFront();
+            } else if (checked == 'residential3') {
                 countyLayers['residential3'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
                 countyLayers['residential3'].bringToFront();
+            } else if (checked == 'residential4') {
                 countyLayers['residential4'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
                 countyLayers['residential4'].bringToFront();
             } 
             else if (checked=='reset'){
                 resetStyle();
-            }
+            }else if (checked == 'QC') {
+                countyLayers['QC'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
+                countyLayers['QC'].bringToFront();
+            } 
             
             
         })      
