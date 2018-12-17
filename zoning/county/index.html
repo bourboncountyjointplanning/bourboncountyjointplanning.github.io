@@ -149,7 +149,13 @@
         pI{
             font-style: italic;
         }
-    
+      .leaflet-popup-content-wrapper {
+            padding: 1px;
+            text-align: left;
+            border-radius: 12px;
+            word-wrap: normal;
+          width: 225px;
+        }
 
     </style>
     
@@ -310,9 +316,9 @@
             conservation: {class: "C", color: '#53aad6', label: "Conservation (C)"},
             generalindustrial: {class: "I-1", color: '#b678c1', label: "General Industrial (I-1)"},
             heavyindustrial: {class: "I-2", color: '#760b8c', label: "Heavy Industrial (I-2)"},
-            millersburg: {class: "MILLERSBURG", color: '#595959', label: "Millersburg"},
-            northmiddletown: {class: "NORTH MIDDLETOWN", color: '#808080', label: "North Middletown"},
-            paris: {class: "PARIS", color: '#aeaaaa', label: "Paris"},
+            millersburg: {class: "MILLERSBURG", color: '#595959', label: "Millersburg (contact alacy@paris.ky.gov for detailed zones)"},
+            northmiddletown: {class: "NORTH MIDDLETOWN", color: '#808080', label: "North Middletown (contact alacy@paris.ky.gov for detailed zones)"},
+            paris: {class: "PARIS", color: '#aeaaaa', label: "Paris (click top-right button to switch maps)"},
             residential1: {class: "R-1", color: '#ffff00', label: "Residential (R-1)"},
             residential2: {class: "R-2", color: '#e5bb22', label: "Residential (R-2)"},
             residential3: {class: "R-3", color: '#e0a31f', label: "Residential (R-3)"},
@@ -353,7 +359,7 @@
                     }
                 },
 
-           }).bindPopup("<b>"+"Zone: "+"</b>"+layerInfo[layer].label+"<br>"+"<pI>"+('<a href="http://www.bourboncountyplanning.com/wp-content/uploads/2016/12/BourbonCountyZoningOrdinance.pdf" target="_blank">County Zone Ordinances</a>')).addTo(map); 
+           }).bindPopup("<b>"+"Zone: "+"</b>"+layerInfo[layer].label+"<br>"+"<pI>"+('<a href="http://www.bourboncountyplanning.com/wp-content/uploads/2016/12/BourbonCountyZoningOrdinance.pdf" target="_blank">Bourbon County Zone Ordinances</a>')).addTo(map); 
 
 
         }
