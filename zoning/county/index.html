@@ -182,6 +182,7 @@
            <label id="residential2"> <input type="radio" name = "list" id="residential2" >Residential (R-2)</label>
            <label id="residential3"> <input type="radio" name = "list" id="residential3" >Residential (R-3)</label>
            <label id="residential4"> <input type="radio" name = "list" id="residential4" >Residential (R-4)</label>
+           <label id="residentialAll"> <input type="radio" name = "list" id="residentialAll" >All Residential (R1-R4)</label>
             <label id="reset"><input type="radio" name="list" id="reset">RESET HIGHLIGHTS</label>
 <!--           <label id="unknown"><input type="radio" name="list" id="unknown">CHECK THESE</label>-->
        </form>
@@ -423,12 +424,24 @@
                 countyLayers['residential4'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
                 countyLayers['residential4'].bringToFront();
             } 
+            else if (checked == 'residentialAll') {
+                countyLayers['residential1'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
+                countyLayers['residential1'].bringToFront();
+                countyLayers['residential2'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
+                countyLayers['residential2'].bringToFront();
+                countyLayers['residential3'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
+                countyLayers['residential3'].bringToFront();
+                countyLayers['residential4'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
+                countyLayers['residential4'].bringToFront();
+            } 
             else if (checked=='reset'){
                 resetStyle();
-            }else if (checked == 'unknown') {
-                countyLayers['unknown'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
-                countyLayers['unknown'].bringToFront();
-            } 
+            }
+            
+//            else if (checked == 'unknown') {
+//                countyLayers['unknown'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
+//                countyLayers['unknown'].bringToFront();
+//            } 
             
             
         })      
