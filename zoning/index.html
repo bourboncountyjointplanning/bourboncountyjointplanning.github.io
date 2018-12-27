@@ -122,9 +122,11 @@
         .radio-list label#planneddevelopment{
             color: rgb(118,110,119);
         }
+/*
         .radio-list label#residential{
             color: rgb(97,65,38);
         }
+*/
         .radio-list label#reset{
             font-weight: bold;
             font-size: 1.2em;
@@ -180,7 +182,15 @@
             <label id="lightindustrial"><input type="radio" name = "list" id="lightindustrial" >Light Industrial (I-1)</label>
             <label id="heavyindustrial"><input type="radio" name = "list" id="heavyindustrial" >Heavy Industrial (I-2)</label>
             <label id="#planneddevelopment"> <input type="radio" name = "list" id="planneddevelopment" >Planned Development (PUD)</label>
-            <label id="residential"> <input type="radio" name = "list" id="residential" >Residential (R1-R8)</label>
+            <label id="residential1"> <input type="radio" name = "list" id="residential1" >Residential (R-1)</label>
+           <label id="residential2"> <input type="radio" name = "list" id="residential2" >Residential (R-2)</label>
+           <label id="residential3"> <input type="radio" name = "list" id="residential3" >Residential (R-3)</label>
+           <label id="residential4"> <input type="radio" name = "list" id="residential4" >Residential (R-4)</label>
+           <label id="residential5"> <input type="radio" name = "list" id="residential5" >Residential (R-5)</label>
+           <label id="residential6"> <input type="radio" name = "list" id="residential6" >Residential (R-6)</label>
+           <label id="residential7"> <input type="radio" name = "list" id="residential7" >Residential (R-7)</label>
+           <label id="residential8"> <input type="radio" name = "list" id="residential8" >Residential (R-8)</label>
+            <label id="residentialAll"> <input type="radio" name = "list" id="residentialAll" >Residential (R1-R8)</label>
             <label id="reset"><input type="radio" name="list" id="reset">RESET HIGHLIGHTS</label>
        </form>
 
@@ -192,7 +202,7 @@
 
     
     <script src ="Flood_100yr.js"></script>
-    <script src ="zoning_20181217.js"></script>
+    <script src ="city_zones.js"></script>
   
     
     <script>
@@ -407,14 +417,39 @@
             } else if (checked == 'planneddevelopment') {
                 cityLayers['planneddevelopment'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
                 cityLayers['planneddevelopment'].bringToFront();
-            }  else if (checked == 'residential') {
+            }  else if (checked == 'residential1') {
+                cityLayers['residential1'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
+                cityLayers['residential1'].bringToFront();
+            } 
+             else if (checked == 'residential2') {
+                cityLayers['residential2'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
+                cityLayers['residential2'].bringToFront();
+            } else if (checked == 'residential3') {
+                cityLayers['residential3'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
+                cityLayers['residential3'].bringToFront();
+            } else if (checked == 'residential4') {
+                cityLayers['residential4'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
+                cityLayers['residential4'].bringToFront();
+            } else if (checked == 'residential5') {
+                cityLayers['residential5'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
+                cityLayers['residential5'].bringToFront();
+            } else if (checked == 'residential6') {
+                cityLayers['residential6'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
+                cityLayers['residential6'].bringToFront();
+            } else if (checked == 'residential7') {
+                cityLayers['residential7'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
+                cityLayers['residential7'].bringToFront();
+            } else if (checked == 'residential8') {
+                cityLayers['residential8'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
+                cityLayers['residential8'].bringToFront();
+            } else if (checked == 'residentialAll') {
                 cityLayers['residential1'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
                 cityLayers['residential1'].bringToFront();
                 cityLayers['residential2'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
                 cityLayers['residential2'].bringToFront();
                 cityLayers['residential3'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
                 cityLayers['residential3'].bringToFront();
-                cityLayers['residential4'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
+                 cityLayers['residential4'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
                 cityLayers['residential4'].bringToFront();
                 cityLayers['residential5'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
                 cityLayers['residential5'].bringToFront();
@@ -424,7 +459,7 @@
                 cityLayers['residential7'].bringToFront();
                 cityLayers['residential8'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
                 cityLayers['residential8'].bringToFront();
-            } 
+            }
             else if (checked=='reset'){
                 resetStyle();
             }
