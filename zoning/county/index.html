@@ -196,6 +196,7 @@
     
     <script src ="Flood_100yr.js"></script>
     <script src ="county_zones.js"></script>
+
         
   
     
@@ -274,6 +275,12 @@
 //        var zoneLabels = L.tileLayer('https://api.mapbox.com/styles/v1/lfgreenfield/cjf5smozt12fm2ro2fhi9tngf/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoibGZncmVlbmZpZWxkIiwiYSI6IjJTQWFaakEifQ.n0qIzdB2sQ4MymItf7vCWA',{
 //            pane: 'labels'
 //        });
+        
+          var addressLabels = L.tileLayer('https://api.mapbox.com/styles/v1/lfgreenfield/cjq6s2wl27a232sl9txorhxd8/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoibGZncmVlbmZpZWxkIiwiYSI6IjJTQWFaakEifQ.n0qIzdB2sQ4MymItf7vCWA',{
+            pane: 'labels'
+        });
+        
+    
         
            
          var tiles = L.tileLayer('https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
@@ -463,9 +470,9 @@
         
      //add flood layer, address labels tile layer, and county zones to layer control   
         var dataGroup = {
-            "100 Yr. Flood": floodLayer,
-//            "Addresses":addressLabels,
-        };
+            "100 Yr. Flood Zone": floodLayer,
+            "Address Labels":addressLabels
+        }
         
         L.control.layers(null, dataGroup, {position: 'topleft'}).addTo(map);
 
