@@ -72,9 +72,9 @@
             position: absolute;
             z-index: 700;
             right:15px;
-            top: 11%;
+            top: 14%;
             padding: 5px 5px 15px;
-            width: 170px;
+            width: 215px;
             background-color: rgba(252,252,252,1);
             border-radius: 5px;
             box-shadow: 0 1px 5px rgba(0,4,72,.80);
@@ -183,7 +183,7 @@
            <label id="residential3"> <input type="radio" name = "list" id="residential3" >Residential (R-3)</label>
            <label id="residential4"> <input type="radio" name = "list" id="residential4" >Residential (R-4)</label>
             <label id="reset"><input type="radio" name="list" id="reset">RESET HIGHLIGHTS</label>
-           <label id="QC"><input type="radio" name="list" id="QC">CHECK THESE</label>
+<!--           <label id="unknown"><input type="radio" name="list" id="unknown">CHECK THESE</label>-->
        </form>
 
 
@@ -194,7 +194,7 @@
 
     
     <script src ="Flood_100yr.js"></script>
-    <script src ="county_zones_20181217.js"></script>
+    <script src ="county_zones.js"></script>
         
   
     
@@ -217,7 +217,7 @@
         var bigmapheight = '100%';
         var smallmapheight = 650;
         var mapbreakwidth = 500;
-        var lowzoom = 9;
+        var lowzoom = 10;
         var initialzoom;
         var newSearchTop = 75;
         var origSearchTop = '95%';
@@ -239,7 +239,7 @@
             center: [38.205,-84.254040],
             zoom: 12,
             maxZoom: 18,
-            minZoom: 9,
+            minZoom: 10,
             attributionControl: false,
             zoomControl: false,
 //            layers: [tiles, addressLabels],
@@ -323,7 +323,7 @@
             residential2: {class: "R-2", color: '#e5bb22', label: "Residential (R-2)"},
             residential3: {class: "R-3", color: '#e0a31f', label: "Residential (R-3)"},
             residential4: {class: "R-4", color: '#a88b25', label: "Residential (R-4)"},
-            QC: {class: "QC", color: '#ff6700', label: "need to be confirmed"},
+            unknown: {class: "unknown", color: '#808080', label: "Unknown. Contact alacy@paris.ky.gov with questions."},
 
         }
         
@@ -425,9 +425,9 @@
             } 
             else if (checked=='reset'){
                 resetStyle();
-            }else if (checked == 'QC') {
-                countyLayers['QC'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
-                countyLayers['QC'].bringToFront();
+            }else if (checked == 'unknown') {
+                countyLayers['unknown'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
+                countyLayers['unknown'].bringToFront();
             } 
             
             
