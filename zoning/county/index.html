@@ -195,7 +195,7 @@
 
     
     <script src ="Flood_100yr.js"></script>
-    <script src ="county_zones.js"></script>
+    <script src ="county_zones_20190620.js"></script>
 
         
   
@@ -343,7 +343,7 @@
     //iterate through CITY layer group, make geoJson, return colors and labels
         for (var layer in layerInfo) {
 
-           countyLayers[layer] = L.geoJson(zones, {  
+           countyLayers[layer] = L.geoJson(countyZones, {  
 
 
 
